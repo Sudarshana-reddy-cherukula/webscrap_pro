@@ -1,0 +1,1208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Premium AI-powered web scraping, PDF processing, and automation platform.">
+  <title>DataVault | AI Automation & Web Scraping Platform</title>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface-2: #1a2242;
+      --panel: #1f2937;
+      --border: #2d3748;
+      --hairline: #374151;
+      --fg: #f1f5f9;
+      --soft: #a0aec0;
+      --muted: #818cf8;
+      --accent: #00f5d4;
+      --accent-2: #3b82f6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --font-display: 'Dosis', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+    
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-2: #f1f5f9;
+      --panel: #e2e8f0;
+      --border: #cbd5e1;
+      --hairline: #e2e8f0;
+      --fg: #0f172a;
+      --soft: #64748b;
+      --muted: #6366f1;
+      --accent: #0d9488;
+      --accent-2: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; border: none; cursor: pointer; }
+    
+    .shell { min-height: 100vh; }
+    
+    /* 3D Cursor */
+    .cursor {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.5), inset 0 0 10px rgba(0, 245, 212, 0.3);
+      transition: all 0.1s ease-out;
+    }
+
+    .cursor.click {
+      transform: translate(-50%, -50%) scale(0.7);
+      box-shadow: 0 0 30px rgba(0, 245, 212, 0.8), inset 0 0 15px rgba(0, 245, 212, 0.6);
+    }
+
+    /* Background Gradient */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(0, 245, 212, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Moving Dots Container */
+    .dots-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+      animation: moveDot linear infinite;
+    }
+
+    .dot:nth-child(1) { left: 10%; top: 20%; animation-duration: 20s; animation-delay: 0s; }
+    .dot:nth-child(2) { left: 80%; top: 10%; animation-duration: 25s; animation-delay: -5s; }
+    .dot:nth-child(3) { left: 20%; top: 60%; animation-duration: 30s; animation-delay: -10s; }
+    .dot:nth-child(4) { left: 90%; top: 70%; animation-duration: 22s; animation-delay: -7s; }
+    .dot:nth-child(5) { left: 40%; top: 15%; animation-duration: 28s; animation-delay: -12s; }
+    .dot:nth-child(6) { left: 70%; top: 40%; animation-duration: 24s; animation-delay: -3s; }
+    .dot:nth-child(7) { left: 15%; top: 80%; animation-duration: 26s; animation-delay: -8s; }
+    .dot:nth-child(8) { left: 85%; top: 50%; animation-duration: 23s; animation-delay: -4s; }
+    .dot:nth-child(9) { left: 50%; top: 75%; animation-duration: 29s; animation-delay: -9s; }
+    .dot:nth-child(10) { left: 25%; top: 35%; animation-duration: 27s; animation-delay: -6s; }
+
+    @keyframes moveDot {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+      }
+      25% {
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(100px, -100px) scale(1.2);
+        opacity: 0.8;
+      }
+      75% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translate(200px, -200px) scale(1);
+        opacity: 0.3;
+      }
+    }
+    
+    /* Navigation */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--hairline);
+      padding: 16px 0;
+      transition: all 0.3s ease;
+      background: rgba(10, 14, 26, 0.8);
+    }
+
+    .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); display: flex; justify-content: space-between; align-items: center; }
+    .brand { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+    .brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; box-shadow: 0 0 15px rgba(0, 245, 212, 0.4); }
+    
+    .nav-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; justify-content: center; }
+    .nav-links button {
+      background: transparent;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s;
+      color: var(--fg);
+      border: 1px solid transparent;
+    }
+    .nav-links button:hover {
+      color: var(--accent);
+      background: rgba(0, 245, 212, 0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
+      transform: translateY(-2px);
+    }
+    .nav-links button.active {
+      color: var(--accent);
+      background: rgba(0, 245, 212, 0.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 25px rgba(0, 245, 212, 0.3);
+    }
+
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .theme-toggle:hover { 
+      background: var(--border);
+      box-shadow: 0 0 15px rgba(0, 245, 212, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* Pages */
+    .page {
+      display: none;
+      animation: pageEnter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .page.active { display: block; }
+
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 90vh;
+      display: grid;
+      align-items: center;
+      padding: 80px clamp(16px, 4vw, 48px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(0, 245, 212, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+      pointer-events: none;
+      animation: gradientShift 8s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; text-align: center; }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin: 0 0 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { text-shadow: 0 0 20px rgba(0, 245, 212, 0.3); }
+      50% { text-shadow: 0 0 40px rgba(0, 245, 212, 0.6); }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--soft);
+      margin: 0 0 32px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #111827;
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+    }
+    .btn-primary:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 0 40px rgba(0, 245, 212, 0.6);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
+    }
+    .btn-secondary:hover { 
+      background: rgba(0, 245, 212, 0.1);
+      box-shadow: 0 0 35px rgba(0, 245, 212, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Dashboard Grid */
+    .container { max-width: 1400px; margin: 0 auto; padding: 60px clamp(16px, 4vw, 48px); }
+    .section-title { font-size: 28px; font-weight: 800; margin-bottom: 32px; color: var(--fg); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--hairline);
+      border-radius: 16px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(0, 245, 212, 0.05), rgba(59, 130, 246, 0.05));
+      backdrop-filter: blur(8px);
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.1);
+    }
+    .stat-card:hover { 
+      border-color: var(--accent); 
+      transform: translateY(-4px);
+      box-shadow: 0 0 40px rgba(0, 245, 212, 0.3);
+    }
+
+    .stat-label { color: var(--soft); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+    .stat-value { font-size: 32px; font-weight: 800; margin-top: 8px; color: var(--accent); font-family: var(--font-mono); }
+    .stat-subtext { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+    /* Card Styles */
+    .card {
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      padding: 28px;
+      background: linear-gradient(135deg, rgba(0, 245, 212, 0.03), rgba(59, 130, 246, 0.03));
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.05);
+    }
+    .card:hover { 
+      border-color: var(--accent); 
+      box-shadow: 0 0 35px rgba(0, 245, 212, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .card h3 { margin: 0 0 16px; font-size: 22px; font-weight: 700; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 12px; border-bottom: 1px solid var(--hairline); margin-bottom: 24px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      color: var(--soft);
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+    .tab-btn:hover { 
+      color: var(--fg);
+      box-shadow: 0 2px 15px rgba(0, 245, 212, 0.1);
+    }
+    .tab-btn.active { 
+      color: var(--accent); 
+      border-bottom-color: var(--accent);
+      box-shadow: 0 2px 15px rgba(0, 245, 212, 0.2);
+    }
+
+    /* Form Elements */
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--fg);
+      font: inherit;
+      transition: all 0.3s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--surface);
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
+      transform: scale(1.01);
+    }
+
+    .form-textarea { resize: vertical; min-height: 100px; font-family: var(--font-mono); }
+
+    /* Layout Grids */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--soft);
+    }
+    .empty-state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.7; animation: float 3s ease-in-out infinite; }
+    .empty-state-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--fg); }
+    .empty-state-text { margin-bottom: 24px; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Tables */
+    .table-container { overflow-x: auto; }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .table th {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--hairline);
+      color: var(--soft);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+    .table td { padding: 12px; border-bottom: 1px solid var(--hairline); }
+    .table tr:hover { 
+      background: rgba(0, 245, 212, 0.05);
+      box-shadow: inset 0 0 15px rgba(0, 245, 212, 0.05);
+    }
+
+    /* File Upload */
+    .upload-area {
+      border: 2px dashed var(--hairline);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: rgba(0, 245, 212, 0.02);
+    }
+    .upload-area:hover {
+      border-color: var(--accent);
+      background: rgba(0, 245, 212, 0.08);
+      box-shadow: 0 0 25px rgba(0, 245, 212, 0.2);
+    }
+    .upload-icon { font-size: 40px; margin-bottom: 16px; }
+    .upload-text { color: var(--soft); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--hairline);
+      padding: 40px clamp(16px, 4vw, 48px);
+      margin-top: 80px;
+      text-align: center;
+      color: var(--soft);
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--surface); border: 1px solid var(--hairline); border-radius: 20px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 50px rgba(0, 245, 212, 0.2); }
+    .modal-header { font-size: 24px; font-weight: 800; margin-bottom: 24px; }
+    .modal-close { position: absolute; top: 20px; right: 20px; width: 32px; height: 32px; background: transparent; font-size: 24px; cursor: pointer; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { gap: 12px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(36px, 6vw, 48px); }
+      .hero-buttons { flex-direction: column; }
+      .btn { width: 100%; }
+      .tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- 3D Cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- Moving Dots Background -->
+  <div class="dots-container">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-icon">⚙</div>
+        <span>DataVault</span>
+      </div>
+      <div class="nav-links">
+        <button onclick="navigateTo('hero')" class="active">Home</button>
+        <button onclick="navigateTo('dashboard')">Dashboard</button>
+        <button onclick="navigateTo('scraper')">Scraper</button>
+        <button onclick="navigateTo('pdf')">PDF Tools</button>
+        <button onclick="navigateTo('automation')">Automation</button>
+        <button onclick="navigateTo('analytics')">Analytics</button>
+        <button onclick="navigateTo('export')">Export</button>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Page -->
+  <section id="hero" class="page active hero">
+    <div class="hero-content">
+      <h1>DataVault</h1>
+      <p class="hero-subtitle">Premium web scraping, PDF processing, and automation platform for intelligent data extraction and workflow automation.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="navigateTo('scraper')">Start Scraping</button>
+        <button class="btn btn-primary" onclick="navigateTo('pdf')">Process PDFs</button>
+        <button class="btn btn-secondary" onclick="navigateTo('automation')">Build Workflow</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Page -->
+  <section id="dashboard" class="page container">
+    <h2 class="section-title">Dashboard</h2>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Active Jobs</div>
+        <div class="stat-value" id="stat-jobs">0</div>
+        <div class="stat-subtext">Running processes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">PDFs Processed</div>
+        <div class="stat-value" id="stat-pdfs">0</div>
+        <div class="stat-subtext">Total files</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Data Extracted</div>
+        <div class="stat-value" id="stat-records">0</div>
+        <div class="stat-subtext">Records</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Exports Created</div>
+        <div class="stat-value" id="stat-exports">0</div>
+        <div class="stat-subtext">Datasets</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Recent Scraping Jobs</h3>
+        <div id="jobs-list" class="empty-state">
+          <div class="empty-state-icon">🔍</div>
+          <div class="empty-state-title">No scraping jobs yet</div>
+          <div class="empty-state-text">Start a new scraping job to see activity here</div>
+          <button class="btn btn-primary" onclick="navigateTo('scraper')">Create Job</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Recent Exports</h3>
+        <div id="exports-list" class="empty-state">
+          <div class="empty-state-icon">📥</div>
+          <div class="empty-state-title">No exports yet</div>
+          <div class="empty-state-text">Export your data to see files here</div>
+          <button class="btn btn-primary" onclick="navigateTo('export')">Export Data</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Web Scraper Page -->
+  <section id="scraper" class="page container">
+    <h2 class="section-title">Web Scraper</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Scraper Configuration</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Target URLs (one per line)</label>
+          <textarea id="scraper-urls" class="form-textarea" placeholder="https://example.com&#10;https://example.com/page2"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">CSS Selectors</label>
+          <input type="text" id="scraper-selectors" class="form-input" placeholder=".product, .item-title, .price">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">XPath (Optional)</label>
+          <input type="text" id="scraper-xpath" class="form-input" placeholder="//div[@class='item']">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Request Headers</label>
+          <input type="text" id="scraper-headers" class="form-input" placeholder="User-Agent: Mozilla/5.0...">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Delay Between Requests (seconds)</label>
+          <input type="number" id="scraper-delay" class="form-input" value="1" min="0" step="0.1">
+        </div>
+
+        <div class="form-group">
+          <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="scraper-pagination"> Pagination Enabled
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="scraper-infinite"> Infinite Scroll
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <button class="btn btn-primary" onclick="startScraping()" style="flex: 1;">Start Scraping</button>
+          <button class="btn btn-secondary" onclick="stopScraping()" style="flex: 1;">Stop</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Live Preview</h3>
+        <div id="scraper-preview" class="empty-state" style="border: 1px dashed var(--hairline); margin: -28px -28px 0 -28px; border-radius: 20px 20px 0 0;">
+          <div class="empty-state-icon">👁️</div>
+          <div class="empty-state-title">Preview</div>
+          <div class="empty-state-text">HTML preview will appear here</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3>Extracted Data</h3>
+      <div id="scraper-results" class="empty-state">
+        <div class="empty-state-icon">📊</div>
+        <div class="empty-state-title">No data extracted yet</div>
+        <div class="empty-state-text">Configure and run a scraping job to see results</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PDF Tools Page -->
+  <section id="pdf" class="page container">
+    <h2 class="section-title">PDF Toolkit</h2>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchPdfTab('extraction')">Text Extraction</button>
+      <button class="tab-btn" onclick="switchPdfTab('images')">Image Extraction</button>
+      <button class="tab-btn" onclick="switchPdfTab('metadata')">Metadata</button>
+      <button class="tab-btn" onclick="switchPdfTab('conversion')">Conversion</button>
+      <button class="tab-btn" onclick="switchPdfTab('merge-split')">Merge & Split</button>
+      <button class="tab-btn" onclick="switchPdfTab('security')">Security</button>
+    </div>
+
+    <!-- Text Extraction Tab -->
+    <div id="tab-extraction" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Upload PDF</h3>
+          <label class="upload-area" onclick="document.getElementById('pdf-upload').click()">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">Click to upload or drag and drop</div>
+            <input type="file" id="pdf-upload" accept=".pdf" style="display: none;" onchange="handlePdfUpload(event)">
+          </label>
+        </div>
+
+        <div class="card">
+          <h3>Extract Options</h3>
+          <div class="form-group">
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" id="pdf-preserve-layout"> Preserve Layout
+            </label>
+          </div>
+          <div class="form-group">
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" id="pdf-extract-tables"> Extract Tables
+            </label>
+          </div>
+          <button class="btn btn-primary" onclick="extractPdfText()" style="width: 100%; margin-top: 16px;">Extract Text</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <h3>Extracted Text</h3>
+        <div id="pdf-text-output" class="empty-state">
+          <div class="empty-state-icon">📋</div>
+          <div class="empty-state-title">No text extracted</div>
+          <div class="empty-state-text">Upload a PDF and extract text to see results</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Images Tab -->
+    <div id="tab-images" class="tab-content" style="display: none;">
+      <div class="card">
+        <h3>Extracted Images</h3>
+        <div id="pdf-images-output" class="empty-state">
+          <div class="empty-state-icon">🖼️</div>
+          <div class="empty-state-title">No images extracted</div>
+          <div class="empty-state-text">Upload a PDF with images to extract them</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata Tab -->
+    <div id="tab-metadata" class="tab-content" style="display: none;">
+      <div class="card">
+        <h3>PDF Metadata</h3>
+        <div id="pdf-metadata-output" class="empty-state">
+          <div class="empty-state-icon">ℹ️</div>
+          <div class="empty-state-title">No metadata available</div>
+          <div class="empty-state-text">Upload a PDF to view its metadata</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conversion Tab -->
+    <div id="tab-conversion" class="tab-content" style="display: none;">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Convert PDF</h3>
+          <div class="form-group">
+            <label class="form-label">Output Format</label>
+            <select class="form-select" id="pdf-output-format">
+              <option value="txt">Text (.txt)</option>
+              <option value="docx">Word (.docx)</option>
+              <option value="html">HTML (.html)</option>
+              <option value="csv">CSV (.csv)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="convertPdf()" style="width: 100%;">Convert</button>
+        </div>
+
+        <div class="card">
+          <h3>Status</h3>
+          <div id="pdf-convert-status" class="empty-state">
+            <div class="empty-state-icon">⏳</div>
+            <div class="empty-state-title">Ready</div>
+            <div class="empty-state-text">Upload a PDF to convert</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Merge & Split Tab -->
+    <div id="tab-merge-split" class="tab-content" style="display: none;">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Merge PDFs</h3>
+          <label class="upload-area" onclick="document.getElementById('pdf-merge-upload').click()" style="margin-bottom: 16px;">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">Select PDFs to merge</div>
+            <input type="file" id="pdf-merge-upload" accept=".pdf" multiple style="display: none;" onchange="handleMergeUpload(event)">
+          </label>
+          <button class="btn btn-primary" onclick="mergePdfs()" style="width: 100%;">Merge PDFs</button>
+        </div>
+
+        <div class="card">
+          <h3>Split PDF</h3>
+          <div class="form-group">
+            <label class="form-label">Page Range</label>
+            <input type="text" class="form-input" id="pdf-split-range" placeholder="e.g., 1-5, 10-15">
+          </div>
+          <button class="btn btn-primary" onclick="splitPdf()" style="width: 100%;">Split</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Tab -->
+    <div id="tab-security" class="tab-content" style="display: none;">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Password Protection</h3>
+          <div class="form-group">
+            <label class="form-label">User Password</label>
+            <input type="password" class="form-input" id="pdf-user-password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Owner Password</label>
+            <input type="password" class="form-input" id="pdf-owner-password">
+          </div>
+          <button class="btn btn-primary" onclick="encryptPdf()" style="width: 100%;">Encrypt</button>
+        </div>
+
+        <div class="card">
+          <h3>Watermark</h3>
+          <div class="form-group">
+            <label class="form-label">Watermark Text</label>
+            <input type="text" class="form-input" id="pdf-watermark-text" placeholder="CONFIDENTIAL">
+          </div>
+          <button class="btn btn-primary" onclick="addWatermark()" style="width: 100%;">Add Watermark</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Automation Page -->
+  <section id="automation" class="page container">
+    <h2 class="section-title">Workflow Automation</h2>
+
+    <div class="card">
+      <h3>Workflow Builder</h3>
+      <div style="min-height: 400px; border: 1px dashed var(--hairline); border-radius: 16px; padding: 20px; display: grid; place-items: center; text-align: center;">
+        <div>
+          <div style="font-size: 40px; margin-bottom: 16px;">⚙️</div>
+          <div style="font-size: 18px; margin-bottom: 8px;">Drag workflow nodes to build your automation</div>
+          <div style="margin-bottom: 24px; color: var(--soft);">Click and drag the nodes below to create your workflow</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <button class="btn btn-secondary" onclick="addWorkflowNode('input')">+ Input URL</button>
+        <button class="btn btn-secondary" onclick="addWorkflowNode('scrape')">+ Scrape Data</button>
+        <button class="btn btn-secondary" onclick="addWorkflowNode('clean')">+ Clean Data</button>
+        <button class="btn btn-secondary" onclick="addWorkflowNode('analyze')">+ Analyze</button>
+        <button class="btn btn-secondary" onclick="addWorkflowNode('export')">+ Export</button>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3>Scheduler</h3>
+        <div class="form-group">
+          <label class="form-label">Frequency</label>
+          <select class="form-select" id="schedule-frequency">
+            <option value="once">Run Once</option>
+            <option value="hourly">Hourly</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Time</label>
+          <input type="time" class="form-input" id="schedule-time">
+        </div>
+        <button class="btn btn-primary" onclick="scheduleWorkflow()" style="width: 100%;">Schedule</button>
+      </div>
+
+      <div class="card">
+        <h3>Workflow History</h3>
+        <div id="workflow-history" class="empty-state">
+          <div class="empty-state-icon">📜</div>
+          <div class="empty-state-title">No history</div>
+          <div class="empty-state-text">Run a workflow to see history</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Analytics Page -->
+  <section id="analytics" class="page container">
+    <h2 class="section-title">Data Analytics</h2>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchAnalyticsTab('overview')">Overview</button>
+      <button class="tab-btn" onclick="switchAnalyticsTab('trends')">Trends</button>
+      <button class="tab-btn" onclick="switchAnalyticsTab('frequency')">Frequency</button>
+      <button class="tab-btn" onclick="switchAnalyticsTab('keywords')">Keywords</button>
+    </div>
+
+    <!-- Overview Tab -->
+    <div id="tab-overview" class="tab-content">
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-label">Total Records</div>
+          <div class="stat-value" id="analytics-records">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Data Quality</div>
+          <div class="stat-value" id="analytics-quality">0%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sources</div>
+          <div class="stat-value" id="analytics-sources">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Updates/Hour</div>
+          <div class="stat-value" id="analytics-rate">0</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <h3>Analytics Dashboard</h3>
+        <div id="analytics-chart" class="empty-state">
+          <div class="empty-state-icon">📈</div>
+          <div class="empty-state-title">No data available</div>
+          <div class="empty-state-text">Scrape data or upload a dataset to generate analytics</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trends Tab -->
+    <div id="tab-trends" class="tab-content" style="display: none;">
+      <div class="card">
+        <h3>Trend Analysis</h3>
+        <div id="analytics-trends" class="empty-state">
+          <div class="empty-state-icon">📊</div>
+          <div class="empty-state-title">No trends detected</div>
+          <div class="empty-state-text">Add data to analyze trends</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frequency Tab -->
+    <div id="tab-frequency" class="tab-content" style="display: none;">
+      <div class="card">
+        <h3>Frequency Analysis</h3>
+        <div id="analytics-frequency" class="empty-state">
+          <div class="empty-state-icon">📉</div>
+          <div class="empty-state-title">No data to analyze</div>
+          <div class="empty-state-text">Upload data to see frequency distributions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keywords Tab -->
+    <div id="tab-keywords" class="tab-content" style="display: none;">
+      <div class="card">
+        <h3>Keyword Analysis</h3>
+        <div id="analytics-keywords" class="empty-state">
+          <div class="empty-state-icon">🔤</div>
+          <div class="empty-state-title">No keywords extracted</div>
+          <div class="empty-state-text">Process text data to extract and analyze keywords</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Export Page -->
+  <section id="export" class="page container">
+    <h2 class="section-title">Export Center</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Export Configuration</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Data Source</label>
+          <select class="form-select" id="export-source">
+            <option value="">Select source...</option>
+            <option value="scraped">Scraped Data</option>
+            <option value="pdf">PDF Extracted</option>
+            <option value="uploaded">Uploaded Files</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Export Format</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" value="csv"> CSV
+            </label>
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" value="json"> JSON
+            </label>
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" value="xlsx"> Excel
+            </label>
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" value="xml"> XML
+            </label>
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" value="pdf"> PDF
+            </label>
+            <label style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+              <input type="checkbox" value="zip"> ZIP
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Filename</label>
+          <input type="text" class="form-input" id="export-filename" placeholder="export_data">
+        </div>
+
+        <button class="btn btn-primary" onclick="startExport()" style="width: 100%; margin-top: 24px;">Export Now</button>
+      </div>
+
+      <div class="card">
+        <h3>Export History</h3>
+        <div id="export-history" class="empty-state">
+          <div class="empty-state-icon">📦</div>
+          <div class="empty-state-title">No exports yet</div>
+          <div class="empty-state-text">Export data to see history here</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3>File Manager</h3>
+      <div id="file-manager" class="empty-state">
+        <div class="empty-state-icon">📁</div>
+        <div class="empty-state-title">No files</div>
+        <div class="empty-state-text">Exported files will appear here</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 DataVault. Premium data extraction and automation platform.</p>
+  </footer>
+
+  <script>
+    // ==================== 3D CURSOR ====================
+    const cursor = document.getElementById('cursor');
+    let cursorX = 0, cursorY = 0;
+    let mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      cursorX += (mouseX - cursorX) * 0.2;
+      cursorY += (mouseY - cursorY) * 0.2;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+
+    // ==================== STATE MANAGEMENT ====================
+    let appState = {
+      currentPage: 'hero',
+      theme: localStorage.getItem('theme') || 'dark',
+      logs: []
+    };
+
+    // ==================== THEME MANAGEMENT ====================
+    function toggleTheme() {
+      const newTheme = appState.theme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+    }
+
+    function setTheme(theme) {
+      appState.theme = theme;
+      document.body.dataset.theme = theme;
+      localStorage.setItem('theme', theme);
+      updateThemeButton();
+    }
+
+    function updateThemeButton() {
+      const btn = document.querySelector('.theme-toggle');
+      btn.textContent = appState.theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // ==================== NAVIGATION ====================
+    function navigateTo(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(page).classList.add('active');
+
+      document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
+      event.target.closest('button').classList.add('active');
+
+      appState.currentPage = page;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==================== PDF FUNCTIONS ====================
+    function switchPdfTab(tab) {
+      document.querySelectorAll('#pdf .tab-content').forEach(el => el.style.display = 'none');
+      document.getElementById(`tab-${tab}`).style.display = 'block';
+      
+      document.querySelectorAll('#pdf .tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function handlePdfUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        showNotification(`Uploaded ${file.name}`);
+      }
+    }
+
+    function extractPdfText() {
+      showNotification('PDF text extraction started...');
+    }
+
+    function convertPdf() {
+      showNotification('PDF conversion started...');
+    }
+
+    function mergePdfs() {
+      showNotification('PDFs merged successfully');
+    }
+
+    function splitPdf() {
+      showNotification('PDF split completed');
+    }
+
+    function encryptPdf() {
+      showNotification('PDF encrypted successfully');
+    }
+
+    function addWatermark() {
+      showNotification('Watermark added to PDF');
+    }
+
+    // ==================== SCRAPER FUNCTIONS ====================
+    function startScraping() {
+      const urls = document.getElementById('scraper-urls').value;
+      if (!urls.trim()) {
+        showNotification('Please enter URLs', 'error');
+        return;
+      }
+      showNotification('Scraping started...');
+    }
+
+    function stopScraping() {
+      showNotification('Scraping stopped');
+    }
+
+    // ==================== AUTOMATION FUNCTIONS ====================
+    function addWorkflowNode(type) {
+      showNotification(`Added ${type} node to workflow`);
+    }
+
+    function scheduleWorkflow() {
+      showNotification('Workflow scheduled successfully');
+    }
+
+    // ==================== ANALYTICS FUNCTIONS ====================
+    function switchAnalyticsTab(tab) {
+      document.querySelectorAll('#analytics .tab-content').forEach(el => el.style.display = 'none');
+      document.getElementById(`tab-${tab}`).style.display = 'block';
+      
+      document.querySelectorAll('#analytics .tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    // ==================== EXPORT FUNCTIONS ====================
+    function startExport() {
+      const source = document.getElementById('export-source').value;
+      if (!source) {
+        showNotification('Please select a data source', 'error');
+        return;
+      }
+      showNotification('Export started...');
+    }
+
+    function handleMergeUpload(e) {
+      const files = e.target.files;
+      showNotification(`${files.length} PDFs selected for merging`);
+    }
+
+    // ==================== UTILITY FUNCTIONS ====================
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--panel);
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
+        padding: 16px 20px;
+        color: ${type === 'error' ? 'var(--error)' : 'var(--success)'};
+        z-index: 1000;
+        box-shadow: 0 0 25px rgba(0, 245, 212, 0.2);
+        animation: slideUp 0.3s ease;
+      `;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 3000);
+    }
+
+    // ==================== INITIALIZATION ====================
+    function init() {
+      document.body.dataset.theme = appState.theme;
+      updateThemeButton();
+    }
+
+    window.addEventListener('load', init);
+  </script>
+</body>
+</html>
