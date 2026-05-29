@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   FileText, FileDown, Search, Image, Type,
-  Loader2, CheckCircle2, Shield, SplitSquareVertical,
+  Loader2, Shield, SplitSquareVertical,
   Combine, RotateCcw, Crop, PaintBucket, Edit3,
   Lightbulb, Code, Upload,
 } from 'lucide-react'

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
-  Globe, Play, Square, Pause, Download, Trash2, Plus,
+  Globe, Play, Square, Pause, Download, Trash2,
   Clock, CheckCircle2, AlertCircle, Loader2, FileType,
-  Layout, Link, ImageIcon, Hash, Code, Film, Zap,
+  Layout, Link, ImageIcon, Code, Film, Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { TableSkeleton } from '@/components/ui/Skeleton'
@@ -43,12 +43,6 @@ function ScraperPage() {
   const [jobsError, setJobsError] = useState(null)
   const { showNotification } = useNotification()
 
-  useEffect(() => {
-    loadJobs()
-    const interval = setInterval(loadJobs, 8000)
-    return () => clearInterval(interval)
-  }, [])
-
   const loadJobs = async () => {
     try {
       setLoadingJobs(true)
@@ -62,6 +56,12 @@ function ScraperPage() {
       setLoadingJobs(false)
     }
   }
+
+  useEffect(() => {
+    loadJobs()
+    const interval = setInterval(loadJobs, 8000)
+    return () => clearInterval(interval)
+  }, [])
 
   const startScraping = async () => {
     if (!urls.trim()) { showNotification('Please enter at least one URL', 'error'); return }
