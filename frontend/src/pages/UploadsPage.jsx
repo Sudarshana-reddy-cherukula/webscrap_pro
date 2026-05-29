@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useDropzone } from 'react-dropzone'
-import { Upload, FileText, X, Loader2, Search, Download, Trash2, AlertCircle } from 'lucide-react'
+import { Upload, FileText, X, Download, Trash2, AlertCircle } from 'lucide-react'
 import { SearchInput } from '@/components/ui/SearchInput'
 import { UploadProgress } from '@/components/ui/UploadProgress'
 import { DataTable } from '@/components/ui/DataTable'
 import { Badge } from '@/components/ui/Badge'
-import EmptyState from '@/components/ui/EmptyState'
+import { dashboardService } from '@/services/dashboardService'
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024
 const ACCEPTED_TYPES = {
@@ -70,10 +70,10 @@ function UploadsPage() {
 
   const loadUploads = async () => {
     try {
-      const { dashboardService } = await import('@/services/dashboardService')
       const res = await dashboardService.getDownloads()
-      const data = res.data?.data || res.data || []
-      setUploads(Array.isArray(data) ? data : [])
+      const data = res.data?.data || res.data
+      const items = data?.downloads || (Array.isArray(data) ? data : [])
+      setUploads(items)
     } catch {
       setUploads([])
     } finally {
@@ -97,24 +97,31 @@ function UploadsPage() {
     }))
     setQueue((prev) => [...prev, ...newFiles])
     setError('')
-    newFiles.forEach((entry) => simulateUpload(entry.id))
+    newFiles.forEach((entry) => startUpload(entry.id))
   }, [])
 
-  const simulateUpload = (id) => {
-    let progress = 0
-    const interval = setInterval(() => {
-      progress += Math.random() * 15 + 5
-      if (progress >= 100) {
-        progress = 100
-        clearInterval(interval)
-        setQueue((prev) => prev.filter((f) => f.id !== id))
-        setUploads((prev) => [
-          { id, name: queue.find((f) => f.id === id)?.name || 'file', size: queue.find((f) => f.id === id)?.file?.size || 0, type: 'pdf', status: 'completed', createdAt: new Date().toISOString() },
-          ...prev,
-        ])
-      }
-      setQueue((prev) => prev.map((f) => (f.id === id ? { ...f, progress } : f)))
-    }, 200)
+  const startUpload = async (id) => {
+    const entry = queue.find((f) => f.id === id)
+    if (!entry) return
+
+    try {
+      const { default: httpClient } = await import('@/services/httpClient')
+      const formData = new FormData()
+      formData.append('pdf', entry.file)
+      await httpClient.post('/pdf/extract-text', formData, {
+        onUploadProgress: (e) => {
+          if (e.total) {
+            const pct = Math.round((e.loaded / e.total) * 100)
+            setQueue((prev) => prev.map((f) => (f.id === id ? { ...f, progress: pct } : f)))
+          }
+        },
+      })
+      setQueue((prev) => prev.filter((f) => f.id !== id))
+      await loadUploads()
+    } catch {
+      setQueue((prev) => prev.map((f) => (f.id === id ? { ...f, status: 'failed', progress: 0 } : f)))
+      setError(`Upload failed for ${entry.name}`)
+    }
   }
 
   const cancelUpload = (id) => setQueue((prev) => prev.filter((f) => f.id !== id))
@@ -178,7 +185,8 @@ function UploadsPage() {
             <p className="text-xs font-medium text-app-muted uppercase tracking-wider">Uploading...</p>
             {queue.map((entry) => (
               <UploadProgress key={entry.id} fileName={entry.name} progress={entry.progress} fileSize={entry.file?.size}
-                status={entry.progress < 100 ? 'uploading' : 'processing'} onCancel={() => cancelUpload(entry.id)}
+                status={entry.status === 'failed' ? 'failed' : entry.progress < 100 ? 'uploading' : 'processing'}
+                onCancel={entry.status !== 'failed' ? () => cancelUpload(entry.id) : undefined}
               />
             ))}
           </motion.div>
