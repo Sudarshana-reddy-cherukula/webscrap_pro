@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import {
   Globe, Play, Square, Pause, Download, Trash2, Plus,
   Clock, CheckCircle2, AlertCircle, Loader2, FileType,
-  Layout, Link, ImageIcon, Hash, Code,
+  Layout, Link, ImageIcon, Hash, Code, Film, Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { TableSkeleton } from '@/components/ui/Skeleton'
@@ -36,6 +36,7 @@ function ScraperPage() {
   const [crawlDepth, setCrawlDepth] = useState(1)
   const [selectorType, setSelectorType] = useState('css')
   const [selectorValue, setSelectorValue] = useState('')
+  const [usePlaywright, setUsePlaywright] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [jobs, setJobs] = useState([])
   const [loadingJobs, setLoadingJobs] = useState(true)
@@ -67,8 +68,8 @@ function ScraperPage() {
     const targetUrls = urls.split('\n').map((u) => u.trim()).filter(Boolean)
     try {
       setIsSubmitting(true)
-      await scraperService.start({ targetUrls, crawlDepth: Number(crawlDepth), scrapeType, selectorType, selectorValue })
-      showNotification('Scraping job started')
+      await scraperService.start({ targetUrls, crawlDepth: Number(crawlDepth), scrapeType, selectorType, selectorValue, usePlaywright })
+      showNotification(`Scraping job started (${usePlaywright ? 'Playwright' : 'Puppeteer'})`)
       setTimeout(loadJobs, 500)
     } catch (err) { showNotification(err.message || 'Failed to start scraping', 'error') } finally { setIsSubmitting(false) }
   }
@@ -179,6 +180,31 @@ function ScraperPage() {
               placeholder={selectorType === 'css' ? '.class-name' : selectorType === 'xpath' ? '//div[@class]' : selectorType === 'regex' ? 'pattern' : 'data-attribute'}
               className={inputClass}
             />
+          </div>
+
+          <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
+            <div className="flex items-center gap-3">
+              {usePlaywright ? (
+                <Film size={18} className="text-purple-400" />
+              ) : (
+                <Zap size={18} className="text-cyan-400" />
+              )}
+              <div>
+                <p className="text-sm font-medium text-app-fg">{usePlaywright ? 'Cinematic Playwright' : 'Vibrant Puppeteer'}</p>
+                <p className="text-xs text-app-muted">{usePlaywright ? 'JS-rendered pages, modern browser' : 'Fast headless Chrome engine'}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setUsePlaywright(!usePlaywright)}
+              className={`relative h-6 w-11 rounded-full transition-colors ${
+                usePlaywright ? 'bg-purple-500' : 'bg-zinc-600'
+              }`}
+            >
+              <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
+                usePlaywright ? 'translate-x-[22px]' : 'translate-x-0.5'
+              }`} />
+            </button>
           </div>
 
           <Button onClick={startScraping} disabled={isSubmitting}

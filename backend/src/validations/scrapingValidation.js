@@ -20,6 +20,8 @@ const scrapeUrlSchema = Joi.object({
     }),
     userAgent: Joi.string().optional(),
     waitForSelector: Joi.string().optional(),
+    usePuppeteer: Joi.boolean().default(false),
+    usePlaywright: Joi.boolean().default(false),
   }).default(),
 });
 
@@ -35,6 +37,8 @@ const baseOptions = {
   timeout: Joi.number().min(1000).max(30000).default(30000),
   userAgent: Joi.string().optional(),
   waitForSelector: Joi.string().optional(),
+  usePuppeteer: Joi.boolean().default(false),
+  usePlaywright: Joi.boolean().default(false),
 };
 
 const scrapeImagesSchema = Joi.object({

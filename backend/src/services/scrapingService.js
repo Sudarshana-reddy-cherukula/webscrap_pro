@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const { chromium } = require('playwright');
 const cheerio = require('cheerio');
 const axios = require('axios');
 const ScrapeJob = require('../models/ScrapeJob');
@@ -20,7 +21,9 @@ class ScrapingService {
 
       let results;
       
-      if (options.usePuppeteer || options.extractImages || options.extractTables) {
+      if (options.usePlaywright) {
+        results = await this.scrapeWithPlaywright(url, options, scrapeJob._id);
+      } else if (options.usePuppeteer || options.extractImages || options.extractTables) {
         results = await this.scrapeWithPuppeteer(url, options, scrapeJob._id);
       } else {
         results = await this.scrapeWithCheerio(url, options, scrapeJob._id);
@@ -276,10 +279,128 @@ class ScrapingService {
         }));
       }
 
+      results.renderedBy = 'puppeteer';
+
       await this.updateProgress(jobId, 90);
       return results;
     } catch (error) {
       logger.error('Puppeteer scraping error:', error);
+      throw error;
+    } finally {
+      if (browser) {
+        await browser.close();
+      }
+    }
+  }
+
+  async scrapeWithPlaywright(url, options, jobId) {
+    let browser;
+    try {
+      await this.updateProgress(jobId, 30);
+
+      browser = await chromium.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+      });
+
+      const context = await browser.newContext({
+        userAgent: options.userAgent || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        viewport: { width: 1280, height: 720 },
+      });
+
+      if (options.headers) {
+        await context.setExtraHTTPHeaders(options.headers);
+      }
+
+      const page = await context.newPage();
+      await this.updateProgress(jobId, 50);
+
+      await page.goto(url, {
+        waitUntil: 'networkidle',
+        timeout: options.timeout || 30000,
+      });
+
+      if (options.waitForSelector) {
+        await page.waitForSelector(options.waitForSelector, { timeout: 10000 });
+      }
+
+      await this.updateProgress(jobId, 70);
+
+      const results = {};
+
+      if (options.extractTitle !== false) {
+        results.title = await page.title();
+      }
+
+      if (options.extractHeadings) {
+        results.headings = await page.evaluate(() => {
+          const headings = {};
+          ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(tag => {
+            headings[tag] = Array.from(document.querySelectorAll(tag)).map(h => h.textContent.trim());
+          });
+          return headings;
+        });
+      }
+
+      if (options.extractParagraphs !== false) {
+        results.paragraphs = await page.evaluate(() => {
+          return Array.from(document.querySelectorAll('p')).map(p => p.textContent.trim());
+        });
+      }
+
+      if (options.extractText !== false) {
+        results.text = await page.evaluate(() => document.body.innerText);
+      }
+
+      if (options.extractTables) {
+        results.tables = await page.evaluate(() => {
+          const tableElements = document.querySelectorAll('table');
+          return Array.from(tableElements).map(table => ({
+            headers: Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim()),
+            rows: Array.from(table.querySelectorAll('tr')).map(tr =>
+              Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim())
+            ),
+          }));
+        });
+      }
+
+      if (options.extractLinks) {
+        results.links = await page.evaluate((baseUrl) => {
+          const linkElements = document.querySelectorAll('a[href]');
+          return Array.from(linkElements).map(link => {
+            const href = link.getAttribute('href');
+            const fullUrl = href.startsWith('http') ? href : new URL(href, baseUrl).href;
+            return { text: link.textContent.trim(), url: fullUrl };
+          });
+        }, url);
+      }
+
+      if (options.extractImages) {
+        results.images = await page.evaluate(() => {
+          const imgElements = document.querySelectorAll('img');
+          return Array.from(imgElements).map(img => ({
+            url: img.src,
+            alt: img.alt || '',
+            src: img.getAttribute('src') || '',
+          }));
+        });
+      }
+
+      if (options.extractMetadata !== false) {
+        results.metadata = await page.evaluate(() => ({
+          title: document.title,
+          description: document.querySelector('meta[name="description"]')?.content || '',
+          keywords: document.querySelector('meta[name="keywords"]')?.content || '',
+          author: document.querySelector('meta[name="author"]')?.content || '',
+        }));
+      }
+
+      results.renderedBy = 'playwright';
+
+      await this.updateProgress(jobId, 90);
+      return results;
+    } catch (error) {
+      logger.error('Playwright scraping error:', error);
       throw error;
     } finally {
       if (browser) {

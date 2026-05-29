@@ -1,0 +1,255 @@
+[32minfo[39m: Socket.io server initialized {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:08:58"}
+[32minfo[39m: Connecting to MongoDB Atlas... {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:08:58"}
+[32minfo[39m: MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:09:01"}
+[32minfo[39m: Server running in development mode on port 5000 {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:09:01"}
+[32minfo[39m: Socket.io server running on port 5000 {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:09:01"}
+[32minfo[39m: API documentation available at http://localhost:5000/api {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:09:01"}
+[32minfo[39m: GET /api/health 200 124 - 2.843 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:14:57"}
+[32minfo[39m: GET /api/health 200 124 - 0.547 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api 200 230 - 0.341 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: POST /api/auth/register 400 91 - 2.662 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: POST /api/auth/login 400 83 - 0.512 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api/auth/profile 401 63 - 0.588 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api/user/dashboard 401 63 - 0.253 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api/user/statistics 401 63 - 0.265 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api/user/history 401 63 - 0.334 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api/scrape/jobs 401 63 - 0.554 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api/pdf/jobs 401 63 - 0.352 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: GET /api/export/list 401 63 - 0.184 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: POST /api/scrape/url 401 63 - 0.216 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: POST /api/scrape/links 401 63 - 0.275 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: POST /api/scrape/metadata 401 63 - 0.188 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: POST /api/scrape/images 401 63 - 0.166 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:14"}
+[32minfo[39m: POST /api/auth/register 400 91 - 0.872 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:26"}
+[32minfo[39m: POST /api/auth/register 400 91 - 0.701 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:15:35"}
+[32minfo[39m: POST /api/auth/register 400 91 - 0.540 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:13"}
+[32minfo[39m: GET /api/health 200 124 - 0.342 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:40"}
+[32minfo[39m: POST /api/auth/register 201 570 - 815.664 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: POST /api/auth/login 400 83 - 0.421 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: GET /api/auth/profile 401 63 - 0.290 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: GET /api/user/dashboard 401 63 - 0.157 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: GET /api/user/statistics 401 63 - 0.282 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: GET /api/user/history 401 63 - 0.162 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: GET /api/scrape/jobs 401 63 - 0.198 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: GET /api/pdf/jobs 401 63 - 0.627 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: GET /api/export/list 401 63 - 0.475 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: POST /api/scrape/url 401 63 - 0.233 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: POST /api/scrape/links 401 63 - 0.312 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: POST /api/scrape/metadata 401 63 - 0.178 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: POST /api/scrape/images 401 63 - 0.157 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:41"}
+[32minfo[39m: POST /api/auth/register 201 572 - 785.631 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:55"}
+[32minfo[39m: POST /api/auth/login 400 83 - 0.296 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:16:55"}
+[32minfo[39m: GET /api/health 200 124 - 0.218 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:12"}
+[32minfo[39m: POST /api/auth/register 201 572 - 640.882 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:13"}
+[32minfo[39m: POST /api/auth/login 200 642 - 605.784 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:14"}
+[32minfo[39m: GET /api/auth/profile 200 324 - 194.882 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:14"}
+[32minfo[39m: GET /api/user/dashboard 200 396 - 809.813 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:15"}
+[32minfo[39m: GET /api/user/statistics 200 342 - 129.659 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:15"}
+[32minfo[39m: GET /api/user/history 200 136 - 669.930 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:16"}
+[32minfo[39m: GET /api/scrape/jobs 200 144 - 308.693 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:16"}
+[32minfo[39m: GET /api/pdf/jobs 200 139 - 326.017 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:16"}
+[32minfo[39m: GET /api/export/list 200 141 - 300.251 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:17"}
+[32minfo[39m: Starting URL scrape: https://example.com {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:17"}
+[32minfo[39m: POST /api/scrape/url 201 672 - 1219.436 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:18"}
+[32minfo[39m: Starting links scrape: https://example.com {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:18"}
+[32minfo[39m: POST /api/scrape/links 201 749 - 708.590 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:19"}
+[32minfo[39m: Starting metadata scrape: https://example.com {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:19"}
+[32minfo[39m: POST /api/scrape/metadata 201 682 - 656.358 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:19"}
+[32minfo[39m: Starting image scrape: https://example.com {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:19"}
+[32minfo[39m: POST /api/scrape/images - - - - ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:34"}
+[32minfo[39m: POST /api/auth/forgot-password 200 94 - 259.219 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:34"}
+[32minfo[39m: Starting image scrape: https://example.com {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:45"}
+[32minfo[39m: POST /api/scrape/images 201 680 - 7798.934 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:17:53"}
+[32minfo[39m: POST /api/auth/login 200 642 - 712.186 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:18:52"}
+[32minfo[39m: POST /api/auth/login 200 642 - 776.754 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:05"}
+[32minfo[39m: POST /api/auth/login 200 642 - 630.603 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:16"}
+[32minfo[39m: POST /api/auth/login 200 642 - 609.186 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:54"}
+[32minfo[39m: Starting PDF text extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:54"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error extracting text from PDF: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:19:55"}
+[32minfo[39m: POST /api/pdf/extract-text 400 77 - 406.206 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:55"}
+[32minfo[39m: Starting PDF metadata extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:55"}
+Warning: Indexing all PDF objects
+Warning: Ignoring invalid character "153" in hex string
+Warning: Ignoring invalid character "251" in hex string
+Warning: Ignoring invalid character "37" in hex string
+Warning: Ignoring invalid character "80" in hex string
+Warning: Ignoring invalid character "45" in hex string
+Warning: Ignoring invalid character "46" in hex string
+Warning: Ignoring invalid character "111" in hex string
+Warning: Ignoring invalid character "106" in hex string
+Warning: Ignoring invalid character "60" in hex string
+Warning: Ignoring invalid character "60" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "84" in hex string
+Warning: Ignoring invalid character "121" in hex string
+Warning: Ignoring invalid character "112" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "116" in hex string
+Warning: Ignoring invalid character "108" in hex string
+Warning: Ignoring invalid character "111" in hex string
+Warning: Ignoring invalid character "103" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "80" in hex string
+Warning: Ignoring invalid character "103" in hex string
+Warning: Ignoring invalid character "115" in hex string
+Warning: Ignoring invalid character "82" in hex string
+[31merror[39m: Error extracting metadata from PDF: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:19:55"}
+[32minfo[39m: POST /api/pdf/extract-metadata 400 81 - 311.263 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:55"}
+[32minfo[39m: Starting PDF to TXT conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:55"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error converting PDF to TXT: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:19:55"}
+[32minfo[39m: POST /api/pdf/convert-to-txt 400 79 - 305.903 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:55"}
+[32minfo[39m: Starting PDF to DOCX conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:55"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error converting PDF to DOCX: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:19:56"}
+[31merror[39m: Error converting PDF to DOCX: Failed to convert to DOCX. DOCX library may not be available. {"service":"webscrap-pro-backend","stack":"Error: Failed to convert to DOCX. DOCX library may not be available.\n    at PDFService.convertPDFToDocx (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:646:13)\n    at async PDFService.convertToDocx (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:147:23)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:129:30","timestamp":"2026-05-21 13:19:56"}
+[32minfo[39m: POST /api/pdf/convert-to-docx 400 127 - 514.199 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:56"}
+[32minfo[39m: POST /api/pdf/modify-text 400 78 - 106.403 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:56"}
+[32minfo[39m: POST /api/pdf/add-watermark 400 83 - 79.046 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:56"}
+[32minfo[39m: POST /api/pdf/add-security 400 77 - 98.058 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:56"}
+[32minfo[39m: POST /api/pdf/split 400 73 - 98.495 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:56"}
+[32minfo[39m: POST /api/pdf/rotate 400 77 - 99.462 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:56"}
+[32minfo[39m: Starting PDF page cropping {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:56"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error cropping pages: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:19:57"}
+[32minfo[39m: POST /api/pdf/crop 400 75 - 305.922 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:57"}
+[32minfo[39m: POST /api/export/create 401 63 - 0.260 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:19:57"}
+[32minfo[39m: POST /api/auth/login 200 642 - 646.424 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:31"}
+[32minfo[39m: Starting PDF text extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:31"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error extracting text from PDF: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:31"}
+[32minfo[39m: POST /api/pdf/extract-text 400 77 - 377.485 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:31"}
+[32minfo[39m: Starting PDF metadata extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:31"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error extracting metadata from PDF: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:31"}
+[32minfo[39m: POST /api/pdf/extract-metadata 400 81 - 302.865 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:31"}
+[32minfo[39m: Starting PDF to TXT conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:32"}
+Warning: Indexing all PDF objects
+[32minfo[39m: POST /api/pdf/convert-to-txt 201 529 - 599.762 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:32"}
+[32minfo[39m: Starting PDF to DOCX conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:32"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error converting PDF to DOCX: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:32"}
+[31merror[39m: Error converting PDF to DOCX: Failed to convert to DOCX. DOCX library may not be available. {"service":"webscrap-pro-backend","stack":"Error: Failed to convert to DOCX. DOCX library may not be available.\n    at PDFService.convertPDFToDocx (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:646:13)\n    at async PDFService.convertToDocx (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:147:23)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:129:30","timestamp":"2026-05-21 13:20:32"}
+[32minfo[39m: POST /api/pdf/convert-to-docx 400 127 - 369.710 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:32"}
+[32minfo[39m: POST /api/pdf/modify-text 400 78 - 131.291 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: POST /api/pdf/add-watermark 400 83 - 95.423 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: POST /api/pdf/add-security 400 77 - 102.992 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: POST /api/pdf/split 400 73 - 95.422 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: POST /api/pdf/rotate 400 77 - 103.740 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: Starting PDF page cropping {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+Warning: Indexing all PDF objects
+[31merror[39m: Error cropping pages: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: POST /api/pdf/crop 400 75 - 308.975 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: POST /api/export/create 401 63 - 0.184 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:33"}
+[32minfo[39m: POST /api/auth/login 200 642 - 798.250 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:40"}
+[32minfo[39m: Starting PDF text extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:40"}
+[31merror[39m: Error extracting text from PDF: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:41"}
+[32minfo[39m: POST /api/pdf/extract-text 400 77 - 404.072 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:41"}
+[32minfo[39m: Starting PDF metadata extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:41"}
+[31merror[39m: Error extracting metadata from PDF: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:41"}
+[32minfo[39m: POST /api/pdf/extract-metadata 400 81 - 304.095 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:41"}
+[32minfo[39m: Starting PDF to TXT conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:41"}
+[31merror[39m: Error converting PDF to TXT: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:41"}
+[32minfo[39m: POST /api/pdf/convert-to-txt 400 79 - 297.552 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:41"}
+[32minfo[39m: Starting PDF to DOCX conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:41"}
+[31merror[39m: Error converting PDF to DOCX: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:42"}
+[31merror[39m: Error converting PDF to DOCX: Failed to convert to DOCX. DOCX library may not be available. {"service":"webscrap-pro-backend","stack":"Error: Failed to convert to DOCX. DOCX library may not be available.\n    at PDFService.convertPDFToDocx (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:646:13)\n    at async PDFService.convertToDocx (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:147:23)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:129:30","timestamp":"2026-05-21 13:20:42"}
+[32minfo[39m: POST /api/pdf/convert-to-docx 400 127 - 408.235 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:42"}
+[32minfo[39m: Starting PDF text modification {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:42"}
+[31merror[39m: Error modifying PDF text: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:42"}
+[32minfo[39m: POST /api/pdf/modify-text 400 76 - 307.817 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:42"}
+[32minfo[39m: Starting PDF watermark addition {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:42"}
+[31merror[39m: Error adding watermark: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:42"}
+[32minfo[39m: POST /api/pdf/add-watermark 400 78 - 265.255 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:42"}
+[32minfo[39m: Starting PDF security addition {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:42"}
+[31merror[39m: Error adding security: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:43"}
+[32minfo[39m: POST /api/pdf/add-security 400 77 - 345.238 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:43"}
+[32minfo[39m: Starting PDF split {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:43"}
+[31merror[39m: Error splitting PDF: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:43"}
+[32minfo[39m: POST /api/pdf/split 400 74 - 303.915 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:43"}
+[32minfo[39m: Starting PDF page rotation {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:43"}
+[31merror[39m: Error rotating pages: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:43"}
+[32minfo[39m: POST /api/pdf/rotate 400 77 - 305.208 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:43"}
+[32minfo[39m: Starting PDF page cropping {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:43"}
+Warning: Ignoring invalid character "153" in hex string
+Warning: Ignoring invalid character "251" in hex string
+Warning: Ignoring invalid character "37" in hex string
+Warning: Ignoring invalid character "80" in hex string
+Warning: Ignoring invalid character "45" in hex string
+Warning: Ignoring invalid character "46" in hex string
+Warning: Ignoring invalid character "37" in hex string
+Warning: Ignoring invalid character "255" in hex string
+Warning: Ignoring invalid character "255" in hex string
+Warning: Ignoring invalid character "255" in hex string
+Warning: Ignoring invalid character "255" in hex string
+Warning: Ignoring invalid character "111" in hex string
+Warning: Ignoring invalid character "106" in hex string
+Warning: Ignoring invalid character "60" in hex string
+Warning: Ignoring invalid character "60" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "84" in hex string
+Warning: Ignoring invalid character "121" in hex string
+Warning: Ignoring invalid character "112" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "80" in hex string
+Warning: Ignoring invalid character "103" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "80" in hex string
+Warning: Ignoring invalid character "114" in hex string
+Warning: Ignoring invalid character "110" in hex string
+Warning: Ignoring invalid character "116" in hex string
+Warning: Ignoring invalid character "82" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "77" in hex string
+Warning: Ignoring invalid character "105" in hex string
+Warning: Ignoring invalid character "111" in hex string
+Warning: Ignoring invalid character "120" in hex string
+Warning: Ignoring invalid character "91" in hex string
+Warning: Ignoring invalid character "93" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "111" in hex string
+Warning: Ignoring invalid character "110" in hex string
+Warning: Ignoring invalid character "116" in hex string
+Warning: Ignoring invalid character "110" in hex string
+Warning: Ignoring invalid character "116" in hex string
+Warning: Ignoring invalid character "115" in hex string
+Warning: Ignoring invalid character "82" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "82" in hex string
+Warning: Ignoring invalid character "115" in hex string
+Warning: Ignoring invalid character "111" in hex string
+Warning: Ignoring invalid character "117" in hex string
+Warning: Ignoring invalid character "114" in hex string
+Warning: Ignoring invalid character "115" in hex string
+Warning: Ignoring invalid character "82" in hex string
+Warning: Ignoring invalid character "47" in hex string
+Warning: Ignoring invalid character "85" in hex string
+Warning: Ignoring invalid character "115" in hex string
+Warning: Ignoring invalid character "114" in hex string
+Warning: Ignoring invalid character "85" in hex string
+Warning: Ignoring invalid character "110" in hex string
+Warning: Ignoring invalid character "105" in hex string
+Warning: Ignoring invalid character "116" in hex string
+[31merror[39m: Error cropping pages: bad XRef entry {"details":"FormatError: bad XRef entry","name":"UnknownErrorException","service":"webscrap-pro-backend","stack":"Error\n    at UnknownErrorExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:443:37)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:446:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-05-21 13:20:44"}
+[32minfo[39m: POST /api/pdf/crop 400 75 - 318.377 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:20:44"}
+[32minfo[39m: POST /api/auth/login 200 642 - 601.041 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:01"}
+[32minfo[39m: Starting PDF text extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:01"}
+[32minfo[39m: POST /api/pdf/extract-text 201 795 - 510.511 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:01"}
+[32minfo[39m: Starting PDF metadata extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:01"}
+[32minfo[39m: POST /api/pdf/extract-metadata 201 567 - 502.978 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:02"}
+[32minfo[39m: Starting PDF to TXT conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:02"}
+[32minfo[39m: POST /api/pdf/convert-to-txt 201 534 - 510.526 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:02"}
+[32minfo[39m: POST /api/auth/login 200 642 - 806.373 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:40"}
+[32minfo[39m: Starting PDF text extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:40"}
+[32minfo[39m: POST /api/pdf/extract-text 201 795 - 489.532 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:41"}
+[32minfo[39m: Starting PDF metadata extraction {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:41"}
+[32minfo[39m: POST /api/pdf/extract-metadata 201 567 - 518.470 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:41"}
+[32minfo[39m: Starting PDF to TXT conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:42"}
+[32minfo[39m: POST /api/pdf/convert-to-txt 201 534 - 611.299 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:42"}
+[32minfo[39m: Starting PDF to DOCX conversion {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:42"}
+[32minfo[39m: POST /api/pdf/convert-to-docx 201 494 - 708.849 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:43"}
+[32minfo[39m: Starting PDF text modification {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:43"}
+[32minfo[39m: POST /api/pdf/modify-text 201 520 - 564.268 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:43"}
+[32minfo[39m: Starting PDF watermark addition {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:43"}
+[32minfo[39m: POST /api/pdf/add-watermark 201 542 - 644.743 ms {"service":"webscrap-pro-backend","timestamp":"2026-05-21 13:23:44"}

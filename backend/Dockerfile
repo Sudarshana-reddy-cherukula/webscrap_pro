@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/playwright:v1.49.0-noble
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install --production
+
+COPY . .
+
+ENV NODE_ENV=production
+ENV PORT=5000
+
+EXPOSE 5000
+
+CMD ["node", "server.js"]

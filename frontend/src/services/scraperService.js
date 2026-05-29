@@ -34,6 +34,7 @@ export const scraperService = {
         extractLinks: type === 'links',
         extractImages: type === 'images',
         extractMetadata: type === 'metadata',
+        usePlaywright: payload.usePlaywright === true,
       },
     })
   },
