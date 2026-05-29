@@ -38,11 +38,10 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      - name: Verify backend starts
+      - name: Verify backend loads
         working-directory: ./backend
-        run: node -e "require('./src/app')" &
-          sleep 2
-          kill $! || true
+        run: node -e "process.env.JWT_SECRET='ci-test'; process.env.MONGO_URI='mongodb://localhost:27017/test'; require('./src/app')" &
+          sleep 2 && kill $! || true
 
   docker:
     runs-on: ubuntu-latest
