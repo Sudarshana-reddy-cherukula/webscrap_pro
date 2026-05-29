@@ -70,4 +70,4 @@ jobs:
           tags: webscrap-frontend:latest
 
       - name: Verify docker-compose config
-        run: docker-compose config
+        run: docker compose config
