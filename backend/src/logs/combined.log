@@ -4935,3 +4935,15 @@
 {"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 300.330 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:49:03"}
 {"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 421.453 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:50:03"}
 {"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 311.815 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:51:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 318.016 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:52:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 213.889 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:53:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 336.175 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:54:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 334.925 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:55:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 343.564 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:56:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 302.842 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:57:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 360.399 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:58:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 368.863 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 14:59:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 271.548 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 15:00:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 372.411 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 15:01:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 496.055 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 15:02:03"}
+{"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 294.916 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 15:03:03"}
