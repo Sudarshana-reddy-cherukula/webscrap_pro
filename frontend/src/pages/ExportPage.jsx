@@ -27,8 +27,6 @@ function ExportPage() {
   const [loadingJobs, setLoadingJobs] = useState(false)
   const { showNotification } = useNotification()
 
-  useEffect(() => { loadHistory() }, [])
-
   const loadHistory = async () => {
     try {
       setLoadingHistory(true)
@@ -37,6 +35,9 @@ function ExportPage() {
       setHistory(data.exports || data?.exports || [])
     } catch { /* silent */ } finally { setLoadingHistory(false) }
   }
+
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
+  useEffect(() => { loadHistory() }, [])
 
   const handleSourceChange = async (value) => {
     setSource(value); setSelectedJobId(''); setAvailableJobs([])

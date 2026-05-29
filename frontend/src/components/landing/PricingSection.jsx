@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Check, ArrowRight, Sparkles } from 'lucide-react'
+import { Check, ArrowRight } from 'lucide-react'
 
 const plans = [
   {

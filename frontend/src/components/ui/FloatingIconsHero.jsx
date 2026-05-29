@@ -9,34 +9,12 @@ const iconComponents = {
   Globe, FileText, Download, BarChart3, Zap, Shield, Cloud, Search, Cog, Layers, Activity, Brain, Cpu, Database, GitBranch,
 }
 
-function FloatingIcon({ mouseX, mouseY, IconComponent, className, index }) {
+function FloatingIcon({ IconComponent, className, index }) {
   const ref = useRef(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const springX = useSpring(x, { stiffness: 300, damping: 20 })
   const springY = useSpring(y, { stiffness: 300, damping: 20 })
-
-  const handleMouseMove = () => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect()
-      const distance = Math.sqrt(
-        Math.pow(mouseX.current - (rect.left + rect.width / 2), 2) +
-        Math.pow(mouseY.current - (rect.top + rect.height / 2), 2)
-      )
-      if (distance < 150) {
-        const angle = Math.atan2(
-          mouseY.current - (rect.top + rect.height / 2),
-          mouseX.current - (rect.left + rect.width / 2)
-        )
-        const force = (1 - distance / 150) * 50
-        x.set(-Math.cos(angle) * force)
-        y.set(-Math.sin(angle) * force)
-      } else {
-        x.set(0)
-        y.set(0)
-      }
-    }
-  }
 
   return (
     <motion.div
@@ -86,18 +64,9 @@ const demoIcons = [
   { id: 12, icon: 'FileText', className: 'bottom-[28%] right-[22%]' },
 ]
 
-function FloatingIconsHero({ title, subtitle, ctaText, ctaHref, onCtaClick }) {
-  const mouseX = useRef(0)
-  const mouseY = useRef(0)
-
-  const handleMouseMove = (event) => {
-    mouseX.current = event.clientX
-    mouseY.current = event.clientY
-  }
-
+function FloatingIconsHero({ ctaHref, onCtaClick }) {
   return (
     <section
-      onMouseMove={handleMouseMove}
       className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden"
     >
       <video autoPlay muted loop playsInline preload="auto"
@@ -108,11 +77,9 @@ function FloatingIconsHero({ title, subtitle, ctaText, ctaHref, onCtaClick }) {
       <MovingDots count={100} connectionDistance={150} />
       <div className="absolute inset-0 w-full h-full">
         {demoIcons.map((iconData) => (
-          <FloatingIcon
-            key={iconData.id}
-            mouseX={mouseX}
-            mouseY={mouseY}
-            IconComponent={iconComponents[iconData.icon]}
+              <FloatingIcon
+                key={iconData.id}
+                IconComponent={iconComponents[iconData.icon]}
             className={iconData.className}
             index={iconData.id}
           />

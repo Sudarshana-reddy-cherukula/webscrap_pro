@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { BookOpen, Code, Terminal, Globe, FileText, Download, BarChart3, Zap, ChevronRight, Search, Copy, Check } from 'lucide-react'
+import { BookOpen, Terminal, Globe, FileText, Download, BarChart3, ChevronRight, Search } from 'lucide-react'
 
 const sections = [
   {
@@ -114,22 +114,6 @@ const sections = [
   },
 ]
 
-function CodeBlock({ code }) {
-  const [copied, setCopied] = useState(false)
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-  return (
-    <div className="relative group">
-      <pre className="text-xs text-app-soft font-mono bg-black/40 rounded-lg p-4 overflow-x-auto border border-app-line">{code}</pre>
-      <button type="button" onClick={handleCopy} className="absolute top-3 right-3 rounded-lg border border-app-line bg-app-elevated p-1.5 text-app-muted opacity-0 group-hover:opacity-100 transition hover:text-app-soft">
-        {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
-      </button>
-    </div>
-  )
-}
 
 function DocsPage() {
   const [activeSection, setActiveSection] = useState('getting-started')

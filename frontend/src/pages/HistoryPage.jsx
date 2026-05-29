@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { History, Filter, Download, Trash2, RefreshCw, AlertCircle, Loader2 } from 'lucide-react'
+import { Download, Trash2, RefreshCw } from 'lucide-react'
 import { DataTable } from '@/components/ui/DataTable'
 import { Badge } from '@/components/ui/Badge'
 import { SearchInput } from '@/components/ui/SearchInput'
@@ -29,7 +29,7 @@ const columns = [
     const d = new Date(val)
     return <span className="text-sm text-app-muted">{d.toLocaleDateString()} {d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
   }},
-  { accessor: 'actions', header: '', render: (_, row) => (
+  { accessor: 'actions', header: '', render: () => (
     <div className="flex items-center gap-1">
       <button type="button" className="rounded-lg border border-white/10 p-1.5 text-app-muted hover:bg-white/[0.04] hover:text-app-soft transition" title="Download">
         <Download size={12} />
@@ -47,8 +47,6 @@ function HistoryPage() {
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('All')
-
-  useEffect(() => { loadHistory() }, [])
 
   const loadHistory = async () => {
     setLoading(true)
@@ -73,6 +71,9 @@ function HistoryPage() {
       setLoading(false)
     }
   }
+
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
+  useEffect(() => { loadHistory() }, [])
 
   const filtered = data.filter((item) => {
     const matchesSearch = !search || item.name?.toLowerCase().includes(search.toLowerCase())

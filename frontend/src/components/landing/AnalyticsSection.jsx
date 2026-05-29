@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { BarChart3, LineChart, PieChart, TrendingUp, Clock, Users, Download, Share2 } from 'lucide-react'
+import { BarChart3, LineChart, PieChart, TrendingUp } from 'lucide-react'
 
 const metrics = [
   {

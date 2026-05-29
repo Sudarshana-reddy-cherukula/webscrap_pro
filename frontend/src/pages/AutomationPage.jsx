@@ -39,9 +39,8 @@ function AutomationPage() {
     }
   }, [showNotification])
 
-  useEffect(() => {
-    loadWorkflows()
-  }, [loadWorkflows])
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
+  useEffect(() => { loadWorkflows() }, [loadWorkflows])
 
   const toggleNode = (type) => {
     const exists = activeNodes.find((n) => n.id === type)

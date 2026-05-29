@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Search, HelpCircle, Mail, BookOpen } from 'lucide-react'
+import { ArrowRight, HelpCircle, Mail, BookOpen } from 'lucide-react'
 import AnimatedGradient from '@/components/ui/AnimatedGradient'
 
 const categories = [

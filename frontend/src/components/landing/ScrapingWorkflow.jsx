@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Search, Cog, Database, Download, ArrowRight, Link2, Eye, Code } from 'lucide-react'
+import { Cog, Database, Link2, Eye, Code } from 'lucide-react'
 
 const steps = [
   {

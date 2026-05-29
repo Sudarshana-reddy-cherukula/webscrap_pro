@@ -26,7 +26,7 @@ function ContactPage() {
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     setLoading(true)
     await new Promise((r) => setTimeout(r, 1500))
     setLoading(false)

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { BarChart3, TrendingUp, PieChart, Hash, Download, Trash2, Loader2, Globe, FileText, ArrowUpRight, Calendar } from 'lucide-react'
+import { BarChart3, TrendingUp, PieChart, Hash, Download, Trash2, Loader2, Globe, FileText, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { useNotification } from '@/hooks/useNotification'
 import { analyticsService } from '@/services/analyticsService'
@@ -14,7 +14,7 @@ const TABS = [
 
 const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
 const iconBox = "inline-flex rounded-xl bg-gradient-to-br p-2"
-const gradientBtn = "bg-gradient-to-r from-cyan-500 to-blue-600 text-app-fg shadow-lg shadow-cyan-500/20"
+
 
 function AnalyticsPage() {
   const [activeTab, setActiveTab] = useState('overview')
@@ -40,8 +40,9 @@ function AnalyticsPage() {
     } finally {
       setLoading(false)
     }
-  }, [activeTab])
+  }, [activeTab, showNotification])
 
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
   useEffect(() => { loadData() }, [loadData])
 
   const handleExport = async () => {

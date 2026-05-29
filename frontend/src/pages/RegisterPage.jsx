@@ -144,6 +144,7 @@ function RegisterPage() {
     resolver: zodResolver(registerSchema),
   })
 
+  /* eslint-disable-next-line react-hooks/incompatible-library */
   const password = watch('password', '')
 
   useEffect(() => {

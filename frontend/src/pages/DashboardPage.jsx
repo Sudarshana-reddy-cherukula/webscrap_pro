@@ -54,6 +54,7 @@ function DashboardPage() {
     }
   }, [timeframe])
 
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
   useEffect(() => { loadData() }, [loadData])
 
   const stats = useMemo(() => {
@@ -75,7 +76,6 @@ function DashboardPage() {
   const usageData = useMemo(() => {
     if (!usageStats) return []
     const labels = timeframe === '7d' ? 7 : timeframe === '30d' ? 30 : 90
-    const total = (usageStats.scraping?.total || 0) + (usageStats.pdf?.total || 0)
     return Array.from({ length: Math.min(labels, 30) }, (_, i) => ({
       date: `Day ${i + 1}`,
       scraped: Math.max(0, Math.round((usageStats.scraping?.total || 0) / Math.min(labels, 30))),

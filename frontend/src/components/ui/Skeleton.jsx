@@ -44,7 +44,7 @@ function ChartSkeleton() {
           <Skeleton
             key={i}
             className="flex-1 rounded-lg"
-            style={{ height: `${Math.random() * 80 + 20}px` }}
+            style={{ height: `${((i * 17) % 80) + 20}px` }}
           />
         ))}
       </div>

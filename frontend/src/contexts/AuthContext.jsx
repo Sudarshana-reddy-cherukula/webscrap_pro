@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+/* eslint-disable react-refresh/only-export-components */
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { createContext } from 'react'
 import { authApi } from '@/api/authApi'
 
@@ -54,7 +55,7 @@ export function AuthProvider({ children }) {
     return payload
   }
 
-  const login = async (credentials) => {
+  const login = useCallback(async (credentials) => {
     console.log('AuthContext: login called with', credentials)
     try {
       const response = await authApi.login(credentials)
@@ -66,12 +67,14 @@ export function AuthProvider({ children }) {
       console.error('AuthContext: login error', error)
       throw error
     }
-  }
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [])
 
-  const register = async (data) => {
+  const register = useCallback(async (data) => {
     const response = await authApi.register(data)
     return saveSession(response.data)
-  }
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [])
 
   const logout = () => {
     setToken(null)
@@ -90,7 +93,7 @@ export function AuthProvider({ children }) {
       logout,
       setUser,
     }),
-    [token, user, isAuthenticated],
+    [token, user, isAuthenticated, login, register],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

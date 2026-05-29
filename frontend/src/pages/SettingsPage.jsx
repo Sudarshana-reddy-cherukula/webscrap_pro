@@ -3,12 +3,9 @@ import { motion } from 'framer-motion'
 import { useTheme } from '@/hooks/useTheme'
 import { useNotification } from '@/hooks/useNotification'
 import {
-  Settings,
   Bell,
   Shield,
   Palette,
-  Mail,
-  Globe,
   Moon,
   Sun,
   Save,

@@ -67,6 +67,7 @@ function ResetPasswordPage() {
     resolver: zodResolver(schema),
   })
 
+  /* eslint-disable-next-line react-hooks/incompatible-library */
   const password = watch('password', '')
 
   const onSubmit = async (data) => {

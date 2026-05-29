@@ -43,7 +43,7 @@ const columns = [
     const d = new Date(val)
     return <span className="text-sm text-app-muted">{d.toLocaleDateString()} {d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
   }},
-  { accessor: 'actions', header: '', render: (_, row) => (
+  { accessor: 'actions', header: '', render: () => (
     <div className="flex items-center gap-1">
       <button type="button" className="rounded-lg border border-white/10 p-1.5 text-app-muted hover:bg-white/[0.04] hover:text-app-soft transition" title="Download">
         <Download size={12} />
@@ -62,12 +62,6 @@ function UploadsPage() {
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
 
-  useEffect(() => {
-    loadUploads()
-    const interval = setInterval(loadUploads, 15000)
-    return () => clearInterval(interval)
-  }, [])
-
   const loadUploads = async () => {
     try {
       const res = await dashboardService.getDownloads()
@@ -81,24 +75,8 @@ function UploadsPage() {
     }
   }
 
-  const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-    if (rejectedFiles?.length > 0) {
-      const reason = rejectedFiles[0]?.errors?.[0]?.message || 'Invalid file'
-      setError(reason)
-      return
-    }
-    const newFiles = acceptedFiles.map((file) => ({
-      id: Date.now().toString() + Math.random(),
-      file,
-      name: file.name,
-      size: file.size,
-      progress: 0,
-      status: 'uploading',
-    }))
-    setQueue((prev) => [...prev, ...newFiles])
-    setError('')
-    newFiles.forEach((entry) => startUpload(entry.id))
-  }, [])
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
+  useEffect(() => { loadUploads(); const i = setInterval(loadUploads, 15000); return () => clearInterval(i) }, [])
 
   const startUpload = async (id) => {
     const entry = queue.find((f) => f.id === id)
@@ -124,6 +102,25 @@ function UploadsPage() {
     }
   }
 
+  const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+    if (rejectedFiles?.length > 0) {
+      const reason = rejectedFiles[0]?.errors?.[0]?.message || 'Invalid file'
+      setError(reason)
+      return
+    }
+    const newFiles = acceptedFiles.map((file) => ({
+      id: Date.now().toString() + Math.random(),
+      file,
+      name: file.name,
+      size: file.size,
+      progress: 0,
+      status: 'uploading',
+    }))
+    setQueue((prev) => [...prev, ...newFiles])
+    setError('')
+    newFiles.forEach((entry) => startUpload(entry.id))
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [])
   const cancelUpload = (id) => setQueue((prev) => prev.filter((f) => f.id !== id))
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

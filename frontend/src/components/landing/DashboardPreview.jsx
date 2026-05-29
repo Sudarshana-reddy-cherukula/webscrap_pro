@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { BarChart3, TrendingUp, Users, Activity, Globe, FileText, ArrowUp, ArrowDown } from 'lucide-react'
+import { TrendingUp, Activity, Globe, FileText, ArrowUp, ArrowDown } from 'lucide-react'
 
 const stats = [
   { label: 'Pages Today', value: '12,847', change: '+12.5%', positive: true, icon: Globe },

@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '@/hooks/useTheme'
 import { useAuth } from '@/hooks/useAuth'
-import { Menu, X, Sun, Moon, LogOut, LayoutDashboard, Globe, FileText, Download, BarChart3, Settings, User } from 'lucide-react'
+import { Menu, X, Sun, Moon, LogOut } from 'lucide-react'
 
 const menuItems = [
   { to: '/', label: 'Home', icon: null, end: true },

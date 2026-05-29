@@ -57,11 +57,8 @@ function ScraperPage() {
     }
   }
 
-  useEffect(() => {
-    loadJobs()
-    const interval = setInterval(loadJobs, 8000)
-    return () => clearInterval(interval)
-  }, [])
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
+  useEffect(() => { loadJobs(); const i = setInterval(loadJobs, 8000); return () => clearInterval(i) }, [])
 
   const startScraping = async () => {
     if (!urls.trim()) { showNotification('Please enter at least one URL', 'error'); return }

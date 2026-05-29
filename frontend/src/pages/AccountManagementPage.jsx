@@ -44,9 +44,8 @@ function AccountManagementPage() {
     }
   }, [showNotification])
 
-  useEffect(() => {
-    loadAccountData()
-  }, [loadAccountData])
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
+  useEffect(() => { loadAccountData() }, [loadAccountData])
 
   const handleChangePassword = async () => {
     if (!oldPassword || !newPassword || !confirmPassword) {
@@ -168,9 +167,7 @@ function AccountManagementPage() {
 
   const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 space-y-5"
   const iconBox = "flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20"
-  const labelClass = "text-sm font-medium text-app-soft"
   const inputWrapper = "space-y-1.5"
-  const divider = "border-t border-white/5"
 
   return (
     <section className="container space-y-6">
