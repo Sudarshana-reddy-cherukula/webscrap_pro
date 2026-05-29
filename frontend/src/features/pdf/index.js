@@ -1,1 +1,1 @@
-export { pdfService } from '../../services/pdfService'
+export { pdfService } from '@/services/pdfService'

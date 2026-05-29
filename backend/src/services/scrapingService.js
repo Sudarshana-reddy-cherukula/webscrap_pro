@@ -5,11 +5,12 @@ const ScrapeJob = require('../models/ScrapeJob');
 const logger = require('../utils/logger');
 
 class ScrapingService {
-  async scrapeUrl(url, options = {}) {
+  async scrapeUrl(userId, url, options = {}) {
     try {
       logger.info(`Starting URL scrape: ${url}`);
       
       const scrapeJob = await ScrapeJob.create({
+        userId,
         targetUrl: url,
         scrapingType: 'url',
         options,
@@ -33,11 +34,12 @@ class ScrapingService {
     }
   }
 
-  async scrapeImages(url, options = {}) {
+  async scrapeImages(userId, url, options = {}) {
     try {
       logger.info(`Starting image scrape: ${url}`);
       
       const scrapeJob = await ScrapeJob.create({
+        userId,
         targetUrl: url,
         scrapingType: 'images',
         options,
@@ -55,11 +57,12 @@ class ScrapingService {
     }
   }
 
-  async scrapeLinks(url, options = {}) {
+  async scrapeLinks(userId, url, options = {}) {
     try {
       logger.info(`Starting links scrape: ${url}`);
       
       const scrapeJob = await ScrapeJob.create({
+        userId,
         targetUrl: url,
         scrapingType: 'links',
         options,
@@ -77,11 +80,12 @@ class ScrapingService {
     }
   }
 
-  async scrapeMetadata(url, options = {}) {
+  async scrapeMetadata(userId, url, options = {}) {
     try {
       logger.info(`Starting metadata scrape: ${url}`);
       
       const scrapeJob = await ScrapeJob.create({
+        userId,
         targetUrl: url,
         scrapingType: 'metadata',
         options,
@@ -285,11 +289,11 @@ class ScrapingService {
   }
 
   extractHeadings($, tag) {
-    return Array.from($(tag)).map((_, element) => $(element).text().trim());
+    return Array.from($(tag)).map((el) => $(el).text().trim());
   }
 
   extractParagraphs($) {
-    return Array.from($('p')).map((_, element) => $(element).text().trim());
+    return Array.from($('p')).map((el) => $(el).text().trim());
   }
 
   extractTables($) {
@@ -383,6 +387,33 @@ class ScrapingService {
       throw new Error('Job not completed');
     }
     return job.results;
+  }
+
+  async pauseJob(jobId) {
+    const job = await ScrapeJob.findById(jobId);
+    if (!job) {
+      throw new Error('Job not found');
+    }
+    if (job.status !== 'processing') {
+      throw new Error('Only processing jobs can be paused');
+    }
+    job.status = 'paused';
+    await job.save();
+    return { message: 'Job paused successfully' };
+  }
+
+  async resumeJob(jobId) {
+    const job = await ScrapeJob.findById(jobId);
+    if (!job) {
+      throw new Error('Job not found');
+    }
+    if (job.status !== 'paused') {
+      throw new Error('Only paused jobs can be resumed');
+    }
+    job.status = 'processing';
+    job.progress = job.progress || 0;
+    await job.save();
+    return { message: 'Job resumed successfully' };
   }
 
   async deleteJob(jobId) {

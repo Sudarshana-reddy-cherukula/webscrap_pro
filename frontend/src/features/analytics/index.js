@@ -1,1 +1,1 @@
-export { analyticsService } from '../../services/analyticsService'
+export { analyticsService } from '@/services/analyticsService'

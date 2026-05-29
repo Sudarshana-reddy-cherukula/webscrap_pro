@@ -1,4 +1,4 @@
-import { useTheme } from '../contexts/themeContext';
+import { useTheme } from '@/hooks/useTheme';
 
 function ThemeTest() {
   const { theme, toggleTheme } = useTheme();

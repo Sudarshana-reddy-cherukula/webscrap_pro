@@ -1,1 +1,1 @@
-export { automationService } from '../../services/automationService'
+export { automationService } from '@/services/automationService'

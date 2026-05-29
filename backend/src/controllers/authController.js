@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const User = require('../models/User');
 const { generateToken, generateRefreshToken } = require('../middlewares/authMiddleware');
 const { asyncHandler } = require('../middlewares/errorMiddleware');
@@ -219,6 +220,106 @@ const refreshToken = asyncHandler(async (req, res) => {
   }
 });
 
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+    const tokenExpires = new Date(Date.now() + 60 * 60 * 1000);
+
+    const user = await User.findOne({ email });
+    if (user) {
+      user.resetOtp = otp;
+      user.resetOtpExpires = otpExpires;
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpires = tokenExpires;
+      await user.save();
+    }
+
+    res.json({
+      success: true,
+      message: 'If an account exists with that email, a reset code has been sent.',
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to process request',
+      error: error.message,
+    });
+  }
+});
+
+const verifyOtp = asyncHandler(async (req, res) => {
+  const { email, otp } = req.body;
+
+  try {
+    const user = await User.findOne({
+      email,
+      resetOtp: otp,
+      resetOtpExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired OTP',
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'OTP verified successfully',
+      data: {
+        token: user.resetPasswordToken,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to verify OTP',
+      error: error.message,
+    });
+  }
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const { token, password } = req.body;
+
+  try {
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired reset token',
+      });
+    }
+
+    user.password = password;
+    user.resetOtp = undefined;
+    user.resetOtpExpires = undefined;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Password has been reset successfully',
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to reset password',
+      error: error.message,
+    });
+  }
+});
+
 module.exports = {
   register,
   login,
@@ -226,4 +327,7 @@ module.exports = {
   updateProfile,
   changePassword,
   refreshToken,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
 };

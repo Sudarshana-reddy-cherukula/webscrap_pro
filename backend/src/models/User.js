@@ -37,6 +37,18 @@ const userSchema = new mongoose.Schema({
   lastLogin: {
     type: Date,
   },
+  resetPasswordToken: {
+    type: String,
+  },
+  resetPasswordExpires: {
+    type: Date,
+  },
+  resetOtp: {
+    type: String,
+  },
+  resetOtpExpires: {
+    type: Date,
+  },
   subscription: {
     plan: {
       type: String,
@@ -47,6 +59,20 @@ const userSchema = new mongoose.Schema({
       type: Date,
     },
   },
+  twoFactorEnabled: {
+    type: Boolean,
+    default: false,
+  },
+  twoFactorSecret: {
+    type: String,
+  },
+  backupCodes: [{
+    code: String,
+    used: {
+      type: Boolean,
+      default: false,
+    },
+  }],
   usage: {
     scrapingJobs: {
       type: Number,

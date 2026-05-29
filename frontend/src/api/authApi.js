@@ -14,6 +14,6 @@ export const authApi = {
   },
 
   updateProfile(data) {
-    return httpClient.put('/users/me', data)
+    return httpClient.put('/auth/profile', data)
   },
 }

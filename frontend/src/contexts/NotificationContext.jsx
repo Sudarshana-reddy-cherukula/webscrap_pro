@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Toast from '../components/feedback/Toast'
-import { NotificationContext } from './notificationContext'
+import { createContext } from 'react'
+import Toast from '@/components/feedback/Toast'
+
+export const NotificationContext = createContext(null)
 
 export function NotificationProvider({ children }) {
   const [notification, setNotification] = useState({ message: '', type: 'success' })

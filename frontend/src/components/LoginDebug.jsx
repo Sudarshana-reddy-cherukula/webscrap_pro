@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { testLogin } from '../utils/apiTest';
+import { testLogin } from '@/utils/apiTest';
 
 function LoginDebug() {
   const [email, setEmail] = useState('test@example.com');

@@ -1,4 +1,4 @@
-import { pdfService } from '../../services/pdfService'
+import { pdfService } from '@/services/pdfService'
 
 function PdfExtractionTab({ isProcessing, setIsProcessing, showNotification }) {
   const onFileUpload = async (e) => {

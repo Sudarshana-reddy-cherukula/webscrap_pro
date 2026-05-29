@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AuthContext } from './authContext'
-import { authApi } from '../api/authApi'
+import { createContext } from 'react'
+import { authApi } from '@/api/authApi'
+
+export const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem('authToken'))
@@ -16,7 +18,8 @@ export function AuthProvider({ children }) {
       authApi
         .getProfile()
         .then((response) => {
-          const profile = response.data.user || response.data
+          const body = response.data?.data || response.data
+          const profile = body.user || body
           setUser(profile)
           localStorage.setItem('authUser', JSON.stringify(profile))
         })
@@ -30,25 +33,39 @@ export function AuthProvider({ children }) {
   }, [token, user])
 
   const saveSession = (payload) => {
-    const sessionUser = payload.user || payload
-    const sessionToken = payload.token || token
+    console.log('AuthContext: saveSession called with', payload)
+    const body = payload.data || payload
+    const sessionUser = body.user || body
+    const sessionToken = body.token || payload.token || token
 
     if (sessionToken) {
       setToken(sessionToken)
       localStorage.setItem('authToken', sessionToken)
+      console.log('AuthContext: token saved', sessionToken)
     }
 
     if (sessionUser) {
       setUser(sessionUser)
       localStorage.setItem('authUser', JSON.stringify(sessionUser))
+      console.log('AuthContext: user saved', sessionUser)
     }
 
+    console.log('AuthContext: final state - token:', sessionToken, 'user:', sessionUser)
     return payload
   }
 
   const login = async (credentials) => {
-    const response = await authApi.login(credentials)
-    return saveSession(response.data)
+    console.log('AuthContext: login called with', credentials)
+    try {
+      const response = await authApi.login(credentials)
+      console.log('AuthContext: login response', response.data)
+      const result = saveSession(response.data)
+      console.log('AuthContext: session saved', result)
+      return result
+    } catch (error) {
+      console.error('AuthContext: login error', error)
+      throw error
+    }
   }
 
   const register = async (data) => {

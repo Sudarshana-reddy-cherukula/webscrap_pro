@@ -75,8 +75,8 @@ const uploadLimiter = rateLimit({
 });
 
 app.use('/api/', limiter);
-app.use('/api/v1/auth', authLimiter);
-app.use('/api/v1/pdf', uploadLimiter);
+app.use('/api/auth', authLimiter);
+app.use('/api/pdf', uploadLimiter);
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -88,6 +88,8 @@ app.use('/api/scrape', require('./routes/scrapingRoutes'));
 app.use('/api/pdf', require('./routes/pdfRoutes'));
 app.use('/api/export', require('./routes/exportRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
+app.use('/api/settings', require('./routes/settingsRoutes'));
+app.use('/api/analytics', require('./routes/analyticsRoutes'));
 
 app.get('/api/health', (req, res) => {
   res.json({
@@ -109,6 +111,7 @@ app.get('/api', (req, res) => {
       scraping: '/api/scrape',
       pdf: '/api/pdf',
       export: '/api/export',
+      analytics: '/api/analytics',
       user: '/api/user',
       health: '/api/health',
       test: '/api/test',
@@ -117,8 +120,8 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/api/test', (req, res) => {
-  res.json({ 
-    message: "Backend Connected Successfully" 
+  res.json({
+    message: "Backend Connected Successfully"
   });
 });
 

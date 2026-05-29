@@ -5,7 +5,7 @@ const scrapeUrl = asyncHandler(async (req, res) => {
   const { url, options } = req.body;
   
   try {
-    const { job, results } = await scrapingService.scrapeUrl(url, options);
+    const { job, results } = await scrapingService.scrapeUrl(req.user._id, url, options);
     
     res.status(201).json({
       success: true,
@@ -34,7 +34,7 @@ const scrapeImages = asyncHandler(async (req, res) => {
   const { url, options } = req.body;
   
   try {
-    const { job, results } = await scrapingService.scrapeImages(url, options);
+    const { job, results } = await scrapingService.scrapeImages(req.user._id, url, options);
     
     res.status(201).json({
       success: true,
@@ -63,7 +63,7 @@ const scrapeLinks = asyncHandler(async (req, res) => {
   const { url, options } = req.body;
   
   try {
-    const { job, results } = await scrapingService.scrapeLinks(url, options);
+    const { job, results } = await scrapingService.scrapeLinks(req.user._id, url, options);
     
     res.status(201).json({
       success: true,
@@ -92,7 +92,7 @@ const scrapeMetadata = asyncHandler(async (req, res) => {
   const { url, options } = req.body;
   
   try {
-    const { job, results } = await scrapingService.scrapeMetadata(url, options);
+    const { job, results } = await scrapingService.scrapeMetadata(req.user._id, url, options);
     
     res.status(201).json({
       success: true,
@@ -184,6 +184,44 @@ const getJobResults = asyncHandler(async (req, res) => {
   }
 });
 
+const pauseJob = asyncHandler(async (req, res) => {
+  const { jobId } = req.params;
+
+  try {
+    await scrapingService.pauseJob(jobId);
+
+    res.json({
+      success: true,
+      message: 'Scraping job paused successfully',
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to pause job',
+      error: error.message,
+    });
+  }
+});
+
+const resumeJob = asyncHandler(async (req, res) => {
+  const { jobId } = req.params;
+
+  try {
+    await scrapingService.resumeJob(jobId);
+
+    res.json({
+      success: true,
+      message: 'Scraping job resumed successfully',
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to resume job',
+      error: error.message,
+    });
+  }
+});
+
 const deleteJob = asyncHandler(async (req, res) => {
   const { jobId } = req.params;
   
@@ -233,4 +271,6 @@ module.exports = {
   getJobResults,
   deleteJob,
   getUserJobs,
+  pauseJob,
+  resumeJob,
 };

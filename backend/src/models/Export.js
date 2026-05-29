@@ -17,7 +17,7 @@ const exportSchema = new mongoose.Schema({
   },
   exportType: {
     type: String,
-    enum: ['csv', 'json', 'excel', 'txt'],
+    enum: ['csv', 'json', 'excel', 'txt', 'pdf'],
     required: [true, 'Export type is required'],
   },
   status: {

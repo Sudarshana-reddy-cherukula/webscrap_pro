@@ -1,103 +1,77 @@
 import httpClient from './httpClient'
 
+function normalizeUrl(url) {
+  if (!url) return ''
+  url = url.trim()
+  if (!/^https?:\/\//i.test(url)) {
+    url = 'https://' + url
+  }
+  return url
+}
+
 export const scraperService = {
-  // Start a new scraping job
   start(payload) {
-    return httpClient.post('/scraper/start', payload)
-  },
+    const url = normalizeUrl(payload.targetUrls?.[0] || '')
+    const type = payload.scrapeType || 'fullPage'
 
-  // Get scraping job status
-  getStatus(jobId) {
-    return httpClient.get(`/scraper/job/${jobId}`)
-  },
+    const routes = {
+      fullPage: '/scrape/url',
+      specific: '/scrape/url',
+      metadata: '/scrape/metadata',
+      links: '/scrape/links',
+      images: '/scrape/images',
+    }
 
-  // Stop a running scraping job
-  stop(jobId) {
-    return httpClient.post(`/scraper/job/${jobId}/stop`)
-  },
+    const route = routes[type] || '/scrape/url'
 
-  // Get scraping job results
-  getResults(jobId, format = 'json') {
-    return httpClient.get(`/scraper/job/${jobId}/results`, { params: { format } })
-  },
-
-  // Get list of all scraping jobs
-  getJobs(limit = 50, offset = 0, status = null) {
-    const params = { limit, offset }
-    if (status) params.status = status
-    return httpClient.get('/scraper/jobs', { params })
-  },
-
-  // Get detailed job information
-  getJobDetails(jobId) {
-    return httpClient.get(`/scraper/job/${jobId}/details`)
-  },
-
-  // Delete a scraping job and its results
-  deleteJob(jobId) {
-    return httpClient.delete(`/scraper/job/${jobId}`)
-  },
-
-  // Pause a running job
-  pauseJob(jobId) {
-    return httpClient.post(`/scraper/job/${jobId}/pause`)
-  },
-
-  // Resume a paused job
-  resumeJob(jobId) {
-    return httpClient.post(`/scraper/job/${jobId}/resume`)
-  },
-
-  // Download job results
-  downloadResults(jobId, format = 'csv') {
-    return httpClient.get(`/scraper/job/${jobId}/download`, {
-      params: { format },
-      responseType: 'blob',
+    return httpClient.post(route, {
+      url,
+      options: {
+        extractText: type === 'fullPage' || type === 'specific',
+        extractTitle: true,
+        extractHeadings: type === 'fullPage' || type === 'specific',
+        extractParagraphs: type === 'fullPage' || type === 'specific',
+        extractLinks: type === 'links',
+        extractImages: type === 'images',
+        extractMetadata: type === 'metadata',
+      },
     })
   },
 
-  // Get scraping templates
-  getTemplates() {
-    return httpClient.get('/scraper/templates')
+  getStatus(jobId) {
+    return httpClient.get(`/scrape/status/${jobId}`)
   },
 
-  // Save a scraper configuration as template
-  saveTemplate(config) {
-    return httpClient.post('/scraper/templates', config)
+  pauseJob(jobId) {
+    return httpClient.post(`/scrape/pause/${jobId}`)
   },
 
-  // Get scraper statistics
-  getStatistics(timeRange = '7d') {
-    return httpClient.get('/scraper/statistics', { params: { timeRange } })
+  resumeJob(jobId) {
+    return httpClient.post(`/scrape/resume/${jobId}`)
   },
 
-  // Validate URLs before scraping
-  validateUrls(urls) {
-    return httpClient.post('/scraper/validate-urls', { urls })
+  stop(jobId) {
+    return httpClient.delete(`/scrape/delete/${jobId}`)
   },
 
-  // Get estimated scraping time
-  estimateTime(payload) {
-    return httpClient.post('/scraper/estimate-time', payload)
+  getResults(jobId, format = 'json') {
+    return httpClient.get(`/scrape/results/${jobId}`, { params: { format } })
   },
 
-  // Schedule recurring scraping jobs
-  schedule(payload) {
-    return httpClient.post('/scraper/schedule', payload)
+  getJobs(limit = 50, offset = 0, status = null) {
+    const params = { limit, page: Math.floor(offset / limit) + 1 }
+    if (status) params.status = status
+    return httpClient.get('/scrape/jobs', { params })
   },
 
-  // Get scheduled scraping jobs
-  getScheduledJobs() {
-    return httpClient.get('/scraper/scheduled-jobs')
+  deleteJob(jobId) {
+    return httpClient.delete(`/scrape/delete/${jobId}`)
   },
 
-  // Update scraper preferences
-  updatePreferences(preferences) {
-    return httpClient.put('/scraper/preferences', preferences)
-  },
-
-  // Get scraper preferences
-  getPreferences() {
-    return httpClient.get('/scraper/preferences')
+  downloadResults(jobId, format = 'csv') {
+    return httpClient.get(`/scrape/results/${jobId}`, {
+      params: { format },
+      responseType: 'blob',
+    })
   },
 }

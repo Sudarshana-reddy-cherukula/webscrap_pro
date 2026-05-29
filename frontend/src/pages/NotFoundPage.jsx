@@ -1,17 +1,24 @@
 import { Link } from 'react-router-dom'
-import Button from '../components/ui/Button'
+import { motion } from 'framer-motion'
 
 function NotFoundPage() {
   return (
-    <div className="grid min-h-[70vh] place-items-center text-center">
-      <div className="space-y-6 rounded-[2rem] border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-slate-950/80 p-12 shadow-2xl shadow-slate-200/40 dark:shadow-slate-950/40">
-        <p className="text-7xl">404</p>
-        <h1 className="text-3xl font-semibold text-slate-900 dark:text-white">Page not found</h1>
-        <p className="text-slate-500 dark:text-slate-400">The route you are looking for does not exist or has been moved.</p>
-        <Link to="/">
-          <Button>Go back home</Button>
+    <div className="flex min-h-[80vh] items-center justify-center px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center"
+      >
+        <p className="text-8xl font-bold text-white">404</p>
+        <h1 className="mt-4 text-2xl font-bold text-white">Page not found</h1>
+        <p className="mt-2 text-zinc-400">The page you&apos;re looking for doesn&apos;t exist.</p>
+        <Link
+          to="/"
+          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-500/30"
+        >
+          Go home
         </Link>
-      </div>
+      </motion.div>
     </div>
   )
 }

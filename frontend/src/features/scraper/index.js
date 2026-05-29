@@ -1,1 +1,1 @@
-export { scraperService } from '../../services/scraperService'
+export { scraperService } from '@/services/scraperService'

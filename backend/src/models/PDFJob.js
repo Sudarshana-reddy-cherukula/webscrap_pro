@@ -29,7 +29,12 @@ const pdfJobSchema = new mongoose.Schema({
   },
   operation: {
     type: String,
-    enum: ['extract-text', 'extract-images', 'metadata', 'convert-to-word', 'convert-to-images'],
+    enum: [
+      'extract-text', 'extract-images', 'extract-metadata',
+      'convert-to-docx', 'convert-to-txt',
+      'modify-text', 'add-watermark', 'add-security',
+      'split-pdf', 'merge-pdf', 'rotate-pages', 'crop-pages',
+    ],
     required: [true, 'Operation is required'],
   },
   status: {
@@ -44,58 +49,12 @@ const pdfJobSchema = new mongoose.Schema({
     max: 100,
   },
   options: {
-    extractImages: {
-      type: Boolean,
-      default: false,
-    },
-    imageQuality: {
-      type: Number,
-      default: 300,
-      min: 72,
-      max: 600,
-    },
-    extractTables: {
-      type: Boolean,
-      default: false,
-    },
-    preserveFormatting: {
-      type: Boolean,
-      default: true,
-    },
-    language: {
-      type: String,
-      default: 'en',
-    },
+    type: mongoose.Schema.Types.Mixed,
+    default: {},
   },
   results: {
-    text: {
-      type: String,
-    },
-    images: [{
-      filename: String,
-      path: String,
-      size: Number,
-      page: Number,
-    }],
-    metadata: {
-      title: String,
-      author: String,
-      subject: String,
-      creator: String,
-      producer: String,
-      creationDate: Date,
-      modificationDate: Date,
-      pageCount: Number,
-      pageSize: String,
-    },
-    outputFile: {
-      filename: String,
-      path: String,
-      size: Number,
-    },
-    extractedData: {
-      type: mongoose.Schema.Types.Mixed,
-    },
+    type: mongoose.Schema.Types.Mixed,
+    default: {},
   },
   error: {
     message: String,

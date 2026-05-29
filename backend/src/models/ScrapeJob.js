@@ -13,12 +13,12 @@ const scrapeJobSchema = new mongoose.Schema({
   },
   scrapingType: {
     type: String,
-    enum: ['static', 'dynamic', 'multi-url'],
+    enum: ['url', 'images', 'links', 'metadata'],
     required: [true, 'Scraping type is required'],
   },
   status: {
     type: String,
-    enum: ['pending', 'processing', 'completed', 'failed', 'cancelled'],
+    enum: ['pending', 'processing', 'completed', 'failed', 'cancelled', 'paused'],
     default: 'pending',
   },
   progress: {

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { AppUiStoreContext } from '../store/appUiStoreContext'
+import { AppUiStoreContext } from '@/store/appUiStoreContext'
 
 export function useAppUiStore() {
   const context = useContext(AppUiStoreContext)

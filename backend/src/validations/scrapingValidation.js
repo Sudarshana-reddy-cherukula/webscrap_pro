@@ -6,6 +6,7 @@ const scrapeUrlSchema = Joi.object({
     'any.required': 'URL is required',
   }),
   options: Joi.object({
+    extractText: Joi.boolean().default(true),
     extractTitle: Joi.boolean().default(true),
     extractHeadings: Joi.boolean().default(true),
     extractParagraphs: Joi.boolean().default(true),
@@ -22,15 +23,28 @@ const scrapeUrlSchema = Joi.object({
   }).default(),
 });
 
+const baseOptions = {
+  extractText: Joi.boolean().default(true),
+  extractTitle: Joi.boolean().default(true),
+  extractHeadings: Joi.boolean().default(true),
+  extractParagraphs: Joi.boolean().default(true),
+  extractTables: Joi.boolean().default(false),
+  extractLinks: Joi.boolean().default(false),
+  extractImages: Joi.boolean().default(false),
+  extractMetadata: Joi.boolean().default(true),
+  timeout: Joi.number().min(1000).max(30000).default(30000),
+  userAgent: Joi.string().optional(),
+  waitForSelector: Joi.string().optional(),
+};
+
 const scrapeImagesSchema = Joi.object({
   url: Joi.string().uri().required().messages({
     'string.uri': 'Please enter a valid URL',
     'any.required': 'URL is required',
   }),
   options: Joi.object({
-    timeout: Joi.number().min(1000).max(30000).default(30000),
-    userAgent: Joi.string().optional(),
-    waitForSelector: Joi.string().optional(),
+    ...baseOptions,
+    extractImages: Joi.boolean().default(true),
   }).default(),
 });
 
@@ -40,9 +54,8 @@ const scrapeLinksSchema = Joi.object({
     'any.required': 'URL is required',
   }),
   options: Joi.object({
-    timeout: Joi.number().min(1000).max(30000).default(30000),
-    userAgent: Joi.string().optional(),
-    waitForSelector: Joi.string().optional(),
+    ...baseOptions,
+    extractLinks: Joi.boolean().default(true),
   }).default(),
 });
 
@@ -52,8 +65,8 @@ const scrapeMetadataSchema = Joi.object({
     'any.required': 'URL is required',
   }),
   options: Joi.object({
-    timeout: Joi.number().min(1000).max(30000).default(30000),
-    userAgent: Joi.string().optional(),
+    ...baseOptions,
+    extractMetadata: Joi.boolean().default(true),
   }).default(),
 });
 

@@ -1,5 +1,5 @@
 import Card from './Card'
-import Button from './Button'
+import { Button } from './Button'
 
 function QuickTools({ tools = [], columns = 2 }) {
   return (

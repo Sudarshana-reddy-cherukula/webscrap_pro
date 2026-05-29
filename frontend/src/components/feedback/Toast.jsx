@@ -3,7 +3,7 @@ function Toast({ message, type = 'success' }) {
 
   const tone =
     type === 'error'
-      ? 'bg-rose-500 text-white'
+      ? 'bg-rose-500 text-app-fg'
       : type === 'warning'
       ? 'bg-amber-500 text-slate-950'
       : 'bg-emerald-500 text-slate-950'

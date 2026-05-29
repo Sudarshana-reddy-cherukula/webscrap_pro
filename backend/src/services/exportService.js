@@ -292,6 +292,34 @@ ${text}
   }
 
   
+  async exportToPDF(data, options, jobId) {
+    try {
+      const exportDir = path.join(__dirname, '../exports');
+      await fs.mkdir(exportDir, { recursive: true });
+
+      const filename = `export_${jobId}_${Date.now()}.pdf`;
+      const filePath = path.join(exportDir, filename);
+
+      const textContent = typeof data === 'object' ? this.objectToText(data, options) : String(data);
+      const htmlContent = this.createPDFFromText(textContent, options);
+
+      const puppeteer = require('puppeteer');
+      const browser = await puppeteer.launch({
+        headless: 'new',
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
+      const page = await browser.newPage();
+      await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+      await page.pdf({ path: filePath, format: 'A4', margin: { top: '20mm', bottom: '20mm' } });
+      await browser.close();
+
+      return filePath;
+    } catch (error) {
+      logger.error('PDF export error:', error);
+      throw error;
+    }
+  }
+
   async updateProgress(jobId, progress) {
     try {
       await Export.findByIdAndUpdate(jobId, { progress });

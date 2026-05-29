@@ -1,60 +1,83 @@
 import { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import DashboardLayout from './layouts/DashboardLayout'
 import ProtectedRoute from './components/routes/ProtectedRoute'
-import { AuthProvider } from './contexts/authContext'
-import { ThemeProvider } from './contexts/themeContext'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
 const LoginPage = lazy(() => import('./pages/LoginPage'))
 const RegisterPage = lazy(() => import('./pages/RegisterPage'))
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'))
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'))
+const VerifyOtpPage = lazy(() => import('./pages/VerifyOtpPage'))
 const DashboardPage = lazy(() => import('./pages/DashboardPage'))
 const ScraperPage = lazy(() => import('./pages/ScraperPage'))
 const PdfToolsPage = lazy(() => import('./pages/PdfToolsPage'))
+const UploadsPage = lazy(() => import('./pages/UploadsPage'))
+const HistoryPage = lazy(() => import('./pages/HistoryPage'))
+const ExportPage = lazy(() => import('./pages/ExportPage'))
+const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'))
 const SettingsPage = lazy(() => import('./pages/SettingsPage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
+const PricingPage = lazy(() => import('./pages/PricingPage'))
+const FaqPage = lazy(() => import('./pages/FaqPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const DocsPage = lazy(() => import('./pages/DocsPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
-const ThemeTest = lazy(() => import('./components/ThemeTest'))
+
+const loadingFallback = (
+  <div className="flex min-h-screen items-center justify-center bg-app-bg">
+    <div className="flex items-center gap-3 rounded-2xl border border-app-line bg-app-surface px-6 py-4">
+      <div className="h-5 w-5 animate-spin rounded-full border-2 border-cyan-500 border-t-transparent" />
+      <span className="text-sm text-app-muted">Loading...</span>
+    </div>
+  </div>
+)
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <Suspense
-        fallback={
-          <div className="min-h-screen grid place-items-center bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200">
-            <div className="rounded-3xl border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-900/90 px-6 py-8 shadow-2xl shadow-slate-200/40 dark:shadow-slate-950/40">
-              Loading app…
-            </div>
-          </div>
-        }
-      >
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
+    <Suspense fallback={loadingFallback}>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/faq" element={<FaqPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/docs" element={<DocsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
 
-          <Route
-            element={
-              <ProtectedRoute>
-                    <DashboardLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/scraper" element={<ScraperPage />} />
-            <Route path="/pdf-tools" element={<PdfToolsPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Route>
-        </Routes>
-      </Suspense>
-      </AuthProvider>
-    </ThemeProvider>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/verify-otp" element={<VerifyOtpPage />} />
+
+        <Route
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/dashboard/analytics" element={<AnalyticsPage />} />
+          <Route path="/dashboard/scraping" element={<ScraperPage />} />
+          <Route path="/dashboard/pdf-tools" element={<PdfToolsPage />} />
+          <Route path="/dashboard/uploads" element={<UploadsPage />} />
+          <Route path="/dashboard/history" element={<HistoryPage />} />
+          <Route path="/dashboard/exports" element={<ExportPage />} />
+          <Route path="/dashboard/settings" element={<SettingsPage />} />
+          <Route path="/dashboard/profile" element={<ProfilePage />} />
+          <Route path="/scraper" element={<ScraperPage />} />
+          <Route path="/pdf-tools" element={<PdfToolsPage />} />
+          <Route path="/export" element={<ExportPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+      </Routes>
+    </Suspense>
   )
 }
 

@@ -1,4 +1,4 @@
-import EmptyState from '../ui/EmptyState'
+import EmptyState from '@/ui/EmptyState'
 
 function PdfPlaceholderTab({ tabId }) {
   return (

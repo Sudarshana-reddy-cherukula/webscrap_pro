@@ -3,6 +3,9 @@ const {
   loginSchema,
   updateProfileSchema,
   changePasswordSchema,
+  forgotPasswordSchema,
+  verifyOtpSchema,
+  resetPasswordSchema,
 } = require('./authValidation');
 
 const {
@@ -19,6 +22,13 @@ const {
   extractMetadataSchema,
   convertToDocxSchema,
   convertToTxtSchema,
+  modifyTextSchema,
+  addWatermarkSchema,
+  addSecuritySchema,
+  splitPdfSchema,
+  mergePdfSchema,
+  rotatePagesSchema,
+  cropPagesSchema,
 } = require('./pdfValidation');
 
 const {
@@ -33,6 +43,9 @@ module.exports = {
   loginSchema,
   updateProfileSchema,
   changePasswordSchema,
+  forgotPasswordSchema,
+  verifyOtpSchema,
+  resetPasswordSchema,
   
   // Scraping validations
   scrapeUrlSchema,
@@ -47,6 +60,13 @@ module.exports = {
   extractMetadataSchema,
   convertToDocxSchema,
   convertToTxtSchema,
+  modifyTextSchema,
+  addWatermarkSchema,
+  addSecuritySchema,
+  splitPdfSchema,
+  mergePdfSchema,
+  rotatePagesSchema,
+  cropPagesSchema,
   
   // Export validations
   exportSchema,

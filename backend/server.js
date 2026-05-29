@@ -1,4 +1,14 @@
 require('dotenv').config();
+
+// Override DNS servers for Windows compatibility with MongoDB Atlas SRV resolution
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+
+// Validate required environment variables
+if (!process.env.MONGO_URI) {
+  throw new Error('MONGO_URI is missing in environment variables');
+}
+
 const http = require('http');
 const socketHandler = require('./src/sockets/socketHandler');
 const { connectDB } = require('./src/config/database');
@@ -14,15 +24,15 @@ socketHandler.initialize(server);
 const startServer = async () => {
   try {
     await connectDB();
-    
+
     server.listen(PORT, () => {
       logger.info(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
       logger.info(`Socket.io server running on port ${PORT}`);
       logger.info(`API documentation available at http://localhost:${PORT}/api`);
-      
+
       // Display all available endpoints
-      console.log('\n📋 Available API Endpoints:');
-      console.log(listEndpoints(app));
+      // console.log('\n📋 Available API Endpoints:');
+      // console.log(listEndpoints(app));
     });
   } catch (error) {
     logger.error('Failed to start server:', error);

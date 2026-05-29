@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Button from './Button'
+import { Button } from './Button'
 import Card from './Card'
 
 function FileUpload({
@@ -49,7 +49,7 @@ function FileUpload({
   return (
     <Card className="space-y-5">
       <div>
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
+        <h3 className="text-lg font-semibold text-app-fg">{title}</h3>
         <p className="mt-2 text-sm text-slate-400">{description}</p>
       </div>
       <div
@@ -64,7 +64,7 @@ function FileUpload({
         <div className="mx-auto flex max-w-md flex-col items-center gap-4">
           <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-slate-800 text-3xl">{icon}</div>
           <div className="space-y-2">
-            <p className="text-sm font-medium text-white">Drop your file here</p>
+            <p className="text-sm font-medium text-app-fg">Drop your file here</p>
             <p className="text-sm text-slate-400">Accepts PDF files only.</p>
           </div>
           <label className="rounded-full bg-indigo-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-indigo-400">

@@ -1,1 +1,1 @@
-export { dashboardService } from '../../services/dashboardService'
+export { dashboardService } from '@/services/dashboardService'

@@ -4,7 +4,7 @@ function EmptyState({ icon = '⚡', title, text }) {
       <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-800 text-2xl">
         {icon}
       </div>
-      <h3 className="mb-2 text-xl font-semibold text-white">{title}</h3>
+      <h3 className="mb-2 text-xl font-semibold text-app-fg">{title}</h3>
       <p className="text-sm leading-6 text-slate-400">{text}</p>
     </div>
   )

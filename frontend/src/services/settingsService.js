@@ -23,7 +23,7 @@ export const settingsService = {
 
   // Update password
   updatePassword(oldPassword, newPassword) {
-    return httpClient.put('/settings/password', { oldPassword, newPassword })
+    return httpClient.put('/auth/change-password', { currentPassword: oldPassword, newPassword })
   },
 
   // Manage API keys
@@ -91,11 +91,6 @@ export const settingsService = {
     return httpClient.post('/settings/security/2fa/disable', { password })
   },
 
-  // Verify 2FA
-  verify2FA(code) {
-    return httpClient.post('/settings/security/2fa/verify', { code })
-  },
-
   // Get active sessions
   getActiveSessions() {
     return httpClient.get('/settings/sessions')
@@ -131,5 +126,10 @@ export const settingsService = {
   // Delete account
   deleteAccount(password) {
     return httpClient.delete('/settings/account', { data: { password } })
+  },
+
+  // Verify 2FA
+  verify2FA(code) {
+    return httpClient.post('/settings/security/2fa/verify', { code })
   },
 }

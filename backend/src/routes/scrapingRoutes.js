@@ -11,6 +11,8 @@ const {
   jobStatusSchema,
 } = require('../validations');
 
+router.post('/pause/:jobId', protect, scrapingController.pauseJob);
+router.post('/resume/:jobId', protect, scrapingController.resumeJob);
 router.post('/url', protect, validateRequest(scrapeUrlSchema), scrapingController.scrapeUrl);
 router.post('/images', protect, validateRequest(scrapeImagesSchema), scrapingController.scrapeImages);
 router.post('/links', protect, validateRequest(scrapeLinksSchema), scrapingController.scrapeLinks);

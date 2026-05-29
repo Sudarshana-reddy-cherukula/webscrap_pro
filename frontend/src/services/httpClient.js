@@ -1,10 +1,21 @@
 import axios from 'axios'
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const httpClient = axios.create({
   baseURL,
-  timeout: 15000,
+  timeout: 20000,
+})
+
+httpClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken')
+  if (token) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`,
+    }
+  }
+  return config
 })
 
 httpClient.interceptors.response.use(

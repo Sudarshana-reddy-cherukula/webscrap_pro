@@ -1,0 +1,39 @@
+# Workspace dependency directories
+node_modules/
+dist/
+build/
+.cache/
+
+# IDE and Editor configurations
+.vscode/
+.idea/
+.windsurf/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+
+# Secrets & local environments
+.env
+*.env
+.env.local
+
+# Local service log files
+*.log
+*.txt
+server_err.txt
+server_out.txt
+server_err.log
+server_out.log
+
+# Temporary / diagnostic files
+temp/
+tmp/
