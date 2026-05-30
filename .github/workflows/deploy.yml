@@ -68,5 +68,5 @@ jobs:
           push: false
           tags: webscrap-frontend:latest
 
-      - name: Verify docker-compose config
+      - name: Verify docker compose config
         run: docker compose config
