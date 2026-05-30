@@ -4958,3 +4958,9 @@
 {"level":"info","message":"GET /api/scrape/jobs?limit=20&page=1 304 - - 364.394 ms","service":"webscrap-pro-backend","timestamp":"2026-05-29 15:12:03"}
 {"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-05-29 15:15:08"}
 {"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-05-29 15:15:08"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:55:58"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:55:58"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:56:02"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:56:02"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:56:02"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:56:02"}
