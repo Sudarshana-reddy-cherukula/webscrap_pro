@@ -9,17 +9,17 @@ function CTASection({ onNavigate }) {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-blue-600/5 to-purple-600/10 px-8 py-16 text-center sm:px-16"
+          className="relative overflow-hidden rounded-3xl border border-amber-400/30 bg-gradient-to-br from-amber-50 via-orange-50/50 to-rose-50/30 px-8 py-16 text-center sm:px-16"
         >
-          <div className="absolute inset-0 bg-grid opacity-30" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-grid opacity-20" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full blur-3xl" />
 
           <div className="relative">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 px-4 py-1.5 text-xs font-medium text-cyan-300"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-50 px-4 py-1.5 text-xs font-medium text-amber-700"
             >
               <Sparkles size={12} />
               Start your free trial today
@@ -35,7 +35,7 @@ function CTASection({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate && onNavigate('/register')}
-                className="group bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-3 text-base font-semibold text-app-fg rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105"
+                className="group bg-gradient-to-r from-amber-500 to-orange-600 px-8 py-3 text-base font-semibold text-white rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-300 hover:scale-105"
               >
                 Get started free
                 <ArrowRight size={16} className="ml-2 inline transition-transform duration-300 group-hover:translate-x-1" />
@@ -43,17 +43,17 @@ function CTASection({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate && onNavigate('/faq')}
-                className="border border-app-line px-8 py-3 text-base font-medium text-app-soft rounded-xl hover:bg-app-surface transition-all duration-300 hover:scale-105"
+                className="border border-app-line px-8 py-3 text-base font-medium text-app-soft rounded-xl hover:bg-white transition-all duration-300 hover:scale-105"
               >
                 Learn more
               </button>
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-6 text-xs text-zinc-600">
+            <div className="mt-8 flex items-center justify-center gap-6 text-xs text-app-muted">
               <span>No credit card required</span>
-              <span className="w-1 h-1 rounded-full bg-zinc-700" />
+              <span className="w-1 h-1 rounded-full bg-app-line" />
               <span>14-day free trial</span>
-              <span className="w-1 h-1 rounded-full bg-zinc-700" />
+              <span className="w-1 h-1 rounded-full bg-app-line" />
               <span>Cancel anytime</span>
             </div>
           </div>

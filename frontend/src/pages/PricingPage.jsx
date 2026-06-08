@@ -58,7 +58,7 @@ function PricingPage() {
               className={`relative ${cardClass} ${plan.popular ? 'border-purple-500/30 shadow-xl shadow-purple-500/5' : ''}`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-purple-500 to-pink-600 px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg">
                   Most popular
                 </div>
               )}
@@ -77,7 +77,7 @@ function PricingPage() {
               <button type="button" onClick={() => navigate('/register')}
                 className={`mt-8 w-full rounded-xl py-2.5 text-sm font-semibold transition ${
                   plan.popular
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30'
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30'
                     : 'border border-white/10 text-app-soft hover:bg-white/[0.04]'
                 }`}
               >{plan.cta}</button>
@@ -107,7 +107,7 @@ function PricingPage() {
             <h2 className="text-2xl font-bold text-app-fg">Still have questions?</h2>
             <p className="mt-2 text-sm text-app-muted">Our team is here to help you find the perfect plan.</p>
             <button type="button" onClick={() => navigate('/faq')}
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30"
             >Visit FAQ <ArrowRight size={16} /></button>
           </div>
         </motion.div>

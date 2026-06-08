@@ -1,37 +1,22 @@
 @import './styles/motion.css';
 
 :root {
-  --bg: #0a0e1a;
-  --surface: #111827;
-  --surface-2: #1a2242;
-  --panel: #1f2937;
-  --border: #2d3748;
-  --hairline: #374151;
-  --fg: #f1f5f9;
-  --soft: #a0aec0;
-  --muted: #818cf8;
-  --accent: #00f5d4;
-  --accent-2: #3b82f6;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
+  --bg: #f8f5f0;
+  --surface: #ffffff;
+  --surface-2: #f5f0ea;
+  --panel: #faf7f3;
+  --border: #e8e2da;
+  --hairline: #ece6df;
+  --fg: #2d2418;
+  --soft: #8c8276;
+  --muted: #a99e92;
+  --accent: #c85a48;
+  --accent-2: #d4933c;
+  --success: #7aaf7a;
+  --warning: #d4a050;
+  --error: #c85a48;
   --font-display: 'Dosis', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'Fira Code', monospace;
-}
-
-[data-theme='light'] {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-2: #2dd8eb;
-  --panel: #e2e8f0;
-  --border: #cbd5e1;
-  --hairline: #e2e8f0;
-  --fg: #0f172a;
-  --soft: #64748b;
-  --muted: #6366f1;
-  --accent: #0d9488;
-  --accent-2: #2563eb;
-  --quick-tools-bg: #2dd8eb;
 }
 
 * {
@@ -76,8 +61,8 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(circle at 20% 50%, rgba(0, 245, 212, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(200, 90, 72, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(212, 147, 60, 0.06) 0%, transparent 50%);
   pointer-events: none;
   z-index: -1;
 }
@@ -99,7 +84,7 @@ body::before {
   height: 4px;
   border-radius: 50%;
   background: var(--accent);
-  opacity: 0.4;
+  opacity: 0.3;
   animation: moveDot linear infinite;
 }
 
@@ -115,9 +100,9 @@ body::before {
 .dot:nth-child(10) { left: 25%; top: 35%; animation-duration: 27s; animation-delay: -6s; }
 
 @keyframes moveDot {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-  50% { transform: translate(100px, -100px) scale(1.2); opacity: 0.8; }
-  100% { transform: translate(200px, -200px) scale(1); opacity: 0.3; }
+  0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  50% { transform: translate(100px, -100px) scale(1.2); opacity: 0.5; }
+  100% { transform: translate(200px, -200px) scale(1); opacity: 0.2; }
 }
 
 .nav {
@@ -127,7 +112,7 @@ body::before {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--hairline);
   padding: 16px 0;
-  background: rgba(10, 14, 26, 0.8);
+  background: rgba(248, 245, 240, 0.8);
 }
 
 .nav-container {
@@ -157,6 +142,7 @@ body::before {
   align-items: center;
   justify-content: center;
   font-weight: 900;
+  color: white;
 }
 
 .nav-links {
@@ -191,7 +177,7 @@ body::before {
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--accent);
-  background: rgba(0, 245, 212, 0.1);
+  background: rgba(200, 90, 72, 0.08);
   border-color: var(--accent);
 }
 
@@ -276,7 +262,7 @@ body::before {
   border: 1px solid var(--hairline);
   border-radius: 16px;
   padding: 24px;
-  background: linear-gradient(135deg, rgba(0, 245, 212, 0.08), rgba(59, 130, 246, 0.07));
+  background: linear-gradient(135deg, rgba(200, 90, 72, 0.06), rgba(212, 147, 60, 0.05));
 }
 
 .cta-banner h3 {
@@ -312,7 +298,7 @@ body::before {
   border: 1px solid var(--hairline);
   border-radius: 16px;
   padding: 24px;
-  background: linear-gradient(135deg, rgba(0, 245, 212, 0.03), rgba(59, 130, 246, 0.03));
+  background: linear-gradient(135deg, rgba(200, 90, 72, 0.02), rgba(212, 147, 60, 0.02));
 }
 
 .stat-label {
@@ -432,7 +418,7 @@ body::before {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #111827;
+  color: #fff;
 }
 
 .btn-secondary {
@@ -510,7 +496,7 @@ footer {
   margin-top: 80px;
   text-align: center;
   color: var(--soft);
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(248, 245, 240, 0.8);
 }
 
 .notification {
@@ -580,7 +566,7 @@ textarea:focus-visible {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
-    background: rgba(10, 14, 26, 0.9);
+    background: rgba(248, 245, 240, 0.9);
     border: 1px solid var(--hairline);
     border-radius: 12px;
     padding: 12px;

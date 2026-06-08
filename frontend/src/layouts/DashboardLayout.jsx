@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
-import { useTheme } from '@/hooks/useTheme'
 import ParticleBackground from '@/components/ui/ParticleBackground'
 import {
   LayoutDashboard,
@@ -17,8 +16,6 @@ import {
   ChevronRight,
   Menu,
   X,
-  Sun,
-  Moon,
 } from 'lucide-react'
 
 const navigation = [
@@ -35,14 +32,13 @@ function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, logout } = useAuth()
-  const { theme, toggleTheme } = useTheme()
   const location = useLocation()
 
   return (
     <div className="flex min-h-screen bg-app-bg">
       <ParticleBackground particleCount={30} />
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-app-line bg-app-bg/90 backdrop-blur-2xl transition-all duration-300 lg:sticky lg:top-0 lg:h-screen ${
+        className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-app-line bg-white/90 backdrop-blur-2xl transition-all duration-300 lg:sticky lg:top-0 lg:h-screen ${
           collapsed ? 'w-16' : 'w-64'
         } ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
@@ -51,12 +47,12 @@ function DashboardLayout() {
             to="/"
             className={`flex items-center gap-2.5 ${collapsed ? 'justify-center' : ''}`}
           >
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-[7px] font-bold text-white tracking-tight leading-none">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-[7px] font-bold text-white tracking-tight leading-none">
               WP
             </div>
             {!collapsed && (
               <span className="text-sm font-bold tracking-tight text-app-fg">
-                WebScrap <span className="text-cyan-400">Pro</span>
+                WebScrap <span className="text-amber-600">Pro</span>
               </span>
             )}
           </NavLink>
@@ -85,7 +81,7 @@ function DashboardLayout() {
               className={({ isActive }) =>
                 `group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
                   isActive
-                    ? 'bg-gradient-to-r from-cyan-500/10 to-blue-600/5 text-cyan-300'
+                    ? 'bg-gradient-to-r from-amber-500/10 to-orange-600/5 text-amber-700'
                     : 'text-app-muted hover:bg-app-surface hover:text-app-nav'
                 } ${collapsed ? 'justify-center' : ''}`
               }
@@ -102,18 +98,8 @@ function DashboardLayout() {
         </nav>
 
         <div className="border-t border-app-line p-3">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-app-muted transition hover:bg-app-surface hover:text-app-nav ${
-              collapsed ? 'justify-center' : ''
-            }`}
-          >
-            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
-            {!collapsed && (theme === 'dark' ? 'Light mode' : 'Dark mode')}
-          </button>
           <div className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''}`}>
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-600/20 text-sm font-medium text-cyan-300 ring-1 ring-app-line">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-500/20 to-orange-600/20 text-sm font-medium text-amber-700 ring-1 ring-app-line">
               {user?.name?.charAt(0) || 'U'}
             </div>
             {!collapsed && (
@@ -126,7 +112,7 @@ function DashboardLayout() {
           <button
             type="button"
             onClick={logout}
-            className={`mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-app-muted transition hover:bg-red-500/10 hover:text-red-400 ${
+            className={`mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-app-muted transition hover:bg-red-500/10 hover:text-red-500 ${
               collapsed ? 'justify-center' : ''
             }`}
           >
@@ -138,13 +124,13 @@ function DashboardLayout() {
 
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       <div className="flex-1">
-        <div className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-app-line bg-app-bg/80 px-4 backdrop-blur-2xl lg:hidden">
+        <div className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-app-line bg-white/80 px-4 backdrop-blur-2xl lg:hidden">
           <button
             type="button"
             className="rounded-lg border border-app-line p-1.5 text-app-muted transition hover:bg-app-surface hover:text-app-soft"
@@ -153,7 +139,7 @@ function DashboardLayout() {
             <Menu size={16} />
           </button>
           <span className="text-sm font-bold text-app-fg">
-            WebScrap <span className="text-cyan-400">Pro</span>
+            WebScrap <span className="text-amber-600">Pro</span>
           </span>
         </div>
         <div className="p-4 sm:p-6 lg:p-8">

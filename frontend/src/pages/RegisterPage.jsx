@@ -16,7 +16,7 @@ const registerSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters'),
 })
 
-const COLORS = ['#06b6d4', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899', '#22d3ee', '#f43f5e']
+const COLORS = ['#c85a48', '#d4933c', '#b0443a', '#d4a050', '#7b5e8d', '#a06040', '#8c6e4a']
 
 function ParticleCanvas() {
   const canvasRef = useRef(null)
@@ -166,25 +166,25 @@ function RegisterPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-app-bg px-4 py-12">
       <ParticleCanvas />
-      <AnimatedBlob className="top-[-10%] right-[-10%] w-[500px] h-[500px]" color="rgba(168,85,247,0.12)" />
-      <AnimatedBlob className="bottom-[-10%] left-[-10%] w-[500px] h-[500px]" color="rgba(6,182,212,0.12)" />
-      <AnimatedBlob className="top-[40%] left-[-20%] w-[400px] h-[400px]" color="rgba(236,72,153,0.08)" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.06),transparent_60%)]" />
+      <AnimatedBlob className="top-[-10%] right-[-10%] w-[500px] h-[500px]" color="rgba(212,147,60,0.1)" />
+      <AnimatedBlob className="bottom-[-10%] left-[-10%] w-[500px] h-[500px]" color="rgba(200,90,72,0.1)" />
+      <AnimatedBlob className="top-[40%] left-[-20%] w-[400px] h-[400px]" color="rgba(123,94,141,0.08)" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,90,72,0.04),transparent_60%)]" />
 
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="relative w-full max-w-md">
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-600/20 via-pink-600/10 to-cyan-500/20 blur-3xl" />
-        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-purple-400/30 via-pink-500/30 to-cyan-400/30" />
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
+        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-amber-400/30 via-orange-500/30 to-rose-500/30" />
         <div className="relative rounded-2xl border border-app-line bg-app-bg/70 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1, duration: 0.5 }}>
               <Link to="/" className="mb-6 inline-flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-[7px] font-bold text-app-fg shadow-lg tracking-tight leading-none">WP</div>
-                <span className="text-lg font-bold text-app-fg">WebScrap <span className="text-cyan-400">Pro</span></span>
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-[7px] font-bold text-white shadow-lg tracking-tight leading-none">WP</div>
+                <span className="text-lg font-bold text-app-fg">WebScrap <span className="text-amber-600">Pro</span></span>
               </Link>
-              <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-purple-500/10 bg-purple-500/5 px-3 py-1">
-                <Sparkles size={10} className="text-purple-400" />
-                <span className="text-[10px] text-purple-400/80">Free 14-day trial</span>
+              <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
+                <Sparkles size={10} className="text-amber-600" />
+                <span className="text-[10px] text-amber-700">Free 14-day trial</span>
               </div>
             </motion.div>
             <h1 className="text-2xl font-bold text-app-fg">Create your account</h1>
@@ -195,14 +195,14 @@ function RegisterPage() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <label htmlFor="name" className="block text-sm font-medium text-app-soft">Full name</label>
               <input id="name" type="text" {...register('name')} placeholder="Jane Doe"
-                className="mt-1.5 block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20 hover:border-white/20" />
+                className="mt-1.5 block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
               {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name.message}</p>}
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
               <label htmlFor="email" className="block text-sm font-medium text-app-soft">Email address</label>
               <input id="email" type="email" {...register('email')} placeholder="you@example.com"
-                className="mt-1.5 block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20 hover:border-white/20" />
+                className="mt-1.5 block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
               {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>}
             </motion.div>
 
@@ -210,7 +210,7 @@ function RegisterPage() {
               <label htmlFor="password" className="block text-sm font-medium text-app-soft">Password</label>
               <div className="relative mt-1.5">
                 <input id="password" type={showPassword ? 'text' : 'password'} {...register('password')} placeholder="Create a strong password"
-                  className="block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20 hover:border-white/20" />
+                  className="block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-app-muted hover:text-app-soft transition">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -221,7 +221,7 @@ function RegisterPage() {
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
               <Button type="submit" disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-purple-500 to-pink-600 py-2.5 text-sm font-semibold text-app-fg shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 transition-all duration-300 hover:scale-[1.02]">
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-300 hover:scale-[1.02]">
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2"><Loader2 size={16} className="animate-spin" /> Creating account...</span>
                 ) : (
@@ -233,14 +233,14 @@ function RegisterPage() {
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="mt-6 text-center">
             <p className="text-sm text-app-muted">Already have an account?{' '}
-              <Link to="/login" className="font-medium text-purple-400 transition hover:text-purple-300">Sign in <ArrowRight size={12} className="inline" /></Link>
+              <Link to="/login" className="font-medium text-amber-600 transition hover:text-amber-700">Sign in <ArrowRight size={12} className="inline" /></Link>
             </p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }}
-            className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[11px] text-zinc-600">
-            <span>Free 14-day trial</span><span className="w-1 h-1 rounded-full bg-app-elevated" />
-            <span>No credit card</span><span className="w-1 h-1 rounded-full bg-app-elevated" />
+            className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[11px] text-app-muted">
+            <span>Free 14-day trial</span><span className="w-1 h-1 rounded-full bg-app-line" />
+            <span>No credit card</span><span className="w-1 h-1 rounded-full bg-app-line" />
             <span>Cancel anytime</span>
           </motion.div>
         </div>

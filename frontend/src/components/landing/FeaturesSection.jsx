@@ -6,36 +6,36 @@ const features = [
     icon: Globe,
     title: 'Smart Web Scraping',
     description: 'Extract structured data from any website with intelligent crawling, CSS selectors, and automatic pagination handling. Built for scale.',
-    gradient: 'from-cyan-500 to-blue-600',
-    glow: 'shadow-cyan-500/10',
+    gradient: 'from-amber-500 to-orange-600',
+    glow: 'shadow-amber-500/10',
   },
   {
     icon: FileText,
     title: 'PDF Text Extraction',
     description: 'Extract text, metadata, and embedded images from any PDF. Handles complex layouts, scanned documents, and encrypted files.',
-    gradient: 'from-purple-500 to-pink-600',
-    glow: 'shadow-purple-500/10',
+    gradient: 'from-rose-500 to-pink-600',
+    glow: 'shadow-rose-500/10',
   },
   {
     icon: Download,
     title: 'Multi-Format Export',
     description: 'Export your data in JSON, CSV, XLSX, XML, or connect directly to your database. Seamless workflow integration.',
-    gradient: 'from-blue-500 to-indigo-600',
-    glow: 'shadow-blue-500/10',
+    gradient: 'from-orange-500 to-amber-600',
+    glow: 'shadow-orange-500/10',
   },
   {
     icon: BarChart3,
     title: 'Real-Time Analytics',
     description: 'Monitor scraping jobs, track processing metrics, and gain actionable insights with beautiful interactive dashboards.',
-    gradient: 'from-amber-500 to-orange-600',
+    gradient: 'from-amber-500 to-yellow-600',
     glow: 'shadow-amber-500/10',
   },
   {
     icon: Zap,
     title: 'Lightning Fast Engine',
     description: 'Parallel processing engine handles thousands of pages per minute with intelligent rate limiting and smart queuing.',
-    gradient: 'from-green-500 to-emerald-600',
-    glow: 'shadow-green-500/10',
+    gradient: 'from-emerald-500 to-teal-600',
+    glow: 'shadow-emerald-500/10',
   },
   {
     icon: Shield,
@@ -70,7 +70,7 @@ const features = [
 function FeaturesSection() {
   return (
     <section id="features" className="relative border-t border-app-line py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.06),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,90,72,0.04),transparent_50%)]" />
       <div className="absolute inset-0 bg-grid opacity-30" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -80,7 +80,7 @@ function FeaturesSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-purple-400">
+          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">
             Features
           </p>
           <h2 className="mt-4 text-balance text-3xl sm:text-4xl font-bold text-app-fg">
@@ -99,19 +99,19 @@ function FeaturesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: i * 0.05, duration: 0.5 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-[#0B1220] p-6 transition-all duration-500 hover:border-cyan-500/20 hover:shadow-2xl hover:shadow-cyan-500/10 hover:-translate-y-1"
+              className="group relative overflow-hidden rounded-2xl border border-app-line bg-white p-6 transition-all duration-500 hover:border-amber-400/30 hover:shadow-2xl hover:shadow-amber-500/5 hover:-translate-y-1"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.02] via-transparent to-purple-600/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${feature.gradient} p-2.5 shadow-lg ${feature.glow} group-hover:scale-110 group-hover:shadow-cyan-500/20 transition-all duration-300`}>
-                <feature.icon size={20} className="text-app-fg" />
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/[0.02] via-transparent to-orange-600/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${feature.gradient} p-2.5 shadow-lg ${feature.glow} group-hover:scale-110 transition-all duration-300`}>
+                <feature.icon size={20} className="text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-app-fg group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-300">
+              <h3 className="text-lg font-semibold text-app-fg group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-amber-600 group-hover:to-orange-500 group-hover:bg-clip-text transition-all duration-300">
                 {feature.title}
               </h3>
               <p className="mt-2 text-sm leading-6 text-app-muted group-hover:text-app-soft transition-colors duration-300">
                 {feature.description}
               </p>
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
             </motion.div>
           ))}
         </div>
@@ -122,7 +122,7 @@ function FeaturesSection() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/20 bg-purple-500/5 px-5 py-2 text-sm text-purple-300">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-50 px-5 py-2 text-sm text-amber-700">
             <Sparkles size={14} />
             New: AI-powered data extraction now available
           </div>

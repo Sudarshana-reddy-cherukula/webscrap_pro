@@ -9,12 +9,12 @@ function NotFoundPage() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center"
       >
-        <p className="text-8xl font-bold text-white">404</p>
-        <h1 className="mt-4 text-2xl font-bold text-white">Page not found</h1>
-        <p className="mt-2 text-zinc-400">The page you&apos;re looking for doesn&apos;t exist.</p>
+        <p className="text-8xl font-bold text-app-fg">404</p>
+        <h1 className="mt-4 text-2xl font-bold text-app-fg">Page not found</h1>
+        <p className="mt-2 text-app-muted">The page you&apos;re looking for doesn&apos;t exist.</p>
         <Link
           to="/"
-          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-500/30"
+          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30"
         >
           Go home
         </Link>

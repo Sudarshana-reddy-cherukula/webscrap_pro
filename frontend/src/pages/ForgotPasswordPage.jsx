@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail, ArrowLeft, ArrowRight, Sparkles, Loader2, CheckCircle2 } from 'lucide-react'
 import authService from '@/services/authService'
 
-const COLORS = ['#06b6d4', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899', '#22d3ee']
+const COLORS = ['#c85a48', '#d4933c', '#b0443a', '#d4a050', '#7b5e8d']
 
 const schema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -57,19 +57,13 @@ function ParticleCanvas() {
         if (p.y < 0) p.y = h; if (p.y > h) p.y = 0
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = p.color; ctx.globalAlpha = p.alpha
-        ctx.fill()
+        ctx.fillStyle = p.color; ctx.globalAlpha = p.alpha; ctx.fill()
       }
       ctx.globalAlpha = 1
       animId = requestAnimationFrame(animate)
     }
     animate()
-
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', onMouse)
-    }
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); window.removeEventListener('mousemove', onMouse) }
   }, [])
 
   return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
@@ -80,11 +74,8 @@ function AnimatedBlob({ className, color }) {
     <motion.div
       className={`absolute rounded-full blur-3xl ${className}`}
       style={{ background: color }}
-      animate={{
-        x: [0, 80, -40, 60, 0], y: [0, -60, 50, -30, 0],
-        scale: [1, 1.15, 0.9, 1.1, 1],
-      }}
-      transition={{ duration: 15, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
+      animate={{ x: [0, 80, -40, 60, 0], y: [0, -60, 50, -30, 0], scale: [1, 1.15, 0.95, 1.1, 1] }}
+      transition={{ duration: 18, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
     />
   )
 }
@@ -95,9 +86,7 @@ function ForgotPasswordPage() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: zodResolver(schema),
-  })
+  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema) })
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -115,8 +104,8 @@ function ForgotPasswordPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-app-bg px-4 py-12">
       <ParticleCanvas />
-      <AnimatedBlob className="top-[-10%] left-[-10%] w-[450px] h-[450px]" color="rgba(59,130,246,0.1)" />
-      <AnimatedBlob className="bottom-[-10%] right-[-10%] w-[450px] h-[450px]" color="rgba(139,92,246,0.1)" />
+      <AnimatedBlob className="top-[-10%] left-[-10%] w-[450px] h-[450px]" color="rgba(200,90,72,0.08)" />
+      <AnimatedBlob className="bottom-[-10%] right-[-10%] w-[450px] h-[450px]" color="rgba(212,147,60,0.08)" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -124,21 +113,21 @@ function ForgotPasswordPage() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"
       >
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 via-purple-600/10 to-pink-600/20 blur-3xl" />
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
 
-        <div className="relative rounded-2xl border border-app-line bg-app-bg/70 p-8 backdrop-blur-2xl shadow-2xl">
+        <div className="relative rounded-2xl border border-app-line bg-white/80 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
             <Link to="/" className="mb-6 inline-flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-app-fg shadow-lg shadow-cyan-500/20">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white shadow-lg shadow-amber-500/20">
                 S
               </div>
               <span className="text-lg font-bold text-app-fg">
-                Scrape<span className="text-cyan-400">Flow</span>
+                Scrape<span className="text-amber-600">Flow</span>
               </span>
             </Link>
-            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-blue-500/10 bg-blue-500/5 px-3 py-1">
-              <Sparkles size={10} className="text-blue-400" />
-              <span className="text-[10px] text-blue-400/80">Password reset</span>
+            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
+              <Sparkles size={10} className="text-amber-600" />
+              <span className="text-[10px] text-amber-700">Password reset</span>
             </div>
             <h1 className="text-2xl font-bold text-app-fg">Forgot password?</h1>
             <p className="mt-2 text-sm text-app-muted">
@@ -152,8 +141,8 @@ function ForgotPasswordPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center space-y-6"
             >
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10">
-                <CheckCircle2 size={32} className="text-emerald-400" />
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
+                <CheckCircle2 size={32} className="text-emerald-600" />
               </div>
               <p className="text-sm text-app-muted">
                 If an account exists with that email, we've sent password reset instructions.
@@ -161,7 +150,7 @@ function ForgotPasswordPage() {
               <button
                 type="button"
                 onClick={() => navigate('/login')}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 text-sm font-semibold text-app-fg shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-500/30"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30"
               >
                 Back to login <ArrowRight size={14} />
               </button>
@@ -175,21 +164,21 @@ function ForgotPasswordPage() {
                   type="email"
                   {...register('email')}
                   placeholder="you@example.com"
-                  className="mt-1.5 block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+                  className="mt-1.5 block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
                 />
-                {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>}
+                {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
               </div>
 
               {error && (
-                <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3">
-                  <p className="text-xs text-red-400">{error}</p>
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+                  <p className="text-xs text-red-600">{error}</p>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 py-2.5 text-sm font-semibold text-app-fg shadow-lg shadow-blue-500/20 transition hover:shadow-blue-500/30 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30 disabled:opacity-50"
               >
                 {loading ? (
                   <Loader2 size={16} className="animate-spin" />

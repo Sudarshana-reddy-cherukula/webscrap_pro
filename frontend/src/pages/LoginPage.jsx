@@ -14,7 +14,7 @@ const loginSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
-const COLORS = ['#06b6d4', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899', '#f43f5e', '#22d3ee', '#6366f1']
+const COLORS = ['#c85a48', '#d4933c', '#b0443a', '#d4a050', '#7b5e8d', '#a06040', '#c48a5e', '#8c6e4a']
 
 function ParticleCanvas() {
   const canvasRef = useRef(null)
@@ -174,11 +174,11 @@ function LoginPage() {
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-app-bg px-4 py-12">
       <ParticleCanvas />
 
-      <AnimatedBlob className="top-[-10%] left-[-10%] w-[500px] h-[500px]" color="rgba(6,182,212,0.12)" />
-      <AnimatedBlob className="bottom-[-10%] right-[-10%] w-[500px] h-[500px]" color="rgba(168,85,247,0.12)" />
-      <AnimatedBlob className="top-[50%] right-[-20%] w-[400px] h-[400px]" color="rgba(236,72,153,0.08)" />
+      <AnimatedBlob className="top-[-10%] left-[-10%] w-[500px] h-[500px]" color="rgba(200,90,72,0.1)" />
+      <AnimatedBlob className="bottom-[-10%] right-[-10%] w-[500px] h-[500px]" color="rgba(212,147,60,0.1)" />
+      <AnimatedBlob className="top-[50%] right-[-20%] w-[400px] h-[400px]" color="rgba(123,94,141,0.08)" />
 
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.06),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,90,72,0.04),transparent_60%)]" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -186,8 +186,8 @@ function LoginPage() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"
       >
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/20 via-blue-600/10 to-purple-600/20 blur-3xl" />
-        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-cyan-400/30 via-purple-500/30 to-pink-500/30" />
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
+        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-amber-400/30 via-orange-500/30 to-rose-500/30" />
 
         <div className="relative rounded-2xl border border-app-line bg-app-bg/70 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
@@ -197,16 +197,16 @@ function LoginPage() {
               transition={{ delay: 0.1, duration: 0.5 }}
             >
               <Link to="/" className="mb-6 inline-flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-[7px] font-bold text-app-fg shadow-lg shadow-cyan-500/20 tracking-tight leading-none">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-[7px] font-bold text-white shadow-lg shadow-amber-500/20 tracking-tight leading-none">
                   WP
                 </div>
                 <span className="text-lg font-bold text-app-fg">
-                  WebScrap <span className="text-cyan-400">Pro</span>
+                  WebScrap <span className="text-amber-600">Pro</span>
                 </span>
               </Link>
-              <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-cyan-500/10 bg-cyan-500/5 px-3 py-1">
-                <Sparkles size={10} className="text-cyan-400" />
-                <span className="text-[10px] text-cyan-400/80">Welcome back</span>
+              <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
+                <Sparkles size={10} className="text-amber-600" />
+                <span className="text-[10px] text-amber-700">Welcome back</span>
               </div>
             </motion.div>
             <h1 className="text-2xl font-bold text-app-fg">Sign in to your account</h1>
@@ -219,18 +219,18 @@ function LoginPage() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <label htmlFor="email" className="block text-sm font-medium text-app-soft">Email address</label>
               <input id="email" type="email" {...register('email')} placeholder="you@example.com"
-                className="mt-1.5 block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 hover:border-white/20" />
+                className="mt-1.5 block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
               {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>}
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
               <div className="flex items-center justify-between">
                 <label htmlFor="password" className="block text-sm font-medium text-app-soft">Password</label>
-                <Link to="/forgot-password" className="text-xs text-app-muted hover:text-cyan-400 transition">Forgot password?</Link>
+                <Link to="/forgot-password" className="text-xs text-app-muted hover:text-amber-600 transition">Forgot password?</Link>
               </div>
               <div className="relative mt-1.5">
                 <input id="password" type={showPassword ? 'text' : 'password'} {...register('password')} placeholder="Enter your password"
-                  className="block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 hover:border-white/20" />
+                  className="block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-app-muted hover:text-app-soft transition">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -240,7 +240,7 @@ function LoginPage() {
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
               <Button type="submit" disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 py-2.5 text-sm font-semibold text-app-fg shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-[1.02]">
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-300 hover:scale-[1.02]">
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> Signing in...</span>
                 ) : (
@@ -258,7 +258,7 @@ function LoginPage() {
           >
             <p className="text-sm text-app-muted">
               Don&apos;t have an account?{' '}
-              <Link to="/register" className="font-medium text-cyan-400 transition hover:text-cyan-300">
+               <Link to="/register" className="font-medium text-amber-600 transition hover:text-amber-700">
                 Create one <ArrowRight size={12} className="inline" />
               </Link>
             </p>
@@ -270,7 +270,7 @@ function LoginPage() {
             transition={{ delay: 0.45 }}
             className="mt-4 rounded-xl border border-app-line bg-app-surface px-4 py-3"
           >
-            <p className="text-center text-[11px] text-zinc-600">
+            <p className="text-center text-[11px] text-app-muted">
               Demo credentials pre-filled. Click sign in to continue.
             </p>
           </motion.div>

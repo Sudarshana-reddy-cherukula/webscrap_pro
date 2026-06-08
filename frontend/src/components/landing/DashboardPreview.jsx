@@ -18,7 +18,7 @@ const recentJobs = [
 function DashboardPreview() {
   return (
     <section id="dashboard" className="relative border-t border-app-line py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(59,130,246,0.06),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(212,147,60,0.04),transparent_50%)]" />
       <div className="absolute inset-0 bg-grid opacity-30" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -28,7 +28,7 @@ function DashboardPreview() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
+          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">
             Dashboard
           </p>
           <h2 className="mt-4 text-balance text-3xl sm:text-4xl font-bold text-app-fg">
@@ -46,11 +46,11 @@ function DashboardPreview() {
           transition={{ delay: 0.1 }}
           className="mt-16 relative"
         >
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/10 via-cyan-500/5 to-transparent blur-3xl" />
-          <div className="relative rounded-2xl border border-app-line bg-app-elevated/80 backdrop-blur-2xl overflow-hidden shadow-2xl shadow-blue-500/5">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-transparent blur-3xl" />
+          <div className="relative rounded-2xl border border-app-line bg-white/90 backdrop-blur-2xl overflow-hidden shadow-2xl shadow-amber-500/5">
             <div className="border-b border-app-line px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 text-xs font-bold text-app-fg">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white">
                   D
                 </div>
                 <div>
@@ -59,8 +59,8 @@ function DashboardPreview() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <div className="h-2 w-2 rounded-full bg-green-400" />
-                <div className="h-2 w-2 rounded-full bg-yellow-400" />
+                <div className="h-2 w-2 rounded-full bg-emerald-500" />
+                <div className="h-2 w-2 rounded-full bg-amber-400" />
                 <div className="h-2 w-2 rounded-full bg-red-400" />
               </div>
             </div>
@@ -74,14 +74,14 @@ function DashboardPreview() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 + i * 0.05 }}
-                    className="rounded-xl border border-app-line bg-app-surface p-4 hover:border-app-line transition-colors"
+                    className="rounded-xl border border-app-line bg-white p-4 hover:border-app-line transition-colors"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs text-app-muted">{stat.label}</span>
                       <stat.icon size={14} className="text-app-muted" />
                     </div>
                     <p className="text-xl font-bold text-app-fg">{stat.value}</p>
-                    <span className={`inline-flex items-center gap-0.5 text-xs ${stat.positive ? 'text-green-400' : 'text-red-400'}`}>
+                    <span className={`inline-flex items-center gap-0.5 text-xs ${stat.positive ? 'text-emerald-600' : 'text-red-500'}`}>
                       {stat.positive ? <ArrowUp size={10} /> : <ArrowDown size={10} />}
                       {stat.change}
                     </span>
@@ -89,11 +89,11 @@ function DashboardPreview() {
                 ))}
               </div>
 
-              <div className="rounded-xl border border-app-line bg-app-surface overflow-hidden">
+              <div className="rounded-xl border border-app-line bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-app-line">
                   <p className="text-xs font-medium text-app-muted uppercase tracking-wider">Recent Jobs</p>
                 </div>
-                <div className="divide-y divide-white/5">
+                <div className="divide-y divide-app-line">
                   {recentJobs.map((job, i) => (
                     <motion.div
                       key={job.url}
@@ -101,12 +101,12 @@ function DashboardPreview() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      className="flex items-center justify-between px-4 py-3 text-sm hover:bg-app-surface transition-colors"
+                      className="flex items-center justify-between px-4 py-3 text-sm hover:bg-amber-50/50 transition-colors"
                     >
                       <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div className={`h-1.5 w-1.5 rounded-full shrink-0 ${
-                          job.status === 'Completed' ? 'bg-green-400' :
-                          job.status === 'Processing' ? 'bg-yellow-400' :
+                          job.status === 'Completed' ? 'bg-emerald-500' :
+                          job.status === 'Processing' ? 'bg-amber-400' :
                           'bg-red-400'
                         }`} />
                         <span className="text-app-soft truncate">{job.url}</span>
@@ -115,9 +115,9 @@ function DashboardPreview() {
                         <span>{job.pages}{typeof job.pages === 'number' ? ' pages' : ''}</span>
                         <span>{job.time}</span>
                         <span className={`${
-                          job.data === 'Completed' ? 'text-green-400' :
-                          job.data === 'Error' ? 'text-red-400' :
-                          'text-yellow-400'
+                          job.data === 'Completed' ? 'text-emerald-600' :
+                          job.data === 'Error' ? 'text-red-500' :
+                          'text-amber-600'
                         }`}>{job.data}</span>
                       </div>
                     </motion.div>

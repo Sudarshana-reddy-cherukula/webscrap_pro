@@ -69,7 +69,7 @@ function PricingSection() {
 
   return (
     <section id="pricing" className="relative border-t border-app-line py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.06),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(200,90,72,0.04),transparent_50%)]" />
       <div className="absolute inset-0 bg-grid opacity-30" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -79,7 +79,7 @@ function PricingSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-violet-400">
+          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">
             Pricing
           </p>
           <h2 className="mt-4 text-balance text-3xl sm:text-4xl font-bold text-app-fg">
@@ -100,12 +100,12 @@ function PricingSection() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className={`relative rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1 ${
                 plan.popular
-                  ? 'border-violet-500/30 bg-gradient-to-b from-violet-500/5 to-transparent shadow-2xl shadow-violet-500/10'
-                  : 'border-app-line bg-app-surface hover:border-app-line'
+                  ? 'border-amber-400/40 bg-gradient-to-b from-amber-50 to-white shadow-2xl shadow-amber-500/10'
+                  : 'border-app-line bg-white hover:border-app-line'
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-600 px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-app-fg shadow-lg shadow-violet-500/20">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg shadow-amber-500/20">
                   Most popular
                 </div>
               )}
@@ -122,7 +122,7 @@ function PricingSection() {
               <ul className="mt-8 space-y-3">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm text-app-muted">
-                    <Check size={16} className="mt-0.5 shrink-0 text-violet-400" />
+                    <Check size={16} className="mt-0.5 shrink-0 text-amber-600" />
                     {f}
                   </li>
                 ))}
@@ -133,8 +133,8 @@ function PricingSection() {
                 onClick={() => navigate('/register')}
                 className={`mt-8 w-full rounded-xl py-2.5 text-sm font-semibold transition-all duration-300 ${
                   plan.popular
-                    ? 'bg-gradient-to-r from-violet-500 to-indigo-600 text-app-fg shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30 hover:scale-[1.02]'
-                    : 'border border-app-line text-app-soft hover:bg-app-surface hover:scale-[1.02]'
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:scale-[1.02]'
+                    : 'border border-app-line text-app-soft hover:bg-white hover:scale-[1.02]'
                 }`}
               >
                 {plan.cta}
@@ -152,7 +152,7 @@ function PricingSection() {
           <h3 className="text-center text-lg font-semibold text-app-fg mb-6">Frequently asked about pricing</h3>
           <div className="space-y-3">
             {faq.map((item) => (
-              <details key={item.q} className="group rounded-xl border border-app-line bg-app-surface transition hover:border-app-line">
+              <details key={item.q} className="group rounded-xl border border-app-line bg-white transition hover:border-app-line">
                 <summary className="flex cursor-pointer items-center justify-between px-5 py-4 text-sm font-medium text-app-soft">
                   {item.q}
                   <ArrowRight size={14} className="shrink-0 transition-transform duration-300 group-open:rotate-90 text-app-muted" />

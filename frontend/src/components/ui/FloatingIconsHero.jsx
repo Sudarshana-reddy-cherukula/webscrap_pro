@@ -30,7 +30,7 @@ function FloatingIcon({ IconComponent, className, index }) {
       className={cn('absolute', className)}
     >
       <motion.div
-        className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10"
+        className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl bg-white/80 backdrop-blur-md border border-app-line"
         animate={{
           y: [0, -8, 0, 8, 0],
           x: [0, 6, 0, -6, 0],
@@ -43,7 +43,7 @@ function FloatingIcon({ IconComponent, className, index }) {
           ease: 'easeInOut',
         }}
       >
-        <IconComponent className="w-6 h-6 md:w-7 md:h-7 text-cyan-300" />
+        <IconComponent className="w-6 h-6 md:w-7 md:h-7 text-amber-600" />
       </motion.div>
     </motion.div>
   )
@@ -70,7 +70,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
       className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden"
     >
       <video autoPlay muted loop playsInline preload="auto"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
@@ -86,14 +86,14 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
         ))}
       </div>
 
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.08),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,90,72,0.05),transparent_60%)]" />
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 px-4 py-1.5 text-xs font-medium text-cyan-300"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-50 px-4 py-1.5 text-xs font-medium text-amber-700"
         >
           <Zap size={12} />
           Now in public beta — try it free
@@ -105,11 +105,11 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-balance"
         >
-          <span className="bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-b from-app-fg to-app-fg/60 bg-clip-text text-transparent">
             Scrape smarter.
           </span>
           <br />
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-rose-600 bg-clip-text text-transparent">
             Extract everything.
           </span>
         </motion.h1>
@@ -118,7 +118,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-zinc-400 leading-relaxed"
+          className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-app-muted leading-relaxed"
         >
           WebScrap Pro combines enterprise-grade web scraping with powerful PDF processing.
           Extract, transform, and export your data with a platform built for reliability and speed.
@@ -132,7 +132,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
         >
           <Button
             onClick={onCtaClick || (() => {})}
-            className="bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-6 text-base font-semibold shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30 hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-r from-amber-500 to-orange-600 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:scale-105 transition-all duration-300"
           >
             Start scraping free
           </Button>
@@ -149,7 +149,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-app-line bg-app-surface max-w-3xl mx-auto"
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-app-line bg-white max-w-3xl mx-auto"
         >
           {[
             { value: '10M+', label: 'Pages scraped' },
@@ -157,7 +157,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
             { value: '50K+', label: 'Active users' },
             { value: '150+', label: 'Countries' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-app-bg/80 px-4 py-5 text-center backdrop-blur-xl">
+            <div key={stat.label} className="bg-white px-4 py-5 text-center">
               <p className="text-2xl md:text-3xl font-bold text-app-fg">{stat.value}</p>
               <p className="mt-1 text-xs text-app-muted">{stat.label}</p>
             </div>

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Sparkles, Loader2, CheckCircle2, ArrowLeft } from 'lucide-react'
 import authService from '@/services/authService'
 
-const COLORS = ['#06b6d4', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899']
+const COLORS = ['#c85a48', '#d4933c', '#b0443a', '#d4a050', '#7b5e8d']
 
 function ParticleCanvas() {
   const canvasRef = useRef(null)
@@ -88,16 +88,16 @@ function VerifyOtpPage() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"
       >
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/20 via-teal-500/10 to-emerald-500/20 blur-3xl" />
-        <div className="relative rounded-2xl border border-app-line bg-app-bg/70 p-8 backdrop-blur-2xl shadow-2xl">
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
+        <div className="relative rounded-2xl border border-app-line bg-white/80 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
             <Link to="/" className="mb-6 inline-flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-app-fg shadow-lg">S</div>
-              <span className="text-lg font-bold text-app-fg">Scrape<span className="text-cyan-400">Flow</span></span>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white shadow-lg">S</div>
+              <span className="text-lg font-bold text-app-fg">Scrape<span className="text-amber-600">Flow</span></span>
             </Link>
-            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/10 bg-emerald-500/5 px-3 py-1">
-              <Sparkles size={10} className="text-emerald-400" />
-              <span className="text-[10px] text-emerald-400/80">Verify your email</span>
+            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
+              <Sparkles size={10} className="text-amber-600" />
+              <span className="text-[10px] text-amber-700">Verify your email</span>
             </div>
             <h1 className="text-2xl font-bold text-app-fg">Check your email</h1>
             <p className="mt-2 text-sm text-app-muted">Enter the 6-digit code sent to {email || 'your email'}</p>
@@ -105,10 +105,10 @@ function VerifyOtpPage() {
 
           {success ? (
             <div className="text-center space-y-4">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10">
-                <CheckCircle2 size={32} className="text-emerald-400" />
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
+                <CheckCircle2 size={32} className="text-emerald-600" />
               </div>
-              <p className="text-sm text-emerald-400">Verified! Redirecting...</p>
+              <p className="text-sm text-emerald-600">Verified! Redirecting...</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
@@ -123,15 +123,15 @@ function VerifyOtpPage() {
                     value={digit}
                     onChange={(e) => handleChange(i, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(i, e)}
-                    className="h-14 w-12 rounded-xl border border-app-line bg-app-surface text-center text-xl font-bold text-app-fg transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 hover:border-white/20"
+                    className="h-14 w-12 rounded-xl border border-app-line bg-white text-center text-xl font-bold text-app-fg transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
                   />
                 ))}
               </div>
 
-              {error && <div className="mb-4 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3"><p className="text-xs text-red-400 text-center">{error}</p></div>}
+              {error && <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3"><p className="text-xs text-red-600 text-center">{error}</p></div>}
 
               <button type="submit" disabled={loading}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 py-2.5 text-sm font-semibold text-app-fg shadow-lg shadow-emerald-500/20 transition hover:shadow-emerald-500/30 disabled:opacity-50">
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30 disabled:opacity-50">
                 {loading ? <Loader2 size={16} className="animate-spin" /> : null}
                 {loading ? 'Verifying...' : 'Verify email'}
               </button>
@@ -139,7 +139,7 @@ function VerifyOtpPage() {
               <div className="mt-4 text-center">
                 <p className="text-xs text-app-muted">
                   Didn't receive the code?{' '}
-                  <button type="button" className="text-cyan-400 hover:text-cyan-300 transition">Resend</button>
+                  <button type="button" className="text-amber-600 hover:text-amber-700 transition">Resend</button>
                 </p>
               </div>
 

@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useTheme } from '@/hooks/useTheme'
 import { useAuth } from '@/hooks/useAuth'
-import { Menu, X, Sun, Moon, LogOut, LayoutDashboard } from 'lucide-react'
+import { Menu, X, LogOut, LayoutDashboard } from 'lucide-react'
 
 const publicLinks = [
   { to: '/', label: 'Home', end: true },
@@ -22,7 +21,6 @@ const privateLinks = [
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const { theme, toggleTheme } = useTheme()
   const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -32,20 +30,20 @@ function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-app-line bg-app-bg/80 backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b border-app-line bg-white/80 backdrop-blur-2xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <Link to="/" className="group flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-app-fg shadow-lg shadow-cyan-500/20">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white shadow-lg shadow-amber-500/20">
             S
           </div>
           <span className="text-lg font-bold tracking-tight text-app-fg">
-            Scrape<span className="text-cyan-400">Flow</span>
+            Scrape<span className="text-amber-600">Flow</span>
           </span>
         </Link>
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-xl border border-app-line bg-app-surface p-2 text-app-muted transition hover:bg-app-surface hover:text-app-fg lg:hidden"
+          className="inline-flex items-center justify-center rounded-xl border border-app-line bg-white p-2 text-app-muted transition hover:bg-app-surface hover:text-app-fg lg:hidden"
           aria-label="Toggle navigation menu"
           onClick={() => setMobileOpen((prev) => !prev)}
         >
@@ -72,7 +70,7 @@ function Navbar() {
                   {isActive && (
                     <motion.span
                       layoutId="nav-glow"
-                      className="absolute inset-0 rounded-xl bg-gradient-to-b from-cyan-500/10 to-blue-600/5 shadow-lg shadow-cyan-500/5"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-b from-amber-500/10 to-orange-600/5 shadow-lg shadow-amber-500/5"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -83,18 +81,10 @@ function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <button
-            type="button"
-            className="rounded-xl border border-app-line bg-app-surface p-2 text-app-muted transition hover:bg-app-surface hover:text-app-fg"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
           {isAuthenticated ? (
             <button
               type="button"
-              className="rounded-xl border border-app-line bg-app-surface p-2 text-app-muted transition hover:bg-app-surface hover:text-red-400"
+              className="rounded-xl border border-app-line bg-white p-2 text-app-muted transition hover:bg-app-surface hover:text-red-500"
               onClick={handleLogout}
               aria-label="Logout"
             >
@@ -104,13 +94,13 @@ function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="rounded-xl border border-app-line px-4 py-2 text-sm font-medium text-app-soft transition hover:bg-app-surface hover:text-app-fg"
+                className="rounded-xl border border-app-line px-4 py-2 text-sm font-medium text-app-soft transition hover:bg-white hover:text-app-fg"
               >
                 Log in
               </Link>
               <Link
                 to="/register"
-                className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-sm font-semibold text-app-fg shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-500/30"
+                className="rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30"
               >
                 Sign up
               </Link>
@@ -137,7 +127,7 @@ function Navbar() {
                   className={({ isActive }) =>
                     `rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
                       isActive
-                        ? 'bg-cyan-500/10 text-cyan-300'
+                        ? 'bg-amber-500/10 text-amber-700'
                         : 'text-app-muted hover:bg-app-surface hover:text-app-nav'
                     }`
                   }
@@ -146,17 +136,10 @@ function Navbar() {
                 </NavLink>
               ))}
               <div className="mt-2 flex gap-2 border-t border-app-line pt-3">
-                <button
-                  type="button"
-                  className="flex-1 rounded-xl border border-app-line bg-app-surface px-4 py-2 text-sm text-app-muted transition hover:bg-app-surface hover:text-app-fg"
-                  onClick={toggleTheme}
-                >
-                  {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-                </button>
                 {isAuthenticated ? (
                   <button
                     type="button"
-                    className="flex-1 rounded-xl border border-app-line bg-app-surface px-4 py-2 text-sm text-red-400 transition hover:bg-app-surface"
+                    className="flex-1 rounded-xl border border-app-line bg-white px-4 py-2 text-sm text-red-500 transition hover:bg-app-surface"
                     onClick={handleLogout}
                   >
                     Log out
@@ -165,7 +148,7 @@ function Navbar() {
                   <Link
                     to="/register"
                     onClick={() => setMobileOpen(false)}
-                    className="flex-1 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-center text-sm font-semibold text-app-fg"
+                    className="flex-1 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-2 text-center text-sm font-semibold text-white"
                   >
                     Sign up
                   </Link>

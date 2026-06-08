@@ -8,7 +8,7 @@ import { Lock, Eye, EyeOff, Loader2, CheckCircle2, Sparkles } from 'lucide-react
 import authService from '@/services/authService'
 import { PasswordStrength } from '@/components/ui/PasswordStrength'
 
-const COLORS = ['#06b6d4', '#8b5cf6', '#a855f7', '#ec4899', '#f43f5e']
+const COLORS = ['#c85a48', '#d4933c', '#b0443a', '#d4a050', '#7b5e8d']
 
 const schema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters'),
@@ -107,23 +107,23 @@ function ResetPasswordPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-app-bg px-4 py-12">
       <ParticleCanvas />
-      <AnimatedBlob className="top-[-10%] right-[-10%] w-[450px] h-[450px]" color="rgba(168,85,247,0.1)" />
-      <AnimatedBlob className="bottom-[-10%] left-[-10%] w-[450px] h-[450px]" color="rgba(236,72,153,0.08)" />
+      <AnimatedBlob className="top-[-10%] right-[-10%] w-[450px] h-[450px]" color="rgba(200,90,72,0.08)" />
+      <AnimatedBlob className="bottom-[-10%] left-[-10%] w-[450px] h-[450px]" color="rgba(212,147,60,0.08)" />
 
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"
       >
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-600/20 via-pink-600/10 to-cyan-500/20 blur-3xl" />
-        <div className="relative rounded-2xl border border-app-line bg-app-bg/70 p-8 backdrop-blur-2xl shadow-2xl">
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
+        <div className="relative rounded-2xl border border-app-line bg-white/80 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
             <Link to="/" className="mb-6 inline-flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-app-fg shadow-lg">S</div>
-              <span className="text-lg font-bold text-app-fg">Scrape<span className="text-cyan-400">Flow</span></span>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white shadow-lg">S</div>
+              <span className="text-lg font-bold text-app-fg">Scrape<span className="text-amber-600">Flow</span></span>
             </Link>
-            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-purple-500/10 bg-purple-500/5 px-3 py-1">
-              <Sparkles size={10} className="text-purple-400" />
-              <span className="text-[10px] text-purple-400/80">New password</span>
+            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
+              <Sparkles size={10} className="text-amber-600" />
+              <span className="text-[10px] text-amber-700">New password</span>
             </div>
             <h1 className="text-2xl font-bold text-app-fg">Reset your password</h1>
             <p className="mt-2 text-sm text-app-muted">Enter your new password below</p>
@@ -136,13 +136,13 @@ function ResetPasswordPage() {
                 <input id="password" type={showPassword ? 'text' : 'password'}
                   {...register('password')}
                   placeholder="Enter new password"
-                  className="block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20" />
+                  className="block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-app-muted hover:text-app-soft">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              {errors.password && <p className="mt-1 text-xs text-red-400">{errors.password.message}</p>}
+              {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>}
               <PasswordStrength password={password} />
             </div>
 
@@ -152,20 +152,20 @@ function ResetPasswordPage() {
                 <input id="confirmPassword" type={showConfirm ? 'text' : 'password'}
                   {...register('confirmPassword')}
                   placeholder="Confirm new password"
-                  className="block w-full rounded-xl border border-app-line bg-app-surface px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20" />
+                  className="block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
                 <button type="button" onClick={() => setShowConfirm(!showConfirm)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-app-muted hover:text-app-soft">
                   {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              {errors.confirmPassword && <p className="mt-1 text-xs text-red-400">{errors.confirmPassword.message}</p>}
+              {errors.confirmPassword && <p className="mt-1 text-xs text-red-500">{errors.confirmPassword.message}</p>}
             </div>
 
-            {error && <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3"><p className="text-xs text-red-400">{error}</p></div>}
-            {!token && <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3"><p className="text-xs text-amber-400">Invalid or missing reset token. Please request a new password reset.</p></div>}
+            {error && <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3"><p className="text-xs text-red-600">{error}</p></div>}
+            {!token && <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3"><p className="text-xs text-amber-700">Invalid or missing reset token. Please request a new password reset.</p></div>}
 
             <button type="submit" disabled={loading || !token}
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 py-2.5 text-sm font-semibold text-app-fg shadow-lg shadow-purple-500/20 transition hover:shadow-purple-500/30 disabled:opacity-50">
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30 disabled:opacity-50">
               {loading ? <Loader2 size={16} className="animate-spin" /> : <Lock size={16} />}
               {loading ? 'Resetting...' : 'Reset password'}
             </button>

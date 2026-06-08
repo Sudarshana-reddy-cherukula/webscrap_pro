@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useTheme } from '@/hooks/useTheme'
 import { useAuth } from '@/hooks/useAuth'
-import { Menu, X, Sun, Moon, LogOut } from 'lucide-react'
+import { Menu, X, LogOut } from 'lucide-react'
 
 const menuItems = [
   { to: '/', label: 'Home', icon: null, end: true },
@@ -30,7 +29,6 @@ const sharedTransition = {
 
 function GlowMenu() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const { theme, toggleTheme } = useTheme()
   const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -43,12 +41,12 @@ function GlowMenu() {
     <header className="sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-4">
         <motion.nav
-          className="p-2 rounded-2xl bg-gradient-to-b from-zinc-900/90 to-zinc-950/80 backdrop-blur-2xl border border-app-line shadow-lg relative overflow-hidden"
+          className="p-2 rounded-2xl bg-white/90 backdrop-blur-2xl border border-app-line shadow-lg relative overflow-hidden"
           initial="initial"
           whileHover="hover"
         >
           <motion.div
-            className="absolute -inset-2 bg-gradient-radial from-transparent via-cyan-400/20 via-30% via-purple-400/20 via-60% via-blue-400/20 via-90% to-transparent rounded-3xl z-0 pointer-events-none"
+            className="absolute -inset-2 bg-gradient-radial from-transparent via-amber-400/15 via-30% via-orange-400/15 via-60% via-rose-400/15 via-90% to-transparent rounded-3xl z-0 pointer-events-none"
             variants={{
               initial: { opacity: 0 },
               hover: {
@@ -60,11 +58,11 @@ function GlowMenu() {
 
           <div className="flex items-center justify-between relative z-10">
             <Link to="/" className="group flex items-center gap-2.5 px-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 text-[9px] font-bold text-app-fg shadow-lg shadow-cyan-500/20 tracking-tight leading-none">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-[9px] font-bold text-white shadow-lg shadow-amber-500/20 tracking-tight leading-none">
                 WP
               </div>
               <span className="text-lg font-bold tracking-tight text-app-fg">
-                WebScrap <span className="text-cyan-400">Pro</span>
+                WebScrap <span className="text-amber-600">Pro</span>
               </span>
             </Link>
 
@@ -100,7 +98,7 @@ function GlowMenu() {
                         },
                       }}
                       style={{
-                        background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(37,99,235,0.06) 50%, rgba(29,78,216,0) 100%)',
+                        background: 'radial-gradient(circle, rgba(200,90,72,0.1) 0%, rgba(212,147,60,0.04) 50%, rgba(212,147,60,0) 100%)',
                       }}
                     />
                     <motion.div
@@ -144,16 +142,6 @@ function GlowMenu() {
             </ul>
 
             <div className="hidden lg:flex items-center gap-2">
-              <motion.button
-                type="button"
-                className="rounded-xl border border-app-line bg-app-surface p-2 text-app-muted transition hover:bg-app-surface hover:text-app-fg"
-                onClick={toggleTheme}
-                aria-label="Toggle theme"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-              </motion.button>
               {isAuthenticated ? (
                 <div className="flex items-center gap-2">
                   <Link
@@ -164,7 +152,7 @@ function GlowMenu() {
                   </Link>
                   <motion.button
                     type="button"
-                    className="rounded-xl border border-app-line bg-app-surface p-2 text-app-muted transition hover:bg-app-surface hover:text-red-400"
+                    className="rounded-xl border border-app-line bg-app-surface p-2 text-app-muted transition hover:bg-app-surface hover:text-red-500"
                     onClick={handleLogout}
                     aria-label="Logout"
                     whileHover={{ scale: 1.05 }}
@@ -183,7 +171,7 @@ function GlowMenu() {
                   </Link>
                   <Link
                     to="/register"
-                    className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-sm font-semibold text-app-fg shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-500/30"
+                    className="rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30"
                   >
                     Sign up
                   </Link>
@@ -202,7 +190,7 @@ function GlowMenu() {
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
           >
-            <div className="mt-1 p-2 rounded-2xl bg-app-elevated/95 backdrop-blur-2xl border border-app-line shadow-lg">
+            <div className="mt-1 p-2 rounded-2xl bg-white/95 backdrop-blur-2xl border border-app-line shadow-lg">
               <nav className="flex flex-col gap-1 px-2 pb-2 pt-1">
                 {menuItems.map((item) => (
                   <NavLink
@@ -212,7 +200,7 @@ function GlowMenu() {
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive }) =>
                       `rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
-                        isActive ? 'bg-cyan-500/10 text-cyan-300' : 'text-app-muted hover:bg-app-surface hover:text-app-nav'
+                        isActive ? 'bg-amber-500/10 text-amber-700' : 'text-app-muted hover:bg-app-surface hover:text-app-nav'
                       }`
                     }
                   >
@@ -220,17 +208,10 @@ function GlowMenu() {
                   </NavLink>
                 ))}
                 <div className="mt-2 flex gap-2 border-t border-app-line pt-3">
-                  <button
-                    type="button"
-                    className="flex-1 rounded-xl border border-app-line bg-app-surface px-4 py-2 text-sm text-app-muted transition hover:bg-app-surface hover:text-app-fg"
-                    onClick={toggleTheme}
-                  >
-                    {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-                  </button>
                   {isAuthenticated ? (
                     <button
                       type="button"
-                      className="flex-1 rounded-xl border border-app-line bg-app-surface px-4 py-2 text-sm text-red-400 transition hover:bg-app-surface"
+                      className="flex-1 rounded-xl border border-app-line bg-app-surface px-4 py-2 text-sm text-red-500 transition hover:bg-app-surface"
                       onClick={handleLogout}
                     >
                       Log out
@@ -239,7 +220,7 @@ function GlowMenu() {
                     <Link
                       to="/register"
                       onClick={() => setMobileOpen(false)}
-                      className="flex-1 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-center text-sm font-semibold text-app-fg"
+                      className="flex-1 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-2 text-center text-sm font-semibold text-white"
                     >
                       Sign up
                     </Link>

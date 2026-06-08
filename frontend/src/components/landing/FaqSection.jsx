@@ -49,7 +49,7 @@ function FaqSection() {
 
   return (
     <section id="faq" className="relative border-t border-app-line py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.04),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(200,90,72,0.03),transparent_50%)]" />
       <div className="absolute inset-0 bg-grid opacity-30" />
 
       <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -59,7 +59,7 @@ function FaqSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400">
+          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">
             FAQ
           </p>
           <h2 className="mt-4 text-balance text-3xl sm:text-4xl font-bold text-app-fg">
@@ -82,7 +82,7 @@ function FaqSection() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search questions..."
-            className="w-full rounded-xl border border-app-line bg-app-surface pl-10 pr-4 py-3 text-sm text-app-fg placeholder:text-app-muted transition focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+            className="w-full rounded-xl border border-app-line bg-white pl-10 pr-4 py-3 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-400/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
           />
         </motion.div>
 
@@ -100,7 +100,7 @@ function FaqSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.03 }}
-              className="rounded-xl border border-app-line bg-app-surface overflow-hidden transition hover:border-app-line"
+              className="rounded-xl border border-app-line bg-white overflow-hidden transition hover:border-app-line"
             >
               <button
                 type="button"
@@ -138,7 +138,7 @@ function FaqSection() {
             <button
               type="button"
               onClick={() => setSearch('')}
-              className="mt-2 text-xs text-indigo-400 hover:text-indigo-300 transition"
+              className="mt-2 text-xs text-amber-700 hover:text-amber-600 transition"
             >
               Clear search
             </button>
