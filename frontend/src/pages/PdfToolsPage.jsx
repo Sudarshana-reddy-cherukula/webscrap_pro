@@ -183,7 +183,7 @@ function CropOverlay({ extraProps, setExtraProps, pdfPreviewUrl }) {
 
   useEffect(() => {
     if (extraProps?.top === undefined) syncMargins(crop)
-  }, [])
+  }, [crop, syncMargins, extraProps?.top])
 
   const handleMouseDown = (e, type) => {
     e.preventDefault(); e.stopPropagation()
@@ -278,17 +278,20 @@ function PdfToolsPage() {
   const [category, setCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [dragActive, setDragActive] = useState(false)
-  const [pdfPreviewUrl, setPdfPreviewUrl] = useState(null)
   const { showNotification } = useNotification()
 
-  useEffect(() => {
+  const pdfPreviewUrl = useMemo(() => {
     if (selectedFile && action !== 'mergePdf') {
-      const url = URL.createObjectURL(selectedFile)
-      setPdfPreviewUrl(url)
-      return () => URL.revokeObjectURL(url)
+      return URL.createObjectURL(selectedFile)
     }
-    setPdfPreviewUrl(null)
+    return null
   }, [selectedFile, action])
+
+  useEffect(() => {
+    return () => {
+      if (pdfPreviewUrl) URL.revokeObjectURL(pdfPreviewUrl)
+    }
+  }, [pdfPreviewUrl])
 
   const filteredTools = useMemo(() => {
     return tools.filter((t) => {
@@ -403,11 +406,9 @@ function PdfToolsPage() {
   }
 
   const removeFile = () => {
-    if (pdfPreviewUrl) URL.revokeObjectURL(pdfPreviewUrl)
     setSelectedFile(null)
     setMergeFiles([])
     setResult(null)
-    setPdfPreviewUrl(null)
   }
 
   return (

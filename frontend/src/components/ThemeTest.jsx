@@ -1,7 +1,7 @@
 import { useTheme } from '@/hooks/useTheme'
 
 function ThemeTest() {
-  const { theme, toggleTheme } = useTheme()
+  const { theme } = useTheme()
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-lg">

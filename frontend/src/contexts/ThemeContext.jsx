@@ -1,7 +1,5 @@
 import { useMemo } from 'react'
-import { createContext } from 'react'
-
-export const ThemeContext = createContext(null)
+import { ThemeContext } from './theme-context'
 
 export function ThemeProvider({ children }) {
   const value = useMemo(
