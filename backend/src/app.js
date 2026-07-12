@@ -29,14 +29,20 @@ app.use(helmet({
 }));
 
 const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000').split(',').map(s => s.trim());
+allowedOrigins.push('https://webscrap-pro-ecru.vercel.app');
+
 const isDev = process.env.NODE_ENV === 'development';
 app.use(cors({
   origin: (origin, cb) => {
-    if (!origin || isDev || allowedOrigins.some(o => origin.startsWith(o))) cb(null, true);
+    if (!origin || isDev || allowedOrigins.includes(origin)) cb(null, true);
     else cb(new Error(`Origin ${origin} not allowed`));
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+app.options('*', cors());
 
 app.use(compression());
 
