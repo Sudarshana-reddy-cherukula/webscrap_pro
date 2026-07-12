@@ -12,24 +12,22 @@ const { cleanupOldFiles } = require('./middlewares/uploadMiddleware');
 const app = express();
 
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      mediaSrc: ["'self'"],
-      frameSrc: ["'none'"],
-    },
-  },
+  contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: false,
+  crossOriginOpenerPolicy: false,
 }));
 
-const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000').split(',').map(s => s.trim());
-allowedOrigins.push('https://webscrap-pro-ecru.vercel.app');
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://webscrap-pro-ecru.vercel.app',
+];
+if (process.env.FRONTEND_URL) {
+  process.env.FRONTEND_URL.split(',').map(s => s.trim()).forEach(url => {
+    if (url && !allowedOrigins.includes(url)) allowedOrigins.push(url);
+  });
+}
 
 const isDev = process.env.NODE_ENV === 'development';
 app.use(cors({
@@ -57,8 +55,7 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => {
-    // Skip rate limiting for health checks
-    return req.path === '/api/health' || req.path === '/api';
+    return req.method === 'OPTIONS' || req.path === '/api/health' || req.path === '/api';
   },
 });
 
