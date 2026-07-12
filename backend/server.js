@@ -14,8 +14,6 @@ const socketHandler = require('./src/sockets/socketHandler');
 const { connectDB } = require('./src/config/database');
 const logger = require('./src/utils/logger');
 const app = require('./src/app');
-const listEndpoints = require("express-list-endpoints");
-
 const PORT = process.env.PORT || 5000;
 const server = http.createServer(app);
 
@@ -29,10 +27,6 @@ const startServer = async () => {
       logger.info(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
       logger.info(`Socket.io server running on port ${PORT}`);
       logger.info(`API documentation available at http://localhost:${PORT}/api`);
-
-      // Display all available endpoints
-      // console.log('\n📋 Available API Endpoints:');
-      // console.log(listEndpoints(app));
     });
   } catch (error) {
     logger.error('Failed to start server:', error);

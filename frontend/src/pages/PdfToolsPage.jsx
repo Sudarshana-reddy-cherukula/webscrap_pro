@@ -1,55 +1,53 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import {
   FileText, FileDown, Search, Image, Type,
   Loader2, Shield, SplitSquareVertical,
   Combine, RotateCcw, Crop, PaintBucket, Edit3,
-  Lightbulb, Code, Upload,
+  Upload, FileUp, FileSearch, Lock, Sliders, NotebookText,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import FileUpload from '@/components/ui/FileUpload'
 import { pdfApi } from '@/api/pdfApi'
 import { useNotification } from '@/hooks/useNotification'
 
+const categories = [
+  { value: 'all', label: 'All Tools', color: '#6366f1' },
+  { value: 'convert', label: 'Convert & Extract', color: '#1473E6' },
+  { value: 'edit', label: 'Edit', color: '#2E7D32' },
+  { value: 'security', label: 'Security', color: '#E65100' },
+  { value: 'pages', label: 'Pages & Organization', color: '#7C4DFF' },
+]
+
 const tools = [
-  { value: 'extractText', label: 'Extract Text', icon: Type, desc: 'Extract all text content from PDF' },
-  { value: 'extractMetadata', label: 'Extract Metadata', icon: Search, desc: 'Get document properties and metadata' },
-  { value: 'extractImages', label: 'Extract Images', icon: Image, desc: 'Extract embedded images from PDF' },
-  { value: 'convertToTxt', label: 'Convert to TXT', icon: FileDown, desc: 'Convert PDF to plain text format' },
-  { value: 'convertToDocx', label: 'Convert to DOCX', icon: FileText, desc: 'Convert PDF to Word document' },
-  { value: 'modifyText', label: 'Modify Text', icon: Edit3, desc: 'Replace, append, or remove text in PDF' },
-  { value: 'addWatermark', label: 'Add Watermark', icon: PaintBucket, desc: 'Add text watermark to PDF pages' },
-  { value: 'addSecurity', label: 'Add Security', icon: Shield, desc: 'Password-protect your PDF file' },
-  { value: 'splitPdf', label: 'Split PDF', icon: SplitSquareVertical, desc: 'Split PDF into separate pages' },
-  { value: 'mergePdf', label: 'Merge PDFs', icon: Combine, desc: 'Combine multiple PDFs into one' },
-  { value: 'rotatePages', label: 'Rotate Pages', icon: RotateCcw, desc: 'Rotate PDF pages by 90/180/270 degrees' },
-  { value: 'cropPages', label: 'Crop Pages', icon: Crop, desc: 'Crop margins from PDF pages' },
+  { value: 'extractText', label: 'Extract Text', icon: Type, desc: 'Extract all text content from PDF', category: 'convert', color: '#1473E6' },
+  { value: 'extractMetadata', label: 'Extract Metadata', icon: FileSearch, desc: 'Get document properties and metadata', category: 'convert', color: '#1473E6' },
+  { value: 'extractImages', label: 'Extract Images', icon: Image, desc: 'Extract embedded images from PDF', category: 'convert', color: '#1473E6' },
+  { value: 'convertToTxt', label: 'Convert to TXT', icon: NotebookText, desc: 'Convert PDF to plain text format', category: 'convert', color: '#1473E6' },
+  { value: 'convertToDocx', label: 'Convert to DOCX', icon: FileText, desc: 'Convert PDF to Word document', category: 'convert', color: '#1473E6' },
+  { value: 'modifyText', label: 'Modify Text', icon: Edit3, desc: 'Replace, append, or remove text in PDF', category: 'edit', color: '#2E7D32' },
+  { value: 'addWatermark', label: 'Add Watermark', icon: PaintBucket, desc: 'Add text watermark to PDF pages', category: 'edit', color: '#2E7D32' },
+  { value: 'addSecurity', label: 'Add Security', icon: Shield, desc: 'Password-protect your PDF file', category: 'security', color: '#E65100' },
+  { value: 'splitPdf', label: 'Split PDF', icon: SplitSquareVertical, desc: 'Split PDF into separate pages', category: 'pages', color: '#7C4DFF' },
+  { value: 'mergePdf', label: 'Merge PDFs', icon: Combine, desc: 'Combine multiple PDFs into one', category: 'pages', color: '#7C4DFF' },
+  { value: 'rotatePages', label: 'Rotate Pages', icon: RotateCcw, desc: 'Rotate PDF pages by 90/180/270 degrees', category: 'pages', color: '#7C4DFF' },
+  { value: 'cropPages', label: 'Crop Pages', icon: Crop, desc: 'Crop margins from PDF pages', category: 'pages', color: '#7C4DFF' },
 ]
-
-const tooltips = [
-  'For best results, use searchable PDFs (not scanned images)',
-  'Convert to TXT or DOCX with a single click',
-  'Split, merge, rotate, and crop PDF pages',
-  'Add watermarks or password protection for security',
-]
-
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl"
 
 function ExtraOptions({ action, extraProps, setExtraProps }) {
-  const inputClass = "mt-1 block w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-app-fg transition focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-  const labelClass = "block text-xs font-medium text-app-muted"
-  const selectClass = "mt-1 block w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-app-fg transition focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+  const inputClass = "mt-1 block w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+  const labelClass = "block text-sm font-medium text-gray-700"
+  const selectClass = "mt-1 block w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
 
   switch (action) {
     case 'modifyText':
       return (
-        <div className="space-y-3 mt-5 pt-5 border-t border-white/5">
+        <div className="space-y-4 mt-4 pt-4 border-t border-gray-100">
           <div>
             <label className={labelClass}>Operation</label>
             <select value={extraProps.operation || 'replace'} onChange={(e) => setExtraProps({ ...extraProps, operation: e.target.value })} className={selectClass}>
-              <option value="replace" className="bg-[#050816]">Replace Text</option>
-              <option value="append" className="bg-[#050816]">Append Text</option>
-              <option value="prepend" className="bg-[#050816]">Prepend Text</option>
+              <option value="replace">Replace Text</option>
+              <option value="append">Append Text</option>
+              <option value="prepend">Prepend Text</option>
             </select>
           </div>
           {extraProps.operation === 'replace' && (
@@ -66,12 +64,12 @@ function ExtraOptions({ action, extraProps, setExtraProps }) {
       )
     case 'addWatermark':
       return (
-        <div className="space-y-3 mt-5 pt-5 border-t border-white/5">
+        <div className="space-y-4 mt-4 pt-4 border-t border-gray-100">
           <div>
             <label className={labelClass}>Watermark Text</label>
             <input type="text" value={extraProps.watermarkText || ''} onChange={(e) => setExtraProps({ ...extraProps, watermarkText: e.target.value })} className={inputClass} placeholder="CONFIDENTIAL" />
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Opacity</label>
               <input type="number" min="0" max="1" step="0.1" value={extraProps.opacity || 0.3} onChange={(e) => setExtraProps({ ...extraProps, opacity: parseFloat(e.target.value) })} className={inputClass} />
@@ -79,12 +77,12 @@ function ExtraOptions({ action, extraProps, setExtraProps }) {
             <div>
               <label className={labelClass}>Position</label>
               <select value={extraProps.position || 'center'} onChange={(e) => setExtraProps({ ...extraProps, position: e.target.value })} className={selectClass}>
-                <option value="center" className="bg-[#050816]">Center</option>
-                <option value="tile" className="bg-[#050816]">Tile</option>
-                <option value="top-left" className="bg-[#050816]">Top Left</option>
-                <option value="top-right" className="bg-[#050816]">Top Right</option>
-                <option value="bottom-left" className="bg-[#050816]">Bottom Left</option>
-                <option value="bottom-right" className="bg-[#050816]">Bottom Right</option>
+                <option value="center">Center</option>
+                <option value="tile">Tile</option>
+                <option value="top-left">Top Left</option>
+                <option value="top-right">Top Right</option>
+                <option value="bottom-left">Bottom Left</option>
+                <option value="bottom-right">Bottom Right</option>
               </select>
             </div>
           </div>
@@ -92,7 +90,7 @@ function ExtraOptions({ action, extraProps, setExtraProps }) {
       )
     case 'addSecurity':
       return (
-        <div className="space-y-3 mt-5 pt-5 border-t border-white/5">
+        <div className="space-y-4 mt-4 pt-4 border-t border-gray-100">
           <div>
             <label className={labelClass}>Password</label>
             <input type="password" value={extraProps.password || ''} onChange={(e) => setExtraProps({ ...extraProps, password: e.target.value })} className={inputClass} placeholder="Enter password" />
@@ -101,13 +99,13 @@ function ExtraOptions({ action, extraProps, setExtraProps }) {
       )
     case 'splitPdf':
       return (
-        <div className="space-y-3 mt-5 pt-5 border-t border-white/5">
+        <div className="space-y-4 mt-4 pt-4 border-t border-gray-100">
           <div>
             <label className={labelClass}>Split Mode</label>
             <select value={extraProps.mode || 'all'} onChange={(e) => setExtraProps({ ...extraProps, mode: e.target.value })} className={selectClass}>
-              <option value="all" className="bg-[#050816]">All Pages</option>
-              <option value="range" className="bg-[#050816]">Page Range</option>
-              <option value="pages" className="bg-[#050816]">Specific Pages</option>
+              <option value="all">All Pages</option>
+              <option value="range">Page Range</option>
+              <option value="pages">Specific Pages</option>
             </select>
           </div>
           {extraProps.mode !== 'all' && (
@@ -120,32 +118,42 @@ function ExtraOptions({ action, extraProps, setExtraProps }) {
       )
     case 'rotatePages':
       return (
-        <div className="space-y-3 mt-5 pt-5 border-t border-white/5">
+        <div className="space-y-4 mt-4 pt-4 border-t border-gray-100">
           <div>
             <label className={labelClass}>Rotation</label>
             <select value={extraProps.rotation || 90} onChange={(e) => setExtraProps({ ...extraProps, rotation: parseInt(e.target.value) })} className={selectClass}>
-              <option value={90} className="bg-[#050816]">90 Degrees</option>
-              <option value={180} className="bg-[#050816]">180 Degrees</option>
-              <option value={270} className="bg-[#050816]">270 Degrees</option>
+              <option value={90}>90 Degrees</option>
+              <option value={180}>180 Degrees</option>
+              <option value={270}>270 Degrees</option>
             </select>
           </div>
         </div>
       )
     case 'cropPages':
       return (
-        <div className="space-y-3 mt-5 pt-5 border-t border-white/5">
-          <div className="grid grid-cols-2 gap-3">
-            <div><label className={labelClass}>Top</label><input type="number" min="0" value={extraProps.top || 0} onChange={(e) => setExtraProps({ ...extraProps, top: parseFloat(e.target.value) })} className={inputClass} /></div>
-            <div><label className={labelClass}>Right</label><input type="number" min="0" value={extraProps.right || 0} onChange={(e) => setExtraProps({ ...extraProps, right: parseFloat(e.target.value) })} className={inputClass} /></div>
-            <div><label className={labelClass}>Bottom</label><input type="number" min="0" value={extraProps.bottom || 0} onChange={(e) => setExtraProps({ ...extraProps, bottom: parseFloat(e.target.value) })} className={inputClass} /></div>
-            <div><label className={labelClass}>Left</label><input type="number" min="0" value={extraProps.left || 0} onChange={(e) => setExtraProps({ ...extraProps, left: parseFloat(e.target.value) })} className={inputClass} /></div>
+        <div className="space-y-4 mt-4 pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-between rounded-lg bg-purple-50 border border-purple-100 px-4 py-2.5">
+            <div className="flex items-center gap-3 text-sm text-purple-700">
+              <Crop size={16} />
+              <span>Drag the handles on the PDF preview to set crop margins</span>
+            </div>
           </div>
+          {extraProps.top !== undefined && (
+            <div className="grid grid-cols-4 gap-2">
+              {['top', 'right', 'bottom', 'left'].map((side) => (
+                <div key={side} className="text-center">
+                  <p className="text-xs font-medium text-gray-500 uppercase mb-0.5">{side}</p>
+                  <p className="text-sm font-semibold text-gray-900">{extraProps[side]}%</p>
+                </div>
+              ))}
+            </div>
+          )}
           <div>
             <label className={labelClass}>Unit</label>
             <select value={extraProps.unit || 'pt'} onChange={(e) => setExtraProps({ ...extraProps, unit: e.target.value })} className={selectClass}>
-              <option value="pt" className="bg-[#050816]">Points</option>
-              <option value="mm" className="bg-[#050816]">Millimeters</option>
-              <option value="in" className="bg-[#050816]">Inches</option>
+              <option value="pt">Points</option>
+              <option value="mm">Millimeters</option>
+              <option value="in">Inches</option>
             </select>
           </div>
         </div>
@@ -155,17 +163,145 @@ function ExtraOptions({ action, extraProps, setExtraProps }) {
   }
 }
 
+function CropOverlay({ extraProps, setExtraProps, pdfPreviewUrl }) {
+  const containerRef = useRef(null)
+  const [crop, setCrop] = useState({ x: 10, y: 10, width: 80, height: 80 })
+  const [interaction, setInteraction] = useState(null)
+  const [startPos, setStartPos] = useState(null)
+  const [startCrop, setStartCrop] = useState(null)
+
+  const syncMargins = useCallback((c) => {
+    setExtraProps((prev) => ({
+      ...prev,
+      top: Math.round(c.y),
+      left: Math.round(c.x),
+      right: Math.round(100 - c.x - c.width),
+      bottom: Math.round(100 - c.y - c.height),
+      unit: prev.unit || 'pt',
+    }))
+  }, [setExtraProps])
+
+  useEffect(() => {
+    if (extraProps?.top === undefined) syncMargins(crop)
+  }, [])
+
+  const handleMouseDown = (e, type) => {
+    e.preventDefault(); e.stopPropagation()
+    setInteraction(type)
+    setStartPos({ x: e.clientX, y: e.clientY })
+    setStartCrop({ ...crop })
+  }
+
+  useEffect(() => {
+    if (!interaction) return
+    const handleMouseMove = (e) => {
+      const rect = containerRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const dx = ((e.clientX - startPos.x) / rect.width) * 100
+      const dy = ((e.clientY - startPos.y) / rect.height) * 100
+      const min = 5
+      let c = { ...startCrop }
+
+      if (interaction === 'move') {
+        c.x = Math.max(0, Math.min(100 - startCrop.width, startCrop.x + dx))
+        c.y = Math.max(0, Math.min(100 - startCrop.height, startCrop.y + dy))
+      } else {
+        if (interaction.includes('left')) {
+          c.x = Math.max(0, Math.min(startCrop.x + startCrop.width - min, startCrop.x + dx))
+          c.width = startCrop.x + startCrop.width - c.x
+        }
+        if (interaction.includes('right')) {
+          c.width = Math.max(min, Math.min(100 - c.x, startCrop.width + dx))
+        }
+        if (interaction.includes('top')) {
+          c.y = Math.max(0, Math.min(startCrop.y + startCrop.height - min, startCrop.y + dy))
+          c.height = startCrop.y + startCrop.height - c.y
+        }
+        if (interaction.includes('bottom')) {
+          c.height = Math.max(min, Math.min(100 - c.y, startCrop.height + dy))
+        }
+      }
+      setCrop(c)
+      syncMargins(c)
+    }
+    const handleMouseUp = () => {
+      setInteraction(null)
+      setStartPos(null)
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [interaction, startPos, startCrop, syncMargins])
+
+  const handleClasses = 'absolute z-20 w-3 h-3 border-2 border-white bg-purple-600 shadow-sm rounded-sm'
+
+  return (
+    <div ref={containerRef} className="relative rounded-lg border border-gray-200 bg-white overflow-hidden select-none">
+      <embed src={pdfPreviewUrl} type="application/pdf" className="w-full h-[500px] pointer-events-none" />
+      <div className="absolute inset-0 z-10">
+        <div className="absolute inset-0 bg-black/40" style={{
+          clipPath: `polygon(
+            0% 0%, 100% 0%, 100% 100%, 0% 100%,
+            0% 0%, ${crop.x}% 0%, ${crop.x}% ${crop.y}%, ${crop.x + crop.width}% ${crop.y}%,
+            ${crop.x + crop.width}% ${crop.y + crop.height}%, ${crop.x}% ${crop.y + crop.height}%,
+            ${crop.x}% ${crop.y}%, 0% ${crop.y}%, 0% 0%
+          )`
+        }} />
+        <div className="absolute z-10 border-2 border-purple-500 cursor-move"
+          style={{ left: `${crop.x}%`, top: `${crop.y}%`, width: `${crop.width}%`, height: `${crop.height}%` }}
+          onMouseDown={(e) => handleMouseDown(e, 'move')}
+        >
+          <div className={handleClasses + ' -top-1.5 -left-1.5 cursor-nw-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'top-left') }} />
+          <div className={handleClasses + ' -top-1.5 left-1/2 -translate-x-1/2 cursor-n-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'top') }} />
+          <div className={handleClasses + ' -top-1.5 -right-1.5 cursor-ne-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'top-right') }} />
+          <div className={handleClasses + ' top-1/2 -translate-y-1/2 -left-1.5 cursor-w-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'left') }} />
+          <div className={handleClasses + ' top-1/2 -translate-y-1/2 -right-1.5 cursor-e-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'right') }} />
+          <div className={handleClasses + ' -bottom-1.5 -left-1.5 cursor-sw-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'bottom-left') }} />
+          <div className={handleClasses + ' -bottom-1.5 left-1/2 -translate-x-1/2 cursor-s-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'bottom') }} />
+          <div className={handleClasses + ' -bottom-1.5 -right-1.5 cursor-se-resize'} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(e, 'bottom-right') }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function PdfToolsPage() {
   const [selectedFile, setSelectedFile] = useState(null)
   const [mergeFiles, setMergeFiles] = useState([])
-  const [action, setAction] = useState('extractText')
+  const [action, setAction] = useState(null)
   const [extraProps, setExtraProps] = useState({})
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [category, setCategory] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [dragActive, setDragActive] = useState(false)
+  const [pdfPreviewUrl, setPdfPreviewUrl] = useState(null)
   const { showNotification } = useNotification()
 
+  useEffect(() => {
+    if (selectedFile && action !== 'mergePdf') {
+      const url = URL.createObjectURL(selectedFile)
+      setPdfPreviewUrl(url)
+      return () => URL.revokeObjectURL(url)
+    }
+    setPdfPreviewUrl(null)
+  }, [selectedFile, action])
+
+  const filteredTools = useMemo(() => {
+    return tools.filter((t) => {
+      if (category !== 'all' && t.category !== category) return false
+      if (searchQuery && !t.label.toLowerCase().includes(searchQuery.toLowerCase()) && !t.desc.toLowerCase().includes(searchQuery.toLowerCase())) return false
+      return true
+    })
+  }, [category, searchQuery])
+
+  const selectedTool = tools.find((t) => t.value === action)
+
   const previewText = useMemo(() => {
-    if (!result) return 'Upload a PDF and choose a tool to preview the output here.'
+    if (!result) return null
     if (typeof result === 'string') return result
     return JSON.stringify(result, null, 2)
   }, [result])
@@ -245,117 +381,270 @@ function PdfToolsPage() {
     } catch (err) { showNotification(err.message || 'PDF tool failed', 'error') } finally { setLoading(false) }
   }
 
-  const ActiveIcon = tools.find((t) => t.value === action)?.icon || FileText
+  const handleFileDrop = (e) => {
+    e.preventDefault()
+    setDragActive(false)
+    const files = e.dataTransfer.files
+    if (files?.length) handleFiles(files)
+  }
+
+  const handleFileInput = (e) => {
+    if (e.target.files?.length) handleFiles(e.target.files)
+  }
+
+  const handleFiles = (files) => {
+    const fileArray = Array.from(files).filter((f) => f.type === 'application/pdf' || f.name.endsWith('.pdf'))
+    if (!fileArray.length) { showNotification('Please select PDF files only', 'warning'); return }
+    if (action === 'mergePdf') {
+      setMergeFiles((prev) => [...prev, ...fileArray])
+    } else {
+      setSelectedFile(fileArray[0])
+    }
+  }
+
+  const removeFile = () => {
+    if (pdfPreviewUrl) URL.revokeObjectURL(pdfPreviewUrl)
+    setSelectedFile(null)
+    setMergeFiles([])
+    setResult(null)
+    setPdfPreviewUrl(null)
+  }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-app-fg">PDF Tools</h1>
-        <p className="mt-1 text-sm text-app-muted">Process, extract, convert, secure, and manipulate PDF documents</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900">PDF Tools</h1>
+          <p className="mt-1 text-sm text-gray-500">Process, extract, convert, secure, and manipulate PDF documents</p>
+        </div>
+        {selectedFile && (
+          <div className="hidden sm:flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-sm">
+            <FileUp size={14} className="text-blue-500" />
+            <span className="text-sm text-gray-700 max-w-[160px] truncate">{selectedFile.name}</span>
+            <button onClick={removeFile} className="ml-1 text-gray-400 hover:text-gray-600 transition-colors">&times;</button>
+          </div>
+        )}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-          <div className={`${cardClass} p-6 space-y-5`}>
-            <div className="flex items-center gap-3 pb-2 border-b border-white/5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/20">
-                <Upload size={18} className="text-white" />
-              </div>
-              <div>
-                <h2 className="text-sm font-semibold text-app-fg">{action === 'mergePdf' ? 'Upload PDFs to Merge' : 'Upload PDF'}</h2>
-                <p className="text-xs text-app-muted">{action === 'mergePdf' ? 'Select multiple PDF files' : 'Drag & drop or click to select'}</p>
-              </div>
-            </div>
-            {action === 'mergePdf' ? (
-              <FileUpload accept=".pdf" multiple onFilesSelected={(files) => setMergeFiles(files)} title="Upload PDFs to Merge" description="Drag & drop or click to select multiple PDF files" icon="📄" />
-            ) : (
-              <FileUpload accept=".pdf" onFilesSelected={(files) => setSelectedFile(files[0] || null)} title="Upload PDF" description="Drag & drop or click to select a PDF file" icon="📄" />
-            )}
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 px-4 py-3">
+          <div className="flex flex-wrap gap-1">
+            {categories.map((cat) => (
+              <button key={cat.value} onClick={() => setCategory(cat.value)}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  category === cat.value
+                    ? 'bg-blue-50 text-blue-700 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
+          <div className="relative w-full sm:w-56">
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search tools..."
+              className="w-full rounded-lg border border-gray-200 bg-gray-50 py-1.5 pl-9 pr-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+            />
+          </div>
+        </div>
 
-          <div className={`${cardClass} p-6 space-y-5`}>
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/20">
-                <ActiveIcon size={18} className="text-white" />
-              </div>
-              <div>
-                <h2 className="text-sm font-semibold text-app-fg">Choose Tool</h2>
-                <p className="text-xs text-app-muted">Select a PDF processing tool</p>
-              </div>
+        <div className="p-4">
+          {filteredTools.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <FileSearch size={36} className="text-gray-300 mb-3" />
+              <p className="text-sm text-gray-500">No tools found matching your search.</p>
             </div>
-
-            <div className="grid gap-2 sm:grid-cols-2">
-              {tools.map((tool, i) => {
+          ) : (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filteredTools.map((tool, i) => {
                 const ToolIcon = tool.icon
                 const isActive = action === tool.value
                 return (
                   <motion.button key={tool.value} type="button" onClick={() => { setAction(tool.value); setExtraProps({}) }}
-                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.025 }}
-                    className={`group flex items-start gap-3 rounded-xl border p-3 text-left transition-all duration-200 ${
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}
+                    className={`group relative overflow-hidden rounded-xl border p-4 text-left transition-all duration-200 ${
                       isActive
-                        ? 'border-purple-500/40 bg-purple-500/10 shadow-lg shadow-purple-500/5'
-                        : 'border-white/5 bg-white/[0.02] hover:border-purple-500/20 hover:bg-purple-500/[0.03] hover:shadow-sm'
+                        ? 'border-blue-200 bg-blue-50/50 shadow-sm'
+                        : 'border-gray-100 bg-white hover:border-gray-200 hover:shadow-md hover:-translate-y-0.5'
                     }`}
                   >
-                    <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all duration-200 ${
-                      isActive ? 'bg-purple-500/25 text-purple-400 shadow-sm shadow-purple-500/10' : 'bg-white/[0.04] text-app-muted group-hover:bg-purple-500/10 group-hover:text-purple-400'
-                    }`}>
-                      <ToolIcon size={14} />
-                    </div>
-                    <div className="min-w-0">
-                      <p className={`text-sm font-medium transition-colors ${isActive ? 'text-purple-300' : 'text-app-soft group-hover:text-purple-200'}`}>{tool.label}</p>
-                      <p className="text-[10px] leading-tight text-app-muted truncate">{tool.desc}</p>
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+                        style={{ backgroundColor: `${tool.color}15`, color: tool.color }}
+                      >
+                        <ToolIcon size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className={`text-sm font-semibold ${isActive ? 'text-blue-700' : 'text-gray-900'}`}>{tool.label}</p>
+                        <p className="mt-0.5 text-xs text-gray-500 leading-snug">{tool.desc}</p>
+                      </div>
+                      {isActive && (
+                        <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-500">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
+                      )}
                     </div>
                   </motion.button>
                 )
               })}
             </div>
-
-            <ExtraOptions action={action} extraProps={extraProps} setExtraProps={setExtraProps} />
-
-            <Button onClick={handleRun} disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 transition-all duration-300"
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2"><Loader2 size={16} className="animate-spin" /> Processing...</span>
-              ) : (
-                <span className="flex items-center justify-center gap-2"><FileDown size={16} /> Execute Tool</span>
-              )}
-            </Button>
-          </div>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-6">
-          <div className={`${cardClass} p-6 space-y-4`}>
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600">
-                <Lightbulb size={12} className="text-white" />
-              </div>
-              <h2 className="text-sm font-semibold text-app-fg">Pro Tips</h2>
-            </div>
-            <ul className="space-y-3">
-              {tooltips.map((tip, i) => (
-                <li key={i} className="flex gap-3 text-xs leading-5 text-app-muted">
-                  <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
-                  {tip}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={`${cardClass} p-6 space-y-4`}>
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600">
-                <Code size={12} className="text-white" />
-              </div>
-              <h2 className="text-sm font-semibold text-app-fg">Preview Output</h2>
-            </div>
-            <pre className="max-h-[320px] overflow-y-auto rounded-xl border border-white/10 bg-black/40 p-4 text-xs leading-5 text-app-soft scrollbar-hide">
-              {previewText}
-            </pre>
-          </div>
-        </motion.div>
+          )}
+        </div>
       </div>
+
+      {selectedTool ? (
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between gap-4 border-b border-gray-100 px-5 py-4 bg-gray-50/50">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg"
+                style={{ backgroundColor: `${selectedTool.color}15`, color: selectedTool.color }}
+              >
+                <selectedTool.icon size={18} />
+              </div>
+              <div>
+                <h2 className="text-base font-semibold text-gray-900">{selectedTool.label}</h2>
+                <p className="text-xs text-gray-500">{selectedTool.desc}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-5">
+            <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
+              <div className="space-y-5">
+                <div onDragOver={(e) => { e.preventDefault(); setDragActive(true) }} onDragLeave={() => setDragActive(false)} onDrop={handleFileDrop}
+                  className={`relative rounded-xl border-2 border-dashed p-8 text-center transition-all duration-200 ${
+                    dragActive ? 'border-blue-400 bg-blue-50' : 'border-gray-200 bg-gray-50/50 hover:border-blue-300 hover:bg-blue-50/30'
+                  }`}
+                >
+                  <div className="mx-auto flex max-w-xs flex-col items-center gap-3">
+                    <div className={`flex h-14 w-14 items-center justify-center rounded-xl transition-colors ${
+                      dragActive ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400'
+                    }`}>
+                      <Upload size={24} />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-gray-700">
+                        {selectedFile ? selectedFile.name : action === 'mergePdf' ? 'Drop PDF files here' : 'Drop your PDF here'}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {selectedFile
+                          ? `${(selectedFile.size / 1024 / 1024).toFixed(1)} MB`
+                          : 'or click to browse files'
+                        }
+                      </p>
+                    </div>
+                    {!selectedFile && (
+                      <label className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 transition-colors">
+                        <FileUp size={14} />
+                        {action === 'mergePdf' ? 'Choose Files' : 'Choose PDF'}
+                        <input type="file" accept=".pdf" multiple={action === 'mergePdf'} onChange={handleFileInput} className="sr-only" />
+                      </label>
+                    )}
+                    {mergeFiles.length > 0 && action === 'mergePdf' && (
+                      <div className="w-full space-y-1.5 mt-1">
+                        {mergeFiles.map((f, i) => (
+                          <div key={i} className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700">
+                            <FileText size={12} className="text-blue-500 shrink-0" />
+                            <span className="truncate flex-1">{f.name}</span>
+                            <span className="text-gray-400 shrink-0">{(f.size / 1024).toFixed(0)} KB</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {selectedFile && action !== 'mergePdf' && (
+                  <div className="flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50 px-4 py-3">
+                    <FileText size={16} className="text-blue-500 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">{selectedFile.name}</p>
+                      <p className="text-xs text-gray-500">{(selectedFile.size / 1024 / 1024).toFixed(1)} MB</p>
+                    </div>
+                    <button onClick={removeFile} className="text-xs text-red-500 hover:text-red-700 font-medium transition-colors">Remove</button>
+                  </div>
+                )}
+
+                <ExtraOptions action={action} extraProps={extraProps} setExtraProps={setExtraProps} />
+
+                <Button onClick={handleRun} disabled={loading}
+                  className="w-full bg-blue-600 text-white shadow-sm hover:bg-blue-700 transition-all duration-200"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2"><Loader2 size={16} className="animate-spin" /> Processing...</span>
+                  ) : (
+                    <span className="flex items-center justify-center gap-2"><FileDown size={16} /> Execute Tool</span>
+                  )}
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                <div className="rounded-xl border border-gray-100 bg-gray-50/50 p-4">
+                  <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 mb-3">
+                    <Sliders size={14} className="text-gray-400" />
+                    {previewText ? 'Preview Output' : 'PDF Preview'}
+                  </h3>
+                  {previewText ? (
+                    <pre className="max-h-[400px] overflow-y-auto rounded-lg border border-gray-200 bg-white p-4 text-xs leading-5 text-gray-700 font-mono scrollbar-hide">
+                      {previewText}
+                    </pre>
+                  ) : pdfPreviewUrl && action === 'cropPages' ? (
+                    <CropOverlay extraProps={extraProps} setExtraProps={setExtraProps} pdfPreviewUrl={pdfPreviewUrl} />
+                  ) : pdfPreviewUrl ? (
+                    <div className="rounded-lg border border-gray-200 bg-white overflow-hidden">
+                      <embed src={pdfPreviewUrl} type="application/pdf" className="w-full h-[500px]" />
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-10 text-center">
+                      <FileSearch size={28} className="text-gray-200 mb-2" />
+                      <p className="text-xs text-gray-400">Upload a PDF to see a preview here.</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="rounded-xl border border-gray-100 bg-gray-50/50 p-4">
+                  <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 mb-3">
+                    <Lock size={14} className="text-gray-400" />
+                    Pro Tips
+                  </h3>
+                  <ul className="space-y-2.5">
+                    <li className="flex gap-2.5 text-xs leading-5 text-gray-600">
+                      <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                      For best results, use searchable PDFs (not scanned images)
+                    </li>
+                    <li className="flex gap-2.5 text-xs leading-5 text-gray-600">
+                      <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-green-400" />
+                      Convert to TXT or DOCX with a single click
+                    </li>
+                    <li className="flex gap-2.5 text-xs leading-5 text-gray-600">
+                      <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-purple-400" />
+                      Split, merge, rotate, and crop PDF pages
+                    </li>
+                    <li className="flex gap-2.5 text-xs leading-5 text-gray-600">
+                      <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-orange-400" />
+                      Add watermarks or password protection for security
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center justify-center rounded-xl border border-gray-100 bg-white shadow-sm py-16 text-center"
+        >
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-50 mb-4">
+            <FileText size={28} className="text-gray-300" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900">Select a Tool to Start</h3>
+          <p className="mt-1 text-sm text-gray-500 max-w-md">Choose a PDF tool from the grid above to begin processing your documents.</p>
+        </motion.div>
+      )}
     </div>
   )
 }

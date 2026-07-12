@@ -34,7 +34,6 @@ export function AuthProvider({ children }) {
   }, [token, user])
 
   const saveSession = (payload) => {
-    console.log('AuthContext: saveSession called with', payload)
     const body = payload.data || payload
     const sessionUser = body.user || body
     const sessionToken = body.token || payload.token || token
@@ -42,31 +41,19 @@ export function AuthProvider({ children }) {
     if (sessionToken) {
       setToken(sessionToken)
       localStorage.setItem('authToken', sessionToken)
-      console.log('AuthContext: token saved', sessionToken)
     }
 
     if (sessionUser) {
       setUser(sessionUser)
       localStorage.setItem('authUser', JSON.stringify(sessionUser))
-      console.log('AuthContext: user saved', sessionUser)
     }
 
-    console.log('AuthContext: final state - token:', sessionToken, 'user:', sessionUser)
     return payload
   }
 
   const login = useCallback(async (credentials) => {
-    console.log('AuthContext: login called with', credentials)
-    try {
-      const response = await authApi.login(credentials)
-      console.log('AuthContext: login response', response.data)
-      const result = saveSession(response.data)
-      console.log('AuthContext: session saved', result)
-      return result
-    } catch (error) {
-      console.error('AuthContext: login error', error)
-      throw error
-    }
+    const response = await authApi.login(credentials)
+    return saveSession(response.data)
   /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [])
 

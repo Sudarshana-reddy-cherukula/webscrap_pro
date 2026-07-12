@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -27,8 +28,13 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false,
 }));
 
+const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000').split(',').map(s => s.trim());
+const isDev = process.env.NODE_ENV === 'development';
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: (origin, cb) => {
+    if (!origin || isDev || allowedOrigins.some(o => origin.startsWith(o))) cb(null, true);
+    else cb(new Error(`Origin ${origin} not allowed`));
+  },
   credentials: true,
 }));
 
@@ -129,8 +135,8 @@ app.use(notFound);
 app.use(errorHandler);
 
 setInterval(() => {
-  cleanupOldFiles('./src/uploads', 24 * 60 * 60 * 1000);
-  cleanupOldFiles('./src/exports', 24 * 60 * 60 * 1000);
+  cleanupOldFiles(path.join(__dirname, 'uploads'), 24 * 60 * 60 * 1000);
+  cleanupOldFiles(path.join(__dirname, 'exports'), 24 * 60 * 60 * 1000);
 }, 60 * 60 * 1000);
 
 module.exports = app;

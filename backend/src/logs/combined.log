@@ -4964,3 +4964,280 @@
 {"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:56:02"}
 {"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:56:02"}
 {"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-05-30 10:56:02"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:27:27"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:27:27"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:27:30"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:27:30"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:27:30"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:27:30"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:33:30"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:33:30"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:33:34"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:33:34"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:33:34"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:33:34"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:05"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:05"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:09"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:09"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:09"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:09"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:34"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:34"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-02.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:38"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:38"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:38"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:38"}
+{"level":"info","message":"GET /api/health 200 123 - 2.232 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:34:44"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:14"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:14"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-01.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:17"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:17"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:17"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:17"}
+{"level":"info","message":"GET /api/health 200 123 - 2.639 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:24"}
+{"level":"info","message":"POST /api/auth/login 401 55 - 170.588 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:30"}
+{"level":"info","message":"POST /api/auth/register 201 581 - 633.296 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:37"}
+{"level":"info","message":"Starting PDF text extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:49"}
+{"level":"error","message":"Error extracting text from PDF: Invalid PDF structure","name":"InvalidPDFException","service":"webscrap-pro-backend","stack":"Error\n    at InvalidPDFExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:452:35)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:455:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-06-08 12:35:49"}
+{"level":"info","message":"POST /api/pdf/extract-text 400 84 - 421.627 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:35:49"}
+{"level":"info","message":"Starting PDF text extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:36:10"}
+{"level":"error","message":"Error extracting text from PDF: Invalid PDF structure","name":"InvalidPDFException","service":"webscrap-pro-backend","stack":"Error\n    at InvalidPDFExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:452:35)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:455:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-06-08 12:36:10"}
+{"level":"info","message":"POST /api/pdf/extract-text 400 84 - 327.670 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:36:10"}
+{"level":"info","message":"Starting PDF text extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:02"}
+{"level":"error","message":"Error extracting text from PDF: Invalid PDF structure","name":"InvalidPDFException","service":"webscrap-pro-backend","stack":"Error\n    at InvalidPDFExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:452:35)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:455:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-06-08 12:37:03"}
+{"level":"info","message":"POST /api/pdf/extract-text 400 84 - 287.473 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:03"}
+{"level":"info","message":"Starting PDF metadata extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:31"}
+{"level":"error","message":"Error extracting metadata from PDF: Invalid PDF structure","name":"InvalidPDFException","service":"webscrap-pro-backend","stack":"Error\n    at InvalidPDFExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:452:35)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:455:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-06-08 12:37:31"}
+{"level":"info","message":"POST /api/pdf/extract-metadata 400 88 - 504.396 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:31"}
+{"level":"info","message":"POST /api/pdf/add-watermark 401 44 - 0.567 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:38"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 625.646 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:44"}
+{"level":"info","message":"Starting PDF watermark addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:50"}
+{"level":"error","message":"Error adding watermark: `opacity.opacity` must be of type `number` or `n`, but was actually of type `string`","service":"webscrap-pro-backend","stack":"TypeError: `opacity.opacity` must be of type `number` or `n`, but was actually of type `string`\n    at exports.assertIs (F:\\webscrap_pro\\backend\\node_modules\\pdf-lib\\cjs\\utils\\validators.js:140:11)\n    at exports.assertRangeOrUndefined (F:\\webscrap_pro\\backend\\node_modules\\pdf-lib\\cjs\\utils\\validators.js:161:13)\n    at PDFPage.drawText (F:\\webscrap_pro\\backend\\node_modules\\pdf-lib\\cjs\\api\\PDFPage.js:837:17)\n    at PDFService.addWatermark (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:195:14)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:368:30","timestamp":"2026-06-08 12:37:50"}
+{"level":"info","message":"POST /api/pdf/add-watermark 400 148 - 279.717 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:37:50"}
+{"level":"info","message":"POST /api/pdf/add-watermark 400 83 - 105.822 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:06"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:20"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:20"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-02.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:23"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:23"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:23"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:23"}
+{"level":"info","message":"GET /api/health 200 123 - 2.164 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:33"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 622.909 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:41"}
+{"level":"info","message":"Starting PDF text extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:42"}
+{"level":"error","message":"Error extracting text from PDF: Invalid PDF structure","name":"InvalidPDFException","service":"webscrap-pro-backend","stack":"Error\n    at InvalidPDFExceptionClosure (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:452:35)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:455:2)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:7939:23)\n    at __w_pdfjs_require__ (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:45:30)\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:88:18\n    at F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:91:10\n    at webpackUniversalModuleDefinition (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:18:20)\n    at Object.<anonymous> (F:\\webscrap_pro\\backend\\node_modules\\pdf-parse\\lib\\pdf.js\\v1.10.100\\build\\pdf.js:25:3)\n    at Module._compile (node:internal/modules/cjs/loader:1830:14)","timestamp":"2026-06-08 12:38:42"}
+{"level":"info","message":"POST /api/pdf/extract-text 400 84 - 385.111 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:42"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 643.573 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:49"}
+{"level":"info","message":"Starting PDF watermark addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:49"}
+{"level":"error","message":"Error adding watermark: `opacity.opacity` must be of type `number` or `n`, but was actually of type `string`","service":"webscrap-pro-backend","stack":"TypeError: `opacity.opacity` must be of type `number` or `n`, but was actually of type `string`\n    at exports.assertIs (F:\\webscrap_pro\\backend\\node_modules\\pdf-lib\\cjs\\utils\\validators.js:140:11)\n    at exports.assertRangeOrUndefined (F:\\webscrap_pro\\backend\\node_modules\\pdf-lib\\cjs\\utils\\validators.js:161:13)\n    at PDFPage.drawText (F:\\webscrap_pro\\backend\\node_modules\\pdf-lib\\cjs\\api\\PDFPage.js:837:17)\n    at PDFService.addWatermark (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:195:14)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:368:30","timestamp":"2026-06-08 12:38:49"}
+{"level":"info","message":"POST /api/pdf/add-watermark 400 148 - 349.890 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:38:49"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:43:55"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:43:55"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:43:58"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:43:58"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:43:58"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:43:58"}
+{"level":"info","message":"GET /api/health 200 123 - 3.194 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:08"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 955.632 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:15"}
+{"level":"info","message":"Starting PDF text extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:15"}
+{"level":"info","message":"POST /api/pdf/extract-text 201 1268 - 1029.870 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:16"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 856.634 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:24"}
+{"level":"info","message":"Starting PDF metadata extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:24"}
+{"level":"info","message":"POST /api/pdf/extract-metadata 201 586 - 481.716 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:25"}
+{"level":"info","message":"Starting PDF watermark addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:25"}
+{"level":"info","message":"POST /api/pdf/add-watermark 201 556 - 585.409 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:25"}
+{"level":"info","message":"Starting PDF page rotation","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:25"}
+{"level":"info","message":"POST /api/pdf/rotate 201 498 - 480.075 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:26"}
+{"level":"info","message":"Starting PDF security addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:26"}
+{"level":"error","message":"Error adding security: pdfDoc.setEncryption is not a function","service":"webscrap-pro-backend","stack":"TypeError: pdfDoc.setEncryption is not a function\n    at PDFService.addSecurity (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:280:14)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:407:30","timestamp":"2026-06-08 12:44:26"}
+{"level":"info","message":"POST /api/pdf/add-security 400 101 - 281.637 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:44:26"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:45:45"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:45:45"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:45:49"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:45:49"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:45:49"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:45:49"}
+{"level":"info","message":"GET /api/health 200 123 - 2.459 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:45:58"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 701.748 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:08"}
+{"level":"info","message":"Starting PDF text extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:08"}
+{"level":"info","message":"POST /api/pdf/extract-text 201 1268 - 868.212 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:09"}
+{"level":"info","message":"Starting PDF metadata extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:09"}
+{"level":"info","message":"POST /api/pdf/extract-metadata 201 586 - 495.373 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:09"}
+{"level":"info","message":"Starting PDF to TXT conversion","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:10"}
+{"level":"info","message":"POST /api/pdf/convert-to-txt 201 555 - 674.310 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:10"}
+{"level":"info","message":"Starting PDF watermark addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:10"}
+{"level":"info","message":"POST /api/pdf/add-watermark 201 548 - 681.193 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:11"}
+{"level":"info","message":"Starting PDF security addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:11"}
+{"level":"info","message":"POST /api/pdf/add-security 201 511 - 557.010 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:11"}
+{"level":"info","message":"Starting PDF split","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:12"}
+{"level":"info","message":"POST /api/pdf/split 201 662 - 669.693 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:12"}
+{"level":"info","message":"Starting PDF page rotation","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:12"}
+{"level":"info","message":"POST /api/pdf/rotate 201 498 - 540.707 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:13"}
+{"level":"info","message":"Starting PDF page cropping","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:13"}
+{"level":"error","message":"Error cropping pages: top is not defined","service":"webscrap-pro-backend","stack":"ReferenceError: top is not defined\n    at PDFService.cropPages (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:489:37)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:561:30","timestamp":"2026-06-08 12:46:13"}
+{"level":"info","message":"POST /api/pdf/crop 400 79 - 464.704 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:13"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:53"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:46:53"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-01.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:00"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:00"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:00"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:00"}
+{"level":"info","message":"GET /api/health 200 123 - 2.477 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:06"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 643.129 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:17"}
+{"level":"info","message":"Starting PDF text extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:17"}
+{"level":"info","message":"POST /api/pdf/extract-text 201 1268 - 1002.260 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:18"}
+{"level":"info","message":"Starting PDF metadata extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:18"}
+{"level":"info","message":"POST /api/pdf/extract-metadata 201 630 - 661.728 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:19"}
+{"level":"info","message":"Starting PDF to DOCX conversion","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:19"}
+{"level":"info","message":"POST /api/pdf/convert-to-docx 201 495 - 940.314 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:20"}
+{"level":"info","message":"Starting PDF to TXT conversion","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:20"}
+{"level":"info","message":"POST /api/pdf/convert-to-txt 201 555 - 842.145 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:21"}
+{"level":"info","message":"Starting PDF watermark addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:21"}
+{"level":"info","message":"POST /api/pdf/add-watermark 201 548 - 686.291 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:21"}
+{"level":"info","message":"Starting PDF security addition","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:22"}
+{"level":"info","message":"POST /api/pdf/add-security 201 511 - 581.708 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:22"}
+{"level":"info","message":"Starting PDF split","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:22"}
+{"level":"info","message":"POST /api/pdf/split 201 662 - 789.400 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:23"}
+{"level":"info","message":"POST /api/pdf/merge 400 77 - 162.232 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:23"}
+{"level":"info","message":"Starting PDF page rotation","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:23"}
+{"level":"info","message":"POST /api/pdf/rotate 201 498 - 566.112 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:24"}
+{"level":"info","message":"Starting PDF page cropping","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:24"}
+{"level":"info","message":"POST /api/pdf/crop 201 547 - 585.541 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:24"}
+{"level":"info","message":"GET /api/pdf/jobs 200 8915 - 465.686 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:25"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 621.176 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:31"}
+{"level":"info","message":"POST /api/pdf/merge 400 77 - 107.380 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:32"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 718.324 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:40"}
+{"level":"info","message":"Starting PDF merge","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:40"}
+{"level":"info","message":"POST /api/pdf/merge 201 415 - 590.922 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:41"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 666.505 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:49"}
+{"level":"info","message":"Starting PDF text modification","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:49"}
+{"level":"info","message":"POST /api/pdf/modify-text 201 523 - 617.217 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:49"}
+{"level":"info","message":"Starting PDF image extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:50"}
+{"level":"error","message":"Error extracting images from PDF: resources.lookup is not a function","service":"webscrap-pro-backend","stack":"TypeError: resources.lookup is not a function\n    at PDFService.extractImagesFromPDF (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:511:35)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async PDFService.extractImages (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:91:23)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:53:30","timestamp":"2026-06-08 12:47:50"}
+{"level":"error","message":"Error extracting images from PDF: Failed to extract images from PDF.","service":"webscrap-pro-backend","stack":"Error: Failed to extract images from PDF.\n    at PDFService.extractImagesFromPDF (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:547:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async PDFService.extractImages (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:91:23)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:53:30","timestamp":"2026-06-08 12:47:50"}
+{"level":"info","message":"POST /api/pdf/extract-images 400 99 - 403.810 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:50"}
+{"level":"info","message":"GET /api/pdf/jobs 200 8034 - 311.348 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:50"}
+{"level":"info","message":"GET /api/pdf/download/6a266c9ea9bf00fc29815233 400 85 - 216.765 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:51"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 809.119 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:58"}
+{"level":"info","message":"GET /api/pdf/jobs 200 8034 - 313.875 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:47:58"}
+{"level":"info","message":"GET /api/pdf/jobs 401 63 - 0.173 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:06"}
+{"ip":"::1","level":"error","message":"Not Found - /api/pdf/download/","method":"GET","service":"webscrap-pro-backend","stack":"Error: Not Found - /api/pdf/download/\n    at notFound (F:\\webscrap_pro\\backend\\src\\middlewares\\errorMiddleware.js:113:17)\n    at Layer.handle [as handle_request] (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at router.process_params (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:646:15\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:265:14)\n    at router.handle (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-06-08 12:48:06","url":"/api/pdf/download/","userAgent":"curl/8.19.0"}
+{"level":"info","message":"GET /api/pdf/download/ 500 1178 - 3.507 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:06"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:28"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:28"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:31"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:31"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:31"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:31"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 566.197 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:42"}
+{"level":"info","message":"Starting PDF image extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:42"}
+{"level":"error","message":"Error extracting images from PDF: resources.lookup is not a function","service":"webscrap-pro-backend","stack":"TypeError: resources.lookup is not a function\n    at PDFService.extractImagesFromPDF (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:511:35)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async PDFService.extractImages (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:91:23)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:53:30","timestamp":"2026-06-08 12:48:42"}
+{"level":"error","message":"Error extracting images from PDF: Failed to extract images from PDF.","service":"webscrap-pro-backend","stack":"Error: Failed to extract images from PDF.\n    at PDFService.extractImagesFromPDF (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:547:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async PDFService.extractImages (F:\\webscrap_pro\\backend\\src\\services\\pdfService.js:91:23)\n    at async F:\\webscrap_pro\\backend\\src\\controllers\\pdfController.js:53:30","timestamp":"2026-06-08 12:48:42"}
+{"level":"info","message":"POST /api/pdf/extract-images 400 99 - 402.397 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:48:42"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:43"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:43"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:47"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:47"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:47"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:47"}
+{"level":"info","message":"GET /api/health 200 123 - 3.112 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:56"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 681.380 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:57"}
+{"level":"info","message":"Starting PDF image extraction","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:57"}
+{"level":"info","message":"POST /api/pdf/extract-images 201 511 - 1121.227 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:49:58"}
+{"level":"info","message":"GET /api/pdf/jobs 401 44 - 1.012 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:50:11"}
+{"ip":"::1","level":"error","message":"Not Found - /api/pdf/download/","method":"GET","service":"webscrap-pro-backend","stack":"Error: Not Found - /api/pdf/download/\n    at notFound (F:\\webscrap_pro\\backend\\src\\middlewares\\errorMiddleware.js:113:17)\n    at Layer.handle [as handle_request] (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at router.process_params (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:646:15\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:265:14)\n    at router.handle (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-06-08 12:50:11","url":"/api/pdf/download/","userAgent":"curl/8.19.0"}
+{"level":"info","message":"GET /api/pdf/download/ 500 1178 - 1.600 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:50:11"}
+{"level":"info","message":"GET /api/pdf/jobs 401 44 - 0.526 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:50:18"}
+{"ip":"::1","level":"error","message":"Not Found - /api/pdf/download/","method":"GET","service":"webscrap-pro-backend","stack":"Error: Not Found - /api/pdf/download/\n    at notFound (F:\\webscrap_pro\\backend\\src\\middlewares\\errorMiddleware.js:113:17)\n    at Layer.handle [as handle_request] (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at router.process_params (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:646:15\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:265:14)\n    at router.handle (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-06-08 12:50:18","url":"/api/pdf/download/","userAgent":"curl/8.19.0"}
+{"level":"info","message":"GET /api/pdf/download/ 500 1178 - 0.962 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:50:18"}
+{"level":"info","message":"GET /api/pdf/jobs 401 44 - 0.682 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:50:25"}
+{"ip":"::1","level":"error","message":"Not Found - /api/pdf/download/","method":"GET","service":"webscrap-pro-backend","stack":"Error: Not Found - /api/pdf/download/\n    at notFound (F:\\webscrap_pro\\backend\\src\\middlewares\\errorMiddleware.js:113:17)\n    at Layer.handle [as handle_request] (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at router.process_params (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:646:15\n    at next (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:265:14)\n    at router.handle (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (F:\\webscrap_pro\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-06-08 12:50:25","url":"/api/pdf/download/","userAgent":"curl/8.19.0"}
+{"level":"info","message":"GET /api/pdf/download/ 500 1178 - 1.329 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:50:25"}
+{"level":"info","message":"GET /api/pdf/jobs 401 44 - 0.748 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:50:32"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:24"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:24"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:27"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:27"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:27"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:27"}
+{"level":"info","message":"POST /api/auth/login 200 651 - 602.615 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:49"}
+{"level":"info","message":"GET /api/pdf/jobs 200 7758 - 293.505 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:49"}
+{"level":"info","message":"GET /api/pdf/download/6a266c9da9bf00fc2981522c 200 51 - 216.394 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:49"}
+{"level":"info","message":"GET /api/pdf/status/6a266d1d4d9d2b88caaa816d 200 407 - 182.730 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:51:49"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:55:42"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:55:42"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:55:46"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:55:46"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:55:46"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 12:55:46"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:12"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:12"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-02.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:15"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:15"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:15"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:15"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:19"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:19"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:22"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:22"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:22"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:03:22"}
+{"level":"info","message":"POST /api/pdf/convert-to-txt 401 44 - 8.326 ms","service":"webscrap-pro-backend","timestamp":"2026-06-08 13:06:45"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:18:42"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:18:42"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-00.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:18:45"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:18:45"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:18:45"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:18:45"}
+{"level":"info","message":"GET /api/user/dashboard 401 44 - 7.635 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:19:51"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 401 44 - 1.100 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:19:51"}
+{"level":"info","message":"GET /api/user/dashboard 401 44 - 0.927 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:19:51"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 401 44 - 0.750 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:19:51"}
+{"level":"info","message":"POST /api/auth/login 401 55 - 193.930 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:13"}
+{"level":"info","message":"POST /api/auth/login 200 643 - 738.394 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:19"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 200 341 - 304.517 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:20"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 293.077 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:20"}
+{"level":"info","message":"GET /api/user/dashboard 200 - - 1231.006 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:20"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 297.273 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:21"}
+{"level":"info","message":"GET /api/export/list?limit=20&page=1 200 - - 464.843 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:44"}
+{"level":"info","message":"GET /api/export/list?limit=20&page=1 304 - - 463.113 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:44"}
+{"level":"info","message":"GET /api/export/list?limit=20&page=1 304 - - 352.203 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:44"}
+{"level":"info","message":"GET /api/export/list?limit=20&page=1 304 - - 335.316 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:45"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 241.787 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:47"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 158.595 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:47"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 121.034 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:47"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 117.792 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:47"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 653.931 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:47"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 203.661 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:48"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 199.658 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:48"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 148.708 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:48"}
+{"level":"info","message":"GET /api/analytics/overview 200 161 - 166.783 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:53"}
+{"level":"info","message":"GET /api/analytics/overview 304 - - 128.435 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:53"}
+{"level":"info","message":"GET /api/analytics/overview 304 - - 200.239 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:53"}
+{"level":"info","message":"GET /api/analytics/overview 304 - - 202.845 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:54"}
+{"level":"info","message":"GET /api/analytics/overview 200 161 - 180.796 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:20:58"}
+{"level":"info","message":"GET /api/analytics/trends?period=30d 200 70 - 294.270 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:21:07"}
+{"level":"info","message":"GET /api/analytics/frequency?dataSource=all&limit=10 200 132 - 191.545 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:21:18"}
+{"level":"info","message":"GET /api/analytics/keywords?limit=20 200 39 - 246.597 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:21:19"}
+{"level":"info","message":"GET /api/analytics/overview 200 161 - 208.473 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:21:28"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 227.074 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:24:04"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 213.227 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:24:04"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 1040.071 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:24:05"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 201.269 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:24:05"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 244.421 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:25:57"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 249.805 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:25:57"}
+{"level":"info","message":"GET /api/user/dashboard 304 - - 197.191 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:25:57"}
+{"level":"info","message":"GET /api/user/statistics?period=7d 304 - - 200.256 ms","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:25:57"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:35:51"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:35:51"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-02.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:35:55"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:35:55"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:35:55"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:35:55"}
+{"level":"info","message":"Socket.io server initialized","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:36:09"}
+{"level":"info","message":"Connecting to MongoDB Atlas...","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:36:09"}
+{"level":"info","message":"MongoDB Connected: ac-eetsjpb-shard-00-02.d0njh1f.mongodb.net","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:36:12"}
+{"level":"info","message":"Server running in development mode on port 5000","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:36:12"}
+{"level":"info","message":"Socket.io server running on port 5000","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:36:12"}
+{"level":"info","message":"API documentation available at http://localhost:5000/api","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:36:12"}
+{"level":"info","message":"SIGINT received, shutting down gracefully","service":"webscrap-pro-backend","timestamp":"2026-07-12 17:36:35"}

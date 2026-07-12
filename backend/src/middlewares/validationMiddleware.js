@@ -2,7 +2,7 @@ const { asyncHandler } = require('./errorMiddleware');
 
 const validateRequest = (schema) => {
   return asyncHandler(async (req, res, next) => {
-    const { error } = schema.validate(req.body);
+    const { error, value } = schema.validate(req.body, { convert: true });
     if (error) {
       return res.status(400).json({
         success: false,
@@ -10,6 +10,7 @@ const validateRequest = (schema) => {
         error: error.details.map(detail => detail.message).join(', '),
       });
     }
+    req.body = value;
     next();
   });
 };
