@@ -139,6 +139,14 @@ app.get('/api/test', (req, res) => {
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'WebScrap Pro Backend Running' });
+});
+app.head('/', (req, res) => res.sendStatus(200));
+app.get('/health', (req, res) => {
+  res.json({ status: 'UP' });
+});
+
 app.use(notFound);
 app.use(errorHandler);
 
