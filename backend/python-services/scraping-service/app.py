@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -103,11 +104,13 @@ def scrape_dynamic(url, options):
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--disable-gpu')
+    chrome_options.binary_location = '/usr/bin/chromium'
     
     if options.get('userAgent'):
         chrome_options.add_argument(f'--user-agent={options["userAgent"]}')
     
-    driver = webdriver.Chrome(options=chrome_options)
+    service = Service('/usr/bin/chromedriver')
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     
     try:
         driver.get(url)
