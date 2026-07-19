@@ -6,6 +6,7 @@ const errorHandler = (err, req, res, next) => {
 
   // Log error with request context
   logger.error({
+    correlationId: req.correlationId,
     message: err.message,
     stack: err.stack,
     url: req.originalUrl,
@@ -100,6 +101,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(error.statusCode || 500).json({
     success: false,
     message: error.message || 'Internal Server Error',
+    correlationId: req.correlationId,
     error: process.env.NODE_ENV === 'production' ? {} : {
       stack: err.stack,
       details: err,

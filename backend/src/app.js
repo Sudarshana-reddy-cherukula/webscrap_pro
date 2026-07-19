@@ -5,11 +5,16 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
+const mongoose = require('mongoose');
 const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
 const { httpLogger } = require('./middlewares/loggerMiddleware');
 const { cleanupOldFiles } = require('./middlewares/uploadMiddleware');
+const { correlationId } = require('./middlewares/correlationId');
+const etagMiddleware = require('./middlewares/etagMiddleware');
 
 const app = express();
+
+app.use(correlationId);
 
 app.use(helmet({
   contentSecurityPolicy: false,
@@ -91,6 +96,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use(httpLogger);
+app.use(etagMiddleware);
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/scrape', require('./routes/scrapingRoutes'));
@@ -99,14 +105,39 @@ app.use('/api/export', require('./routes/exportRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 app.use('/api/settings', require('./routes/settingsRoutes'));
 app.use('/api/analytics', require('./routes/analyticsRoutes'));
+app.use('/api/ai', require('./routes/aiRoutes'));
+app.use('/api/workflows', require('./routes/workflowRoutes'));
+app.use('/api/webhooks', require('./routes/webhookRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
+
+// API v1 (versioned)
+app.use('/api/v1', require('./routes/v1/index'));
+
+// API docs
+app.use('/api/docs', require('./routes/docsRoutes'));
 
 app.get('/api/health', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Server is running',
+  const dbState = mongoose.connection.readyState;
+  const dbStates = { 0: 'disconnected', 1: 'connected', 2: 'connecting', 3: 'disconnecting' };
+  const isHealthy = dbState === 1;
+
+  res.status(isHealthy ? 200 : 503).json({
+    success: isHealthy,
+    status: isHealthy ? 'healthy' : 'unhealthy',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
     uptime: process.uptime(),
+    correlationId: req.correlationId,
+    checks: {
+      database: {
+        status: dbStates[dbState] || 'unknown',
+        readyState: dbState,
+      },
+      memory: {
+        heapUsed: Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + 'MB',
+        rss: Math.round(process.memoryUsage().rss / 1024 / 1024) + 'MB',
+      },
+    },
   });
 });
 
@@ -122,7 +153,12 @@ app.get('/api', (req, res) => {
       export: '/api/export',
       analytics: '/api/analytics',
       user: '/api/user',
+      ai: '/api/ai',
+      workflows: '/api/workflows',
+      webhooks: '/api/webhooks',
+      admin: '/api/admin',
       health: '/api/health',
+      docs: '/api/docs',
       test: '/api/test',
     },
   });

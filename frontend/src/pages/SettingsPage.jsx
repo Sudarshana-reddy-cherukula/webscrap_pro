@@ -8,6 +8,7 @@ import {
   Palette,
   Moon,
   Sun,
+  Monitor,
   Save,
 } from 'lucide-react'
 
@@ -17,12 +18,18 @@ const alertOptions = [
   { value: 'never', label: 'Never' },
 ]
 
+const themeOptions = [
+  { value: 'light', label: 'Light', icon: Sun },
+  { value: 'dark', label: 'Dark', icon: Moon },
+  { value: 'system', label: 'System', icon: Monitor },
+]
+
 function SettingsPage() {
   const [notifications, setNotifications] = useState('daily')
   const [emailAlerts, setEmailAlerts] = useState(true)
   const [apiKeys, setApiKeys] = useState(false)
   const [timezone, setTimezone] = useState('UTC')
-  const { theme, toggleTheme } = useTheme()
+  const { theme, themePreference, setTheme } = useTheme()
   const { showNotification } = useNotification()
 
   const handleSave = (e) => {
@@ -37,21 +44,29 @@ function SettingsPage() {
       title: 'Appearance',
       color: 'from-cyan-500 to-blue-600',
       content: (
-        <div className="flex items-center justify-between rounded-xl border border-app-line bg-app-surface px-4 py-3">
-          <div className="flex items-center gap-3">
-            {theme === 'dark' ? <Moon size={16} className="text-cyan-400" /> : <Sun size={16} className="text-amber-400" />}
-            <div>
-              <p className="text-sm text-app-soft">Theme</p>
-              <p className="text-xs text-app-muted">Current: {theme === 'dark' ? 'Dark' : 'Light'} mode</p>
-            </div>
+        <div className="space-y-3">
+          <p className="text-xs text-app-muted">Choose your preferred theme</p>
+          <div className="flex gap-2">
+            {themeOptions.map(({ value, label, icon: Icon }) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setTheme(value)}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-medium transition ${
+                  themePreference === value
+                    ? 'border-primary bg-primary/10 text-app-fg'
+                    : 'border-border bg-app-surface text-app-muted hover:bg-app-elevated'
+                }`}
+              >
+                <Icon size={14} />
+                {label}
+              </button>
+            ))}
           </div>
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="rounded-xl border border-app-line px-4 py-1.5 text-xs font-medium text-app-soft transition hover:bg-app-surface"
-          >
-            Toggle
-          </button>
+          <p className="text-[10px] text-app-muted">
+            {theme === 'dark' ? 'Dark mode active' : 'Light mode active'}
+            {themePreference === 'system' && ' (following system)'}
+          </p>
         </div>
       ),
     },
@@ -142,7 +157,7 @@ function SettingsPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
-              className="rounded-2xl border border-white/10 bg-[#0B1220] p-6 backdrop-blur-xl"
+              className="rounded-2xl border border-border bg-card p-6 backdrop-blur-xl"
             >
               <div className="flex items-center gap-3">
                 <div className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${section.color} shadow-lg`}>

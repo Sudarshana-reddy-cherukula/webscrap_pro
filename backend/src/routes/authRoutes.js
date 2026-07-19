@@ -23,4 +23,7 @@ router.post('/forgot-password', validateRequest(forgotPasswordSchema), authContr
 router.post('/verify-otp', validateRequest(verifyOtpSchema), authController.verifyOtp);
 router.post('/reset-password', validateRequest(resetPasswordSchema), authController.resetPassword);
 
+router.get('/google', authController.googleLogin);
+router.get('/google/callback', authController.googleCallback);
+
 module.exports = router;

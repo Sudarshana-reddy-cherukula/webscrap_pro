@@ -1,38 +1,22 @@
-const winston = require('winston');
-const path = require('path');
+const pino = require('pino');
 
-const logFormat = winston.format.combine(
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-  winston.format.errors({ stack: true }),
-  winston.format.json()
-);
+const isDev = process.env.NODE_ENV !== 'production';
 
-const logger = winston.createLogger({
+const logger = pino({
   level: process.env.LOG_LEVEL || 'info',
-  format: logFormat,
-  defaultMeta: { service: 'webscrap-pro-backend' },
-  transports: [
-    new winston.transports.File({
-      filename: path.join(__dirname, '../logs/error.log'),
-      level: 'error',
-      maxsize: 5242880,
-      maxFiles: 5,
-    }),
-    new winston.transports.File({
-      filename: path.join(__dirname, '../logs/combined.log'),
-      maxsize: 5242880,
-      maxFiles: 5,
-    }),
-  ],
+  base: { service: 'webscrap-pro-backend' },
+  timestamp: pino.stdTimeFunctions.isoTime,
+  formatters: {
+    level(label) {
+      return { level: label };
+    },
+  },
+  transport: isDev
+    ? {
+        target: 'pino/file',
+        options: { destination: 1, colorize: true },
+      }
+    : undefined,
 });
-
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple()
-    )
-  }));
-}
 
 module.exports = logger;

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "checkJs": true,
+    "strict": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "allowJs": true
+  },
+  "include": ["src/**/*.js", "tests/**/*.js", "server.js"],
+  "exclude": ["node_modules", "python-services"]
+}

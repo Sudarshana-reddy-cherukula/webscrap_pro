@@ -65,6 +65,19 @@ export const scraperService = {
     return httpClient.get('/scrape/jobs', { params })
   },
 
+  getJobsCursor(params = {}) {
+    const { cursor, limit = 20, status, search } = params
+    const query = { limit }
+    if (cursor) query.cursor = cursor
+    if (status) query.status = status
+    if (search) query.search = search
+    return httpClient.get('/scrape/jobs/cursor', { params: query })
+  },
+
+  getUserJobs(page = 1, limit = 20) {
+    return httpClient.get('/scrape/jobs', { params: { page, limit } })
+  },
+
   deleteJob(jobId) {
     return httpClient.delete(`/scrape/delete/${jobId}`)
   },

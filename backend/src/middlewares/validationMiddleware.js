@@ -43,8 +43,24 @@ const validateParams = (schema) => {
   });
 };
 
+const validateZod = (schema, source = 'body') => {
+  return asyncHandler(async (req, res, next) => {
+    const result = schema.safeParse(req[source]);
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation error',
+        error: result.error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join(', '),
+      });
+    }
+    req[source] = result.data;
+    next();
+  });
+};
+
 module.exports = {
   validateRequest,
   validateQuery,
   validateParams,
+  validateZod,
 };

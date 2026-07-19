@@ -45,7 +45,7 @@ function Footer() {
   }
 
   return (
-    <footer className="relative border-t border-app-line bg-[#f8f5f0]">
+    <footer className="relative border-t border-app-line bg-app-bg">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(200,90,72,0.03),transparent_60%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(212,147,60,0.02),transparent_50%)]" />
 

@@ -1,0 +1,132 @@
+{
+  "name": "WebScrap Pro Email Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "email",
+        "responseMode": "onReceived",
+        "responseCode": 200
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "rules": [
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{$json[\"template\"]}}",
+                    "value2": "otp"
+                  }
+                ]
+              },
+              "output": 0
+            },
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{$json[\"template\"]}}",
+                    "value2": "welcome"
+                  }
+                ]
+              },
+              "output": 1
+            },
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{$json[\"template\"]}}",
+                    "value2": "job-complete"
+                  }
+                ]
+              },
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "switch-template",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json[\"to\"]}}",
+        "subject": "Your OTP Code",
+        "message": "Your OTP code is: {{$json[\"data\"][\"otp\"]}}\n\nThis code expires in 10 minutes.\n\n- WebScrap Pro Team"
+      },
+      "id": "send-otp",
+      "name": "Send OTP Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [650, 200],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json[\"to\"]}}",
+        "subject": "Welcome to WebScrap Pro!",
+        "message": "Hi {{$json[\"data\"][\"name\"]}},\n\nWelcome to WebScrap Pro!\n\nYour account is ready. Start scraping the web today.\n\nBest,\nWebScrap Pro Team"
+      },
+      "id": "send-welcome",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [650, 350],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json[\"to\"]}}",
+        "subject": "Your Scrape Job is Complete",
+        "message": "Hi {{$json[\"data\"][\"name\"]}},\n\nYour scrape job is complete!\n\nJob ID: {{$json[\"data\"][\"jobId\"]}}\nURL: {{$json[\"data\"][\"url\"]}}\n\nView results in your dashboard.\n\n- WebScrap Pro Team"
+      },
+      "id": "send-job-complete",
+      "name": "Send Job Complete Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [650, 500],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [{ "node": "Switch", "type": "main", "index": 0 }]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [{ "node": "Send OTP Email", "type": "main", "index": 0 }],
+        [{ "node": "Send Welcome Email", "type": "main", "index": 0 }],
+        [{ "node": "Send Job Complete Email", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}

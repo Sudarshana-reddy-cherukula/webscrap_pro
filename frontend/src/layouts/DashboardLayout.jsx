@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
-import ParticleBackground from '@/components/ui/ParticleBackground'
+import PremiumBackground from '@/components/background/PremiumBackground'
 import {
   LayoutDashboard,
   Globe,
   FileText,
   Download,
   BarChart3,
+  Brain,
   Settings,
   User,
   LogOut,
@@ -16,6 +17,8 @@ import {
   ChevronRight,
   Menu,
   X,
+  Workflow,
+  Shield,
 } from 'lucide-react'
 
 const navigation = [
@@ -24,6 +27,9 @@ const navigation = [
   { to: '/pdf-tools', label: 'PDF Tools', icon: FileText },
   { to: '/export', label: 'Export Center', icon: Download },
   { to: '/analytics', label: 'Analytics', icon: BarChart3 },
+  { to: '/ai', label: 'AI Dashboard', icon: Brain },
+  { to: '/workflows', label: 'Workflows', icon: Workflow },
+  { to: '/admin', label: 'Admin', icon: Shield },
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
@@ -36,7 +42,7 @@ function DashboardLayout() {
 
   return (
     <div className="flex min-h-screen bg-app-bg">
-      <ParticleBackground particleCount={30} />
+      <PremiumBackground variant="minimal" />
       <aside
         className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-app-line bg-white/90 backdrop-blur-2xl transition-all duration-300 lg:sticky lg:top-0 lg:h-screen ${
           collapsed ? 'w-16' : 'w-64'

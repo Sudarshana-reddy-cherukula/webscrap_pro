@@ -2,6 +2,8 @@ const crypto = require('crypto');
 const User = require('../models/User');
 const { generateToken, generateRefreshToken } = require('../middlewares/authMiddleware');
 const { asyncHandler } = require('../middlewares/errorMiddleware');
+const { getGoogleAuthURL, getGoogleUser } = require('../config/googleOAuth');
+const { sendEmail, templates } = require('../utils/emailService');
 
 const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -20,6 +22,8 @@ const register = asyncHandler(async (req, res) => {
       email,
       password,
     });
+
+    sendEmail({ to: email, ...templates.welcome(name) }).catch(() => {});
 
     const token = generateToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
@@ -191,6 +195,7 @@ const refreshToken = asyncHandler(async (req, res) => {
   
   try {
     const jwt = require('jsonwebtoken');
+    const Session = require('../models/Session');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     
@@ -200,9 +205,24 @@ const refreshToken = asyncHandler(async (req, res) => {
         message: 'Invalid refresh token',
       });
     }
+
+    // Invalidate old session
+    await Session.findOneAndUpdate(
+      { userId: user._id, token, active: true },
+      { active: false }
+    );
     
     const newToken = generateToken(user._id);
     const newRefreshToken = generateRefreshToken(user._id);
+
+    // Create new session
+    await Session.create({
+      userId: user._id,
+      token: newRefreshToken,
+      device: req.headers['user-agent'] || 'Unknown',
+      ipAddress: req.ip,
+      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    });
     
     res.json({
       success: true,
@@ -236,6 +256,8 @@ const forgotPassword = asyncHandler(async (req, res) => {
       user.resetPasswordToken = resetToken;
       user.resetPasswordExpires = tokenExpires;
       await user.save();
+
+      sendEmail({ to: email, ...templates.otp(user.name, otp) }).catch(() => {});
     }
 
     res.json({
@@ -320,6 +342,55 @@ const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
+const googleLogin = asyncHandler(async (req, res) => {
+  const url = getGoogleAuthURL();
+  res.redirect(url);
+});
+
+const googleCallback = asyncHandler(async (req, res) => {
+  const { code, error } = req.query;
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+
+  if (error) {
+    return res.redirect(`${frontendUrl}/login?error=google_denied`);
+  }
+
+  if (!code) {
+    return res.redirect(`${frontendUrl}/login?error=no_code`);
+  }
+
+  try {
+    const { googleId, email, name, avatar } = await getGoogleUser(code);
+
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (user) {
+      user.googleId = googleId;
+      user.avatar = avatar;
+      user.provider = user.provider === 'local' ? 'local' : 'google';
+      user.lastLogin = new Date();
+      await user.save();
+    } else {
+      user = await User.create({
+        name,
+        email,
+        googleId,
+        avatar,
+        provider: 'google',
+        lastLogin: new Date(),
+      });
+    }
+
+    const token = generateToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    res.redirect(`${frontendUrl}/login?token=${token}&refreshToken=${refreshToken}`);
+  } catch (err) {
+    console.error('Google OAuth error:', err.message);
+    res.redirect(`${frontendUrl}/login?error=auth_failed`);
+  }
+});
+
 module.exports = {
   register,
   login,
@@ -330,4 +401,6 @@ module.exports = {
   forgotPassword,
   verifyOtp,
   resetPassword,
+  googleLogin,
+  googleCallback,
 };

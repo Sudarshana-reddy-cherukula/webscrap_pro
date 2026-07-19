@@ -1,38 +1,9 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Sparkles, Loader2, CheckCircle2, ArrowLeft } from 'lucide-react'
 import authService from '@/services/authService'
-
-const COLORS = ['#c85a48', '#d4933c', '#b0443a', '#d4a050', '#7b5e8d']
-
-function ParticleCanvas() {
-  const canvasRef = useRef(null)
-  useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return
-    const ctx = canvas.getContext('2d'); let animId, w, h; const particles = []; const mouse = { x: -1000, y: -1000 }
-    const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight }
-    resize(); window.addEventListener('resize', resize)
-    for (let i = 0; i < 50; i++) particles.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2, size: Math.random() * 2.5 + 0.5, color: COLORS[Math.floor(Math.random() * COLORS.length)], alpha: Math.random() * 0.3 + 0.1 })
-    const onMouse = (e) => { mouse.x = e.clientX; mouse.y = e.clientY }
-    window.addEventListener('mousemove', onMouse)
-    const animate = () => {
-      ctx.clearRect(0, 0, w, h)
-      for (const p of particles) {
-        const dx = mouse.x - p.x, dy = mouse.y - p.y, dist = Math.sqrt(dx * dx + dy * dy)
-        if (dist < 200) { const force = (200 - dist) / 200; p.vx += (dx / dist || 0) * force * 0.02; p.vy += (dy / dist || 0) * force * 0.02 }
-        p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.vy *= 0.99
-        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = p.color; ctx.globalAlpha = p.alpha; ctx.fill()
-      }
-      ctx.globalAlpha = 1; animId = requestAnimationFrame(animate)
-    }
-    animate()
-    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); window.removeEventListener('mousemove', onMouse) }
-  }, [])
-  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
-}
+import PremiumBackground from '@/components/background/PremiumBackground'
 
 function VerifyOtpPage() {
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
@@ -83,7 +54,7 @@ function VerifyOtpPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-app-bg px-4 py-12">
-      <ParticleCanvas />
+      <PremiumBackground variant="minimal" />
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"

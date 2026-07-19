@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
@@ -7,8 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Lock, Eye, EyeOff, Loader2, CheckCircle2, Sparkles } from 'lucide-react'
 import authService from '@/services/authService'
 import { PasswordStrength } from '@/components/ui/PasswordStrength'
-
-const COLORS = ['#c85a48', '#d4933c', '#b0443a', '#d4a050', '#7b5e8d']
+import PremiumBackground from '@/components/background/PremiumBackground'
 
 const schema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters'),
@@ -17,41 +16,6 @@ const schema = z.object({
   message: 'Passwords do not match',
   path: ['confirmPassword'],
 })
-
-function ParticleCanvas() {
-  const canvasRef = useRef(null)
-  useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return
-    const ctx = canvas.getContext('2d'); let animId, w, h
-    const particles = []; const mouse = { x: -1000, y: -1000 }
-    const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight }
-    resize(); window.addEventListener('resize', resize)
-    for (let i = 0; i < 50; i++) particles.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2, size: Math.random() * 2.5 + 0.5, color: COLORS[Math.floor(Math.random() * COLORS.length)], alpha: Math.random() * 0.3 + 0.1 })
-    const onMouse = (e) => { mouse.x = e.clientX; mouse.y = e.clientY }
-    window.addEventListener('mousemove', onMouse)
-    const animate = () => {
-      ctx.clearRect(0, 0, w, h)
-      for (const p of particles) {
-        const dx = mouse.x - p.x, dy = mouse.y - p.y, dist = Math.sqrt(dx * dx + dy * dy)
-        if (dist < 200) { const force = (200 - dist) / 200; p.vx += (dx / dist || 0) * force * 0.02; p.vy += (dy / dist || 0) * force * 0.02 }
-        p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.vy *= 0.99
-        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = p.color; ctx.globalAlpha = p.alpha; ctx.fill()
-      }
-      ctx.globalAlpha = 1; animId = requestAnimationFrame(animate)
-    }
-    animate()
-    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); window.removeEventListener('mousemove', onMouse) }
-  }, [])
-  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
-}
-
-function AnimatedBlob({ className, color }) {
-  return <motion.div className={`absolute rounded-full blur-3xl ${className}`} style={{ background: color }}
-    animate={{ x: [0, -60, 40, -50, 0], y: [0, 50, -40, 30, 0], scale: [1, 1.1, 0.95, 1.05, 1] }}
-    transition={{ duration: 16, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }} />
-}
 
 function ResetPasswordPage() {
   const [searchParams] = useSearchParams()
@@ -84,7 +48,7 @@ function ResetPasswordPage() {
   if (success) {
     return (
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-app-bg px-4 py-12">
-        <ParticleCanvas />
+        <PremiumBackground variant="minimal" />
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
           className="relative w-full max-w-md"
         >
@@ -106,9 +70,7 @@ function ResetPasswordPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-app-bg px-4 py-12">
-      <ParticleCanvas />
-      <AnimatedBlob className="top-[-10%] right-[-10%] w-[450px] h-[450px]" color="rgba(200,90,72,0.08)" />
-      <AnimatedBlob className="bottom-[-10%] left-[-10%] w-[450px] h-[450px]" color="rgba(212,147,60,0.08)" />
+      <PremiumBackground variant="minimal" />
 
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}

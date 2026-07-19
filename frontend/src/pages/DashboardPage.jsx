@@ -219,7 +219,7 @@ function DashboardPage() {
                         'text-cyan-400/80'
                       }`}
                     >
-                      <span className="shrink-0 text-zinc-600">
+                       <span className="shrink-0 text-app-muted">
                         [{item.createdAt ? new Date(item.createdAt).toLocaleTimeString() : '--:--:--'}]
                       </span>
                       <span>
@@ -230,7 +230,7 @@ function DashboardPage() {
                     </motion.div>
                   ))
                 ) : (
-                  <div className="text-zinc-500 text-xs py-4 text-center">No recent activity</div>
+                   <div className="text-app-muted text-xs py-4 text-center">No recent activity</div>
                 )}
                 <motion.div
                   animate={{ opacity: [1, 0.3, 1] }}

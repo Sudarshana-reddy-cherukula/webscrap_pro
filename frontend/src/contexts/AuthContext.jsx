@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { createContext } from 'react'
-import { authApi } from '@/api/authApi'
+import authService from '@/services/authService'
 
 export const AuthContext = createContext(null)
 
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (token && !user) {
-      authApi
+      authService
         .getProfile()
         .then((response) => {
           const body = response.data?.data || response.data
@@ -52,13 +52,13 @@ export function AuthProvider({ children }) {
   }
 
   const login = useCallback(async (credentials) => {
-    const response = await authApi.login(credentials)
+    const response = await authService.login(credentials)
     return saveSession(response.data)
   /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [])
 
   const register = useCallback(async (data) => {
-    const response = await authApi.register(data)
+    const response = await authService.register(data)
     return saveSession(response.data)
   /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [])

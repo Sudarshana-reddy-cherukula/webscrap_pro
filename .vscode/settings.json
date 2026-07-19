@@ -1,0 +1,101 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.minimap.enabled": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.suggestSelection": "first",
+  "editor.wordWrap": "on",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.py": "python"
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/package-lock.json": true,
+    "**/python-services": true
+  },
+
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[jsx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.tabSize": 2
+  },
+
+  "eslint.workingDirectories": [
+    { "mode": "auto" }
+  ],
+
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.classAttributes": ["class", "className", "classList"],
+  "tailwindCSS.lint": {
+    "cssConflict": "warning",
+    "invalidApply": "error",
+    "invalidConfigPath": "error",
+    "invalidScreen": "error",
+    "invalidTailwindDirective": "error",
+    "invalidVariant": "error",
+    "recommendedVariantOrder": "warning"
+  },
+
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/.git/objects/**": true,
+    "**/python-services/**/venv/**": true,
+    "**/python-services/**/__pycache__/**": true
+  },
+
+  "python.defaultInterpreterPath": "python",
+  "python.terminal.activateEnvironment": true,
+
+  "json.schemas": [
+    {
+      "fileMatch": ["package.json"],
+      "url": "https://json.schemastore.org/package.json"
+    },
+    {
+      "fileMatch": ["tsconfig.json"],
+      "url": "https://json.schemastore.org/tsconfig.json"
+    }
+  ],
+
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/compose-spec/compose-spec/main/schema/compose-spec.json": "docker-compose.yml",
+    "https://json.schemastore.org/github-action.json": ".github/workflows/*.yml"
+  },
+
+  "docker.dockerPath": "docker"
+}

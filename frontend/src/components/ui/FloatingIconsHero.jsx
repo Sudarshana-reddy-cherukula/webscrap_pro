@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 import MovingDots from '@/components/ui/MovingDots'
+import HeroGlow from '@/components/background/HeroGlow'
 import { Globe, FileText, Download, BarChart3, Zap, Shield, Cloud, Search, Cog, Layers, Activity, Brain, Cpu, Database, GitBranch } from 'lucide-react'
 
 const iconComponents = {
@@ -75,6 +76,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
       <MovingDots count={100} connectionDistance={150} />
+      <HeroGlow />
       <div className="absolute inset-0 w-full h-full">
         {demoIcons.map((iconData) => (
               <FloatingIcon

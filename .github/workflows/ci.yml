@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  lint:
+  lint-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,36 +15,43 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
 
-      - name: Install frontend dependencies
-        working-directory: frontend
+      - name: Install backend deps
+        working-directory: backend
         run: npm ci
 
-      - name: Run ESLint
+      - name: Run backend tests
+        working-directory: backend
+        run: npm test
+
+      - name: Install frontend deps
         working-directory: frontend
-        run: npm run lint
+        run: npm ci
 
       - name: Build frontend
         working-directory: frontend
         run: npm run build
 
-  docker:
+  deploy:
+    needs: lint-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    needs: lint
     steps:
-      - uses: actions/checkout@v4
+      - name: Deploy frontend to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: frontend
 
-      - name: Create .env file for Docker Compose
-        run: |
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET || 'ci-test-secret-do-not-use-in-production' }}" >> .env
-          echo "MONGO_URI=${{ secrets.MONGO_URI || 'mongodb://mongodb:27017/webscrap_pro' }}" >> .env
-          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL || 'http://localhost:3000' }}" >> .env
-
-      - name: Validate Docker Compose config
-        run: docker compose config
-
-      - name: Build Docker images
-        run: docker compose build
+      - name: Deploy backend to Render
+        uses: johnbeynon/render-deploy-action@v1.0.0
+        with:
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { useNotification } from '@/hooks/useNotification'
 import { exportService } from '@/services/exportService'
 import { scraperService } from '@/services/scraperService'
-import { pdfApi } from '@/api/pdfApi'
+import { pdfService } from '@/services/pdfService'
 
 const EXPORT_SOURCES = [
   { value: 'scraping', label: 'Scraped Data', icon: FileJson },
@@ -50,7 +50,7 @@ function ExportPage() {
         const data = res.data?.data || res.data
         jobs = (data.jobs || []).filter((j) => j.status === 'completed')
       } else if (value === 'pdf') {
-        const res = await pdfApi.getJobs({ limit: 100 })
+        const res = await pdfService.getJobs({ limit: 100 })
         const data = res.data?.data || res.data
         jobs = (data.jobs || []).filter((j) => j.status === 'completed')
       }
@@ -153,9 +153,9 @@ function ExportPage() {
                   <select value={selectedJobId} onChange={(e) => setSelectedJobId(e.target.value)}
                     className="mt-1.5 block w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-app-fg transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
                   >
-                    <option value="" className="bg-[#050816]">Select a job...</option>
+                    <option value="" className="bg-card">Select a job...</option>
                     {availableJobs.map((job) => (
-                      <option key={job.id || job._id} value={job.id || job._id} className="bg-[#050816]">
+                      <option key={job.id || job._id} value={job.id || job._id} className="bg-card">
                         {job.originalName || job.targetUrl || (job.id || job._id).substring(0, 12)}...
                       </option>
                     ))}
@@ -199,9 +199,9 @@ function ExportPage() {
               <div className="flex items-center justify-center py-12"><Loader2 size={20} className="animate-spin text-app-muted" /></div>
             ) : history.length === 0 ? (
               <div className="py-12 text-center">
-                <Download size={32} className="mx-auto text-zinc-600" />
+                <Download size={32} className="mx-auto text-app-muted" />
                 <p className="mt-3 text-sm text-app-muted">No exports yet</p>
-                <p className="text-xs text-zinc-600">Configure and start an export above</p>
+                <p className="text-xs text-app-muted">Configure and start an export above</p>
               </div>
             ) : (
               history.slice(0, 10).map((exp) => {

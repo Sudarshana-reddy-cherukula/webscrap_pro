@@ -21,9 +21,21 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
+    required: false,
     minlength: [6, 'Password must be at least 6 characters long'],
     select: false,
+  },
+  avatar: {
+    type: String,
+  },
+  provider: {
+    type: String,
+    enum: ['local', 'google'],
+    default: 'local',
+  },
+  googleId: {
+    type: String,
+    sparse: true,
   },
   role: {
     type: String,
@@ -92,7 +104,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password') || !this.password) return next();
   
   try {
     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_ROUNDS) || 12);

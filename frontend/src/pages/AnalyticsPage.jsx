@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { BarChart3, TrendingUp, PieChart, Hash, Download, Trash2, Loader2, Globe, FileText, Calendar } from 'lucide-react'
+import { BarChart, Bar, LineChart, Line, PieChart as RechartsPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, AreaChart, Area } from 'recharts'
 import { Button } from '@/components/ui/Button'
 import { useNotification } from '@/hooks/useNotification'
 import { analyticsService } from '@/services/analyticsService'
@@ -14,6 +15,141 @@ const TABS = [
 
 const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
 const iconBox = "inline-flex rounded-xl bg-gradient-to-br p-2"
+
+const CHART_COLORS = ['#06b6d4', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#3b82f6', '#14b8a6', '#f97316', '#6366f1']
+
+function OverviewChart({ data }) {
+  const chartData = [
+    { name: 'Scrape Jobs', value: data?.scrapeJobs || data?.totalScrapes || 0 },
+    { name: 'PDF Jobs', value: data?.pdfJobs || data?.totalPdfs || 0 },
+    { name: 'Exports', value: data?.totalExports || 0 },
+    { name: 'Today', value: data?.todayJobs || 0 },
+  ]
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={chartData}>
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+        <XAxis dataKey="name" stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
+        <YAxis stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
+        <Tooltip contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }} />
+        <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+          {chartData.map((_, index) => (
+            <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+          ))}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  )
+}
+
+function TrendsChart({ data }) {
+  const scrapeData = data?.scrapeTrends || []
+  const pdfData = data?.pdfTrends || []
+
+  const combinedData = scrapeData.map(item => {
+    const pdfItem = pdfData.find(p => p._id === item._id)
+    return {
+      date: item._id,
+      scrapes: item.count,
+      pdfs: pdfItem?.count || 0,
+    }
+  })
+
+  if (combinedData.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <p className="text-sm text-app-muted">No trend data available for the selected period</p>
+      </div>
+    )
+  }
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <AreaChart data={combinedData}>
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+        <XAxis dataKey="date" stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }} />
+        <YAxis stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
+        <Tooltip contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }} />
+        <Legend />
+        <Area type="monotone" dataKey="scrapes" stackId="1" stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.3} name="Scrape Jobs" />
+        <Area type="monotone" dataKey="pdfs" stackId="1" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.3} name="PDF Jobs" />
+      </AreaChart>
+    </ResponsiveContainer>
+  )
+}
+
+function FrequencyChart({ data }) {
+  const urls = data?.topUrls || []
+
+  if (urls.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <p className="text-sm text-app-muted">No frequency data available</p>
+      </div>
+    )
+  }
+
+  const chartData = urls.map(item => ({
+    url: new URL(item._id).hostname,
+    count: item.count,
+  }))
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={chartData} layout="vertical">
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+        <XAxis type="number" stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
+        <YAxis type="category" dataKey="url" stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }} width={120} />
+        <Tooltip contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }} />
+        <Bar dataKey="count" fill="#06b6d4" radius={[0, 4, 4, 0]} />
+      </BarChart>
+    </ResponsiveContainer>
+  )
+}
+
+function KeywordsChart({ data }) {
+  const keywords = data?.keywords || []
+
+  if (keywords.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <p className="text-sm text-app-muted">No keywords data available</p>
+      </div>
+    )
+  }
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={keywords.slice(0, 10)}>
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+        <XAxis dataKey="keyword" stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }} />
+        <YAxis stroke="rgba(255,255,255,0.5)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
+        <Tooltip contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }} />
+        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+          {keywords.slice(0, 10).map((_, index) => (
+            <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+          ))}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  )
+}
+
+function TabContent({ activeTab, data }) {
+  switch (activeTab) {
+    case 'overview':
+      return <OverviewChart data={data} />
+    case 'trends':
+      return <TrendsChart data={data} />
+    case 'frequency':
+      return <FrequencyChart data={data} />
+    case 'keywords':
+      return <KeywordsChart data={data} />
+    default:
+      return <OverviewChart data={data} />
+  }
+}
 
 
 function AnalyticsPage() {
@@ -119,12 +255,12 @@ function AnalyticsPage() {
           {loading ? (
             <div className="flex items-center justify-center py-16"><Loader2 size={24} className="animate-spin text-app-muted" /></div>
           ) : data ? (
-            <pre className="max-h-[400px] overflow-y-auto rounded-xl border border-white/10 bg-black/40 p-4 text-xs leading-5 text-app-soft scrollbar-hide">{JSON.stringify(data, null, 2)}</pre>
+            <TabContent activeTab={activeTab} data={data} />
           ) : (
             <div className="py-16 text-center">
-              <BarChart3 size={40} className="mx-auto text-zinc-600" />
+              <BarChart3 size={40} className="mx-auto text-app-muted" />
               <p className="mt-4 text-sm text-app-muted">No analytics data available</p>
-              <p className="text-xs text-zinc-600">Start scraping or processing PDFs to see analytics here</p>
+              <p className="text-xs text-app-muted">Start scraping or processing PDFs to see analytics here</p>
             </div>
           )}
         </div>

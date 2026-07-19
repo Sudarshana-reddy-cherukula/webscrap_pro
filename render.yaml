@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: webscrap-pro-backend
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REDIS_URL
+        value: redis://localhost:6379
+      - key: FRONTEND_URL
+        sync: false
+      - key: BACKEND_URL
+        generateValue: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: N8N_WEBHOOK_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: EMBEDDING_MODEL
+        value: text-embedding-3-small
+      - key: EMBEDDING_DIMENSIONS
+        value: "1536"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "1000"

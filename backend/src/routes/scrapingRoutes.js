@@ -3,6 +3,8 @@ const router = express.Router();
 const scrapingController = require('../controllers/scrapingController');
 const { protect } = require('../middlewares/authMiddleware');
 const { validateRequest, validateParams } = require('../middlewares/validationMiddleware');
+const { cursorPagination, formatCursorResponse } = require('../middlewares/cursorPagination');
+const ScrapeJob = require('../models/ScrapeJob');
 const {
   scrapeUrlSchema,
   scrapeImagesSchema,
@@ -21,5 +23,6 @@ router.get('/status/:jobId', protect, validateParams(jobStatusSchema), scrapingC
 router.get('/results/:jobId', protect, validateParams(jobStatusSchema), scrapingController.getJobResults);
 router.delete('/delete/:jobId', protect, validateParams(jobStatusSchema), scrapingController.deleteJob);
 router.get('/jobs', protect, scrapingController.getUserJobs);
+router.get('/jobs/cursor', protect, cursorPagination(ScrapeJob), formatCursorResponse);
 
 module.exports = router;

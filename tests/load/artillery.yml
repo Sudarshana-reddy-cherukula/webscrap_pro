@@ -1,0 +1,88 @@
+{
+  "config": {
+    "target": "http://localhost:5000",
+    "phases": [
+      { "duration": 10, "arrivalRate": 5, "name": "Warm-up" },
+      { "duration": 30, "arrivalRate": 20, "name": "Ramp up" },
+      { "duration": 60, "arrivalRate": 50, "name": "Sustained load" },
+      { "duration": 10, "arrivalRate": 0, "name": "Cool-down" }
+    ],
+    "defaults": {
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "ensure": {
+      "p99": 2000,
+      "maxErrorRate": 5
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Health Check",
+      "weight": 30,
+      "flow": [
+        { "get": { "url": "/api/health" } }
+      ]
+    },
+    {
+      "name": "API Index",
+      "weight": 20,
+      "flow": [
+        { "get": { "url": "/api" } }
+      ]
+    },
+    {
+      "name": "Register and Login Flow",
+      "weight": 25,
+      "flow": [
+        {
+          "post": {
+            "url": "/api/auth/register",
+            "json": {
+              "name": "Load Test User",
+              "email": "loadtest-{{ $randomNumber() }}@test.com",
+              "password": "TestPass123!"
+            },
+            "capture": {
+              "json": "$.data.token",
+              "as": "token"
+            }
+          }
+        },
+        {
+          "get": {
+            "url": "/api/health",
+            "headers": {
+              "Authorization": "Bearer {{ token }}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth Endpoints",
+      "weight": 15,
+      "flow": [
+        {
+          "post": {
+            "url": "/api/auth/login",
+            "json": {
+              "email": "test@test.com",
+              "password": "wrongpassword"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Protected Routes",
+      "weight": 10,
+      "flow": [
+        { "get": { "url": "/api/scrape/jobs" } },
+        { "get": { "url": "/api/user/dashboard" } },
+        { "get": { "url": "/api/analytics/overview" } }
+      ]
+    }
+  ]
+}

@@ -107,7 +107,7 @@ function FaqPage() {
                   {category.questions.map((item) => (
                     <details
                       key={item.q}
-                      className="group rounded-2xl border border-white/5 bg-[#0B1220] transition hover:border-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/5"
+                      className="group rounded-2xl border border-border bg-card transition hover:border-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/5"
                     >
                       <summary className="flex cursor-pointer items-center justify-between px-6 py-4 text-sm font-medium text-app-nav group-open:text-cyan-300 transition-colors">
                         {item.q}

@@ -17,12 +17,15 @@ const UploadsPage = lazy(() => import('./pages/UploadsPage'))
 const HistoryPage = lazy(() => import('./pages/HistoryPage'))
 const ExportPage = lazy(() => import('./pages/ExportPage'))
 const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'))
+const AIDashboardPage = lazy(() => import('./pages/AIDashboardPage'))
 const SettingsPage = lazy(() => import('./pages/SettingsPage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
 const PricingPage = lazy(() => import('./pages/PricingPage'))
 const FaqPage = lazy(() => import('./pages/FaqPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
 const DocsPage = lazy(() => import('./pages/DocsPage'))
+const WorkflowsPage = lazy(() => import('./pages/WorkflowsPage'))
+const AdminPage = lazy(() => import('./pages/AdminPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 const loadingFallback = (
@@ -62,6 +65,7 @@ function App() {
         >
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/dashboard/analytics" element={<AnalyticsPage />} />
+          <Route path="/dashboard/ai" element={<AIDashboardPage />} />
           <Route path="/dashboard/scraping" element={<ScraperPage />} />
           <Route path="/dashboard/pdf-tools" element={<PdfToolsPage />} />
           <Route path="/dashboard/uploads" element={<UploadsPage />} />
@@ -69,10 +73,15 @@ function App() {
           <Route path="/dashboard/exports" element={<ExportPage />} />
           <Route path="/dashboard/settings" element={<SettingsPage />} />
           <Route path="/dashboard/profile" element={<ProfilePage />} />
+          <Route path="/dashboard/workflows" element={<WorkflowsPage />} />
+          <Route path="/dashboard/admin" element={<AdminPage />} />
           <Route path="/scraper" element={<ScraperPage />} />
           <Route path="/pdf-tools" element={<PdfToolsPage />} />
           <Route path="/export" element={<ExportPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/ai" element={<AIDashboardPage />} />
+          <Route path="/workflows" element={<WorkflowsPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>

@@ -165,7 +165,7 @@ function ScraperPage() {
               <label className={labelClass}>Selector Type</label>
               <select value={selectorType} onChange={(e) => setSelectorType(e.target.value)} className={inputClass}>
                 {SELECTOR_TYPES.map((t) => (
-                  <option key={t.value} value={t.value} className="bg-[#050816]">{t.label}</option>
+                  <option key={t.value} value={t.value} className="bg-card">{t.label}</option>
                 ))}
               </select>
             </div>
@@ -195,7 +195,7 @@ function ScraperPage() {
               type="button"
               onClick={() => setUsePlaywright(!usePlaywright)}
               className={`relative h-6 w-11 rounded-full transition-colors ${
-                usePlaywright ? 'bg-purple-500' : 'bg-zinc-600'
+                usePlaywright ? 'bg-purple-500' : 'bg-muted'
               }`}
             >
               <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
@@ -242,10 +242,10 @@ function ScraperPage() {
             ) : jobs.length === 0 ? (
               <div className="py-12 text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.03] border border-white/10">
-                  <Globe size={24} className="text-zinc-600" />
+                   <Globe size={24} className="text-app-muted" />
                 </div>
                 <p className="mt-4 text-sm text-app-muted">No scraping jobs yet</p>
-                <p className="text-xs text-zinc-600">Configure and start a job above</p>
+                 <p className="text-xs text-app-muted">Configure and start a job above</p>
               </div>
             ) : (
               jobs.slice(0, 10).map((job) => {

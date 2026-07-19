@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
-import { authApi } from '@/api/authApi'
+import authService from '@/services/authService'
 import { useNotification } from '@/hooks/useNotification'
 import {
   User,
@@ -24,7 +24,7 @@ function ProfilePage() {
     e.preventDefault()
     setLoading(true)
     try {
-      const res = await authApi.updateProfile({ name })
+      const res = await authService.updateProfile({ name })
       const updated = res.data?.data?.user || res.data?.user || res.data
       setUser(updated)
       localStorage.setItem('authUser', JSON.stringify(updated))
@@ -47,7 +47,7 @@ function ProfilePage() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-white/10 bg-[#0B1220] p-6 backdrop-blur-xl"
+          className="rounded-2xl border border-border bg-card p-6 backdrop-blur-xl"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20">
@@ -83,9 +83,9 @@ function ProfilePage() {
                   disabled
                   className="block w-full rounded-xl border border-app-line bg-white/[0.01] px-4 py-2.5 pr-10 text-sm text-app-muted transition"
                 />
-                <Mail size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-600" />
+                <Mail size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-app-muted" />
               </div>
-              <p className="mt-1 text-xs text-zinc-600">Email cannot be changed</p>
+              <p className="mt-1 text-xs text-app-muted">Email cannot be changed</p>
             </div>
 
             <div className="flex justify-end">
@@ -111,7 +111,7 @@ function ProfilePage() {
           transition={{ delay: 0.1 }}
           className="space-y-6"
         >
-          <div           className="rounded-2xl border border-white/10 bg-[#0B1220] p-6 backdrop-blur-xl">
+          <div           className="rounded-2xl border border-border bg-card p-6 backdrop-blur-xl">
             <div className="flex items-center gap-4">
               <div className="relative">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-600/20 text-2xl font-bold text-cyan-300 ring-2 ring-white/10 shadow-lg shadow-cyan-500/10">
@@ -119,7 +119,7 @@ function ProfilePage() {
                 </div>
                 <button
                   type="button"
-                  className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-zinc-800 text-app-muted transition hover:bg-zinc-700"
+                  className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-elevated text-app-muted transition hover:bg-muted"
                 >
                   <Camera size={10} />
                 </button>
@@ -131,7 +131,7 @@ function ProfilePage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-[#0B1220] p-6 backdrop-blur-xl">
+          <div className="rounded-2xl border border-border bg-card p-6 backdrop-blur-xl">
             <h3 className="text-sm font-medium text-app-fg">Account Details</h3>
             <div className="mt-4 space-y-3">
               <div className="flex items-center gap-3 text-sm">

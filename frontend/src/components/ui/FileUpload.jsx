@@ -50,11 +50,11 @@ function FileUpload({
     <Card className="space-y-5">
       <div>
         <h3 className="text-lg font-semibold text-app-fg">{title}</h3>
-        <p className="mt-2 text-sm text-slate-400">{description}</p>
+        <p className="mt-2 text-sm text-app-muted">{description}</p>
       </div>
       <div
-        className={`rounded-3xl border border-slate-700/90 bg-slate-900/70 p-8 text-center transition duration-300 ${
-          isDragActive ? 'border-indigo-500/80 bg-slate-900/90 shadow-[0_0_0_1px_rgba(99,102,241,0.5)]' : 'hover:border-slate-500/80 hover:bg-slate-900/80'
+        className={`rounded-3xl border border-border bg-app-elevated p-8 text-center transition duration-300 ${
+          isDragActive ? 'border-primary/60 shadow-[0_0_0_1px_var(--ring)]' : 'hover:border-app-line-strong'
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -62,20 +62,20 @@ function FileUpload({
         onDrop={handleDrop}
       >
         <div className="mx-auto flex max-w-md flex-col items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-slate-800 text-3xl">{icon}</div>
+          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-muted text-3xl">{icon}</div>
           <div className="space-y-2">
             <p className="text-sm font-medium text-app-fg">Drop your file here</p>
-            <p className="text-sm text-slate-400">Accepts PDF files only.</p>
+            <p className="text-sm text-app-muted">Accepts PDF files only.</p>
           </div>
-          <label className="rounded-full bg-indigo-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-indigo-400">
+          <label className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
             Choose File
             <input type="file" accept={accept} multiple={multiple} onChange={handleFileInput} className="sr-only" />
           </label>
         </div>
       </div>
       {selectedFile && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-700/90 bg-slate-900/70 px-4 py-3">
-          <p className="text-sm text-slate-200">✓ {selectedFile}</p>
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-border bg-app-elevated px-4 py-3">
+          <p className="text-sm text-app-fg">✓ {selectedFile}</p>
           <Button variant="secondary" onClick={() => { setSelectedFile(null); onFilesSelected([]) }}>
             Clear
           </Button>
