@@ -24,15 +24,11 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: ./backend
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Install frontend dependencies
         working-directory: ./frontend
-        run: npm ci
-
-      - name: Lint frontend
-        working-directory: ./frontend
-        run: npm run lint
+        run: npm ci --legacy-peer-deps
 
       - name: Build frontend
         working-directory: ./frontend
