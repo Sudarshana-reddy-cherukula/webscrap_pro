@@ -3,7 +3,7 @@ services:
     name: webscrap-pro-backend
     runtime: node
     plan: free
-    buildCommand: cd backend && npm install
+    buildCommand: cd backend && npm install --legacy-peer-deps
     startCommand: cd backend && node server.js
     healthCheckPath: /api/health
     envVars:
