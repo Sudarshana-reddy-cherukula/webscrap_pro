@@ -1,7 +1,6 @@
 const { Worker } = require('bullmq');
 const { getRedis } = require('../config/redis');
 const { QUEUE_NAMES } = require('../config/queue');
-const PdfJob = require('../models/PdfJob');
 const pdfService = require('../services/pdfService');
 const socketHandler = require('../sockets/socketHandler');
 const logger = require('../utils/logger');
