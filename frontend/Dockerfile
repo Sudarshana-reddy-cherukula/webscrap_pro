@@ -3,10 +3,10 @@ WORKDIR /app
 COPY package*.json ./
 
 FROM base AS deps
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 FROM base AS prod-deps
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production --legacy-peer-deps && npm cache clean --force
 
 FROM deps AS build
 COPY . .
