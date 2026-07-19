@@ -12,9 +12,7 @@ FROM base AS build
 COPY --from=dev-deps /app/node_modules ./node_modules
 COPY . .
 
-FROM mcr.microsoft.com/playwright:v1.49.0-noble AS playwright-base
-
-FROM playwright-base AS production
+FROM node:20-alpine AS production
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
