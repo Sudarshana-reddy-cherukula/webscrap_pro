@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Brain, MessageSquare, Search, Copy, AlertTriangle, Loader2, Send, Sparkles, FileText, Clock, Play, Pause, Trash2, Plus, ChevronDown, ChevronRight } from 'lucide-react'
+import { Brain, MessageSquare, Search, Copy, AlertTriangle, Loader2, Send, Sparkles, FileText, Clock, Play, Pause, Trash2, Plus, ChevronDown, ChevronRight, Download } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Badge } from '@/components/ui/Badge'
@@ -8,7 +8,7 @@ import { useNotification } from '@/hooks/useNotification'
 import { aiService } from '@/services/aiService'
 import { scraperService } from '@/services/scraperService'
 
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
+const cardClass = "rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-6"
 const iconBox = "inline-flex rounded-xl bg-gradient-to-br p-2"
 
 const TABS = [
@@ -114,7 +114,7 @@ function ChatTab() {
             key={session._id}
             onClick={() => loadSessionHistory(session)}
             className={`w-full text-left p-2 rounded-lg text-xs transition mb-1 ${
-              activeSession?._id === session._id ? 'bg-cyan-500/15 text-cyan-300' : 'text-app-muted hover:bg-white/5'
+              activeSession?._id === session._id ? 'bg-cyan-500/15 text-cyan-300' : 'text-app-muted hover:bg-app-surface'
             }`}
           >
             <p className="truncate">{session.title}</p>
@@ -133,7 +133,7 @@ function ChatTab() {
                 <button
                   key={job._id}
                   onClick={() => createSession(job._id)}
-                  className="text-left p-3 rounded-lg border border-white/10 bg-white/[0.02] hover:bg-white/5 transition text-xs"
+                  className="text-left p-3 rounded-lg border border-app-line bg-app-surface hover:bg-app-surface transition text-xs"
                 >
                   <p className="text-app-fg font-medium truncate">{job.results?.metadata?.title || job.targetUrl}</p>
                   <p className="text-app-muted mt-1 truncate">{job.targetUrl}</p>
@@ -143,6 +143,24 @@ function ChatTab() {
           </div>
         ) : (
           <>
+            {messages.length > 0 && (
+              <div className="flex items-center justify-end mb-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const text = messages.map(m => `${m.role === 'user' ? 'You' : 'AI'}: ${m.content}`).join('\n\n')
+                    const blob = new Blob([text], { type: 'text/plain' })
+                    const url = window.URL.createObjectURL(blob)
+                    const a = document.createElement('a'); a.href = url; a.download = `chat-${activeSession?.title || 'export'}.txt`; a.click()
+                    window.URL.revokeObjectURL(url)
+                  }}
+                  className="rounded-lg border border-app-line p-1.5 text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition"
+                  title="Download chat"
+                >
+                  <Download size={12} />
+                </button>
+              </div>
+            )}
             <div className="flex-1 overflow-y-auto space-y-3 mb-4">
               {messages.length === 0 && (
                 <div className="text-center py-8">
@@ -155,7 +173,7 @@ function ChatTab() {
                   <div className={`max-w-[80%] p-3 rounded-xl text-sm ${
                     msg.role === 'user'
                       ? 'bg-cyan-500/20 text-cyan-100'
-                      : 'bg-white/5 text-app-soft'
+                      : 'bg-app-surface text-app-soft'
                   }`}>
                     {msg.content}
                   </div>
@@ -219,6 +237,25 @@ function SearchTab() {
 
       {results.length > 0 && (
         <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <p className="text-xs text-app-muted">{results.length} results found</p>
+            <button
+              type="button"
+              onClick={() => {
+                const csv = 'Title,URL,Similarity,Content\n' + results.map(r => 
+                  `"${(r.metadata?.title || '').replace(/"/g, '""')}","${r.metadata?.url || ''}","${(r.similarity * 100).toFixed(0)}%","${(r.content || '').replace(/"/g, '""')}"`
+                ).join('\n')
+                const blob = new Blob([csv], { type: 'text/csv' })
+                const url = window.URL.createObjectURL(blob)
+                const a = document.createElement('a'); a.href = url; a.download = `search-results.csv`; a.click()
+                window.URL.revokeObjectURL(url)
+              }}
+              className="rounded-lg border border-app-line p-1.5 text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition"
+              title="Export results"
+            >
+              <Download size={12} />
+            </button>
+          </div>
           {results.map((result, i) => (
             <motion.div
               key={result._id || i}
@@ -309,7 +346,7 @@ function ClassifyTab() {
             className={`text-left p-4 rounded-xl border transition ${
               selectedJob === job._id
                 ? 'border-cyan-500/50 bg-cyan-500/10'
-                : 'border-white/10 bg-white/[0.02] hover:bg-white/5'
+                : 'border-app-line bg-app-surface hover:bg-app-surface'
             }`}
           >
             <p className="text-sm text-app-fg font-medium truncate">{job.results?.metadata?.title || job.targetUrl}</p>
@@ -326,7 +363,24 @@ function ClassifyTab() {
       )}
 
       {!loading && classification && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="space-y-4">
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                const report = `Classification Report\n\nCategory: ${classification.category}\nConfidence: ${(classification.confidence * 100).toFixed(0)}%\n\nKeywords:\n${classification.keywords?.map(k => `- ${k.keyword} (${(k.relevance * 100).toFixed(0)}%)`).join('\n') || 'None'}\n\nSummary:\n${classification.summary || 'N/A'}`
+                const blob = new Blob([report], { type: 'text/plain' })
+                const url = window.URL.createObjectURL(blob)
+                const a = document.createElement('a'); a.href = url; a.download = `classification-${classification.category}.txt`; a.click()
+                window.URL.revokeObjectURL(url)
+              }}
+              className="rounded-lg border border-app-line p-1.5 text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition"
+              title="Download report"
+            >
+              <Download size={12} />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={cardClass}>
             <div className="flex items-center gap-2 mb-3">
               <Brain size={16} className="text-purple-400" />
@@ -337,7 +391,7 @@ function ClassifyTab() {
             {classification.subcategories?.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1">
                 {classification.subcategories.map((sub, i) => (
-                  <Badge key={i} className="bg-white/10 text-app-soft text-[10px]">{sub}</Badge>
+                  <Badge key={i} className="bg-app-surface text-app-soft text-[10px]">{sub}</Badge>
                 ))}
               </div>
             )}
@@ -362,6 +416,7 @@ function ClassifyTab() {
               ))}
             </div>
           </motion.div>
+        </div>
         </div>
       )}
     </div>
@@ -485,7 +540,7 @@ function ScheduleTab() {
               className={`${cardClass} flex items-center justify-between`}
             >
               <div className="flex items-center gap-3">
-                <Badge className={job.enabled ? 'bg-green-500/15 text-green-300' : 'bg-white/10 text-app-muted'}>
+                <Badge className={job.enabled ? 'bg-green-500/15 text-green-300' : 'bg-app-surface text-app-muted'}>
                   {job.enabled ? 'Active' : 'Paused'}
                 </Badge>
                 <div>
@@ -523,7 +578,7 @@ function AIDashboardPage() {
         <p className="mt-1 text-sm text-app-muted">Intelligent features powered by AI</p>
       </div>
 
-      <div className="flex gap-1 rounded-xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-xl overflow-x-auto">
+      <div className="flex gap-1 rounded-xl border border-app-line bg-app-elevated/10 p-1 backdrop-blur-xl overflow-x-auto">
         {TABS.map((tab) => {
           const Icon = tab.icon
           return (

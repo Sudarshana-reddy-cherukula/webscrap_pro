@@ -47,7 +47,7 @@ function DashboardPreview() {
           className="mt-16 relative"
         >
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-indigo-500/10 via-violet-500/5 to-transparent blur-3xl" />
-          <div className="relative rounded-2xl border border-app-line bg-white/90 backdrop-blur-2xl overflow-hidden shadow-2xl shadow-indigo-500/5">
+          <div className="relative rounded-2xl border border-app-line bg-app-elevated/90 backdrop-blur-2xl overflow-hidden shadow-2xl shadow-indigo-500/5">
             <div className="border-b border-app-line px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-bold text-white">
@@ -74,7 +74,7 @@ function DashboardPreview() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 + i * 0.05 }}
-                    className="rounded-xl border border-app-line bg-white p-4 hover:border-app-line transition-colors"
+                    className="rounded-xl border border-app-line bg-app-elevated p-4 hover:border-app-line transition-colors"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs text-app-muted">{stat.label}</span>
@@ -89,7 +89,7 @@ function DashboardPreview() {
                 ))}
               </div>
 
-              <div className="rounded-xl border border-app-line bg-white overflow-hidden">
+              <div className="rounded-xl border border-app-line bg-app-elevated overflow-hidden">
                 <div className="px-4 py-3 border-b border-app-line">
                   <p className="text-xs font-medium text-app-muted uppercase tracking-wider">Recent Jobs</p>
                 </div>

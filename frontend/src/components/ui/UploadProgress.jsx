@@ -51,7 +51,7 @@ function UploadProgress({ fileName, progress, status = 'uploading', fileSize, on
         </div>
       </div>
 
-      <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-app-line/50 overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}

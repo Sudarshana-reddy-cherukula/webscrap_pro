@@ -38,14 +38,14 @@ function createTrailDot(x, y) {
 }
 
 function buildGrid(particles, w, h) {
-  const cols = Math.ceil(w / CELL_SIZE)
-  const rows = Math.ceil(h / CELL_SIZE)
+  const cols = Math.max(1, Math.ceil(w / CELL_SIZE))
+  const rows = Math.max(1, Math.ceil(h / CELL_SIZE))
   const grid = new Array(cols * rows)
   for (let i = 0; i < grid.length; i++) grid[i] = []
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i]
-    const col = Math.min(Math.floor(p.x / CELL_SIZE), cols - 1)
-    const row = Math.min(Math.floor(p.y / CELL_SIZE), rows - 1)
+    const col = Math.max(0, Math.min(Math.floor(p.x / CELL_SIZE), cols - 1))
+    const row = Math.max(0, Math.min(Math.floor(p.y / CELL_SIZE), rows - 1))
     grid[row * cols + col].push(i)
   }
   return { grid, cols, rows }
@@ -59,7 +59,9 @@ function getNeighbors(grid, cols, rows, col, row) {
       const c = col + dc
       if (r >= 0 && r < rows && c >= 0 && c < cols) {
         const cell = grid[r * cols + c]
-        for (let k = 0; k < cell.length; k++) result.push(cell[k])
+        if (cell) {
+          for (let k = 0; k < cell.length; k++) result.push(cell[k])
+        }
       }
     }
   }
@@ -175,6 +177,12 @@ export default function ParticleNetwork({
       }
 
       const { ctx, w, h, particles, mouse, ripples, trail } = s
+      if (w === 0 || h === 0) {
+        s.animId = requestAnimationFrame(animate)
+        return
+      }
+      s.isDark = document.documentElement.classList.contains('dark')
+      const isDark = s.isDark
 
       ctx.clearRect(0, 0, w, h)
 
@@ -196,11 +204,11 @@ export default function ParticleNetwork({
         const a = t.alpha * t.life
         ctx.beginPath()
         ctx.arc(t.x, t.y, t.size * t.life, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(99,102,241,${a})`
+        ctx.fillStyle = isDark ? `rgba(99,102,241,${a})` : `rgba(79,82,221,${a})`
         ctx.fill()
         ctx.beginPath()
         ctx.arc(t.x, t.y, t.size * t.life * 2.5, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(99,102,241,${a * 0.15})`
+        ctx.fillStyle = isDark ? `rgba(99,102,241,${a * 0.15})` : `rgba(79,82,221,${a * 0.2})`
         ctx.fill()
       }
 
@@ -247,21 +255,21 @@ export default function ParticleNetwork({
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, finalSize, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${p.alpha})`
+        ctx.fillStyle = isDark ? `rgba(255,255,255,${p.alpha})` : `rgba(40,40,70,${p.alpha})`
         ctx.fill()
 
         if (p.glowBoost > 0.05) {
           ctx.beginPath()
           ctx.arc(p.x, p.y, finalSize * 3, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(99,102,241,${p.glowBoost * 0.3})`
+          ctx.fillStyle = isDark ? `rgba(99,102,241,${p.glowBoost * 0.3})` : `rgba(99,102,241,${p.glowBoost * 0.5})`
           ctx.fill()
         }
       }
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
-        const col = Math.min(Math.floor(p.x / CELL_SIZE), cols - 1)
-        const row = Math.min(Math.floor(p.y / CELL_SIZE), rows - 1)
+        const col = Math.max(0, Math.min(Math.floor(p.x / CELL_SIZE), cols - 1))
+        const row = Math.max(0, Math.min(Math.floor(p.y / CELL_SIZE), rows - 1))
         const neighbors = getNeighbors(grid, cols, rows, col, row)
 
         for (let k = 0; k < neighbors.length; k++) {
@@ -277,7 +285,7 @@ export default function ParticleNetwork({
             const distSqrt = Math.sqrt(dist)
             const fade = 1 - distSqrt / connectionDistance
             const avgGlow = (p.glowBoost + q.glowBoost) * 0.5
-            const lineAlpha = fade * 0.18 * (1 + avgGlow * 2)
+            const lineAlpha = fade * (isDark ? 0.18 : 0.3) * (1 + avgGlow * 2)
 
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
@@ -294,7 +302,7 @@ export default function ParticleNetwork({
           const mDist = Math.sqrt(mdx * mdx + mdy * mdy)
           if (mDist < mouseRadius && mDist > 0) {
             const fade = 1 - mDist / mouseRadius
-            const lineAlpha = fade * 0.2 * (1 + p.glowBoost)
+            const lineAlpha = fade * (isDark ? 0.2 : 0.35) * (1 + p.glowBoost)
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(mouse.x, mouse.y)
@@ -316,7 +324,7 @@ export default function ParticleNetwork({
         }
         ctx.beginPath()
         ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(99,102,241,${r.alpha})`
+        ctx.strokeStyle = isDark ? `rgba(99,102,241,${r.alpha})` : `rgba(79,82,221,${r.alpha})`
         ctx.lineWidth = 1
         ctx.stroke()
       }
@@ -326,8 +334,9 @@ export default function ParticleNetwork({
         if (cursorAge < 3) {
           const fade = Math.max(0, 1 - cursorAge / 3)
           const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 100)
-          grad.addColorStop(0, `rgba(99,102,241,${0.08 * fade})`)
-          grad.addColorStop(0.5, `rgba(6,182,212,${0.04 * fade})`)
+          const gAlpha = isDark ? 1 : 1.5
+          grad.addColorStop(0, `rgba(99,102,241,${0.08 * fade * gAlpha})`)
+          grad.addColorStop(0.5, `rgba(6,182,212,${0.04 * fade * gAlpha})`)
           grad.addColorStop(1, 'rgba(99,102,241,0)')
           ctx.beginPath()
           ctx.arc(mouse.x, mouse.y, 100, 0, Math.PI * 2)

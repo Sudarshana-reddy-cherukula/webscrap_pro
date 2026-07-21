@@ -65,4 +65,14 @@ export const pdfService = {
   getJobs(params = { limit: 50 }) {
     return httpClient.get('/pdf/jobs', { params })
   },
+  downloadImage(jobId, filename) {
+    return httpClient.get(`/pdf/download-image/${jobId}/${filename}`, {
+      responseType: 'blob',
+    })
+  },
+  downloadAllImages(jobId) {
+    return httpClient.get(`/pdf/download-images/${jobId}`, {
+      responseType: 'blob',
+    })
+  },
 }

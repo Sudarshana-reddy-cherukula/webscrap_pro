@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
+import { useTheme } from '@/hooks/useTheme'
 import PremiumBackground from '@/components/background/PremiumBackground'
 import {
   LayoutDashboard,
@@ -19,9 +20,11 @@ import {
   X,
   Workflow,
   Shield,
+  Sun,
+  Moon,
 } from 'lucide-react'
 
-const navigation = [
+const baseNavigation = [
   { to: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { to: '/scraper', label: 'Web Scraper', icon: Globe },
   { to: '/pdf-tools', label: 'PDF Tools', icon: FileText },
@@ -29,7 +32,7 @@ const navigation = [
   { to: '/analytics', label: 'Analytics', icon: BarChart3 },
   { to: '/ai', label: 'AI Dashboard', icon: Brain },
   { to: '/workflows', label: 'Workflows', icon: Workflow },
-  { to: '/admin', label: 'Admin', icon: Shield },
+  { to: '/admin', label: 'Admin', icon: Shield, adminOnly: true },
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
@@ -38,10 +41,12 @@ function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, logout } = useAuth()
+  const { toggleTheme, themePreference } = useTheme()
   const location = useLocation()
+  const navigation = baseNavigation.filter(item => !item.adminOnly || user?.role === 'admin')
 
   return (
-    <div className="flex min-h-screen bg-app-bg">
+    <div className="flex min-h-screen bg-app-bg overflow-x-hidden">
       <PremiumBackground variant="minimal" />
       <aside
         className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-app-line bg-app-elevated/90 backdrop-blur-2xl transition-all duration-300 lg:sticky lg:top-0 lg:h-screen ${
@@ -117,6 +122,16 @@ function DashboardLayout() {
           </div>
           <button
             type="button"
+            onClick={toggleTheme}
+            className={`mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-app-muted transition hover:bg-app-surface hover:text-app-fg ${
+              collapsed ? 'justify-center' : ''
+            }`}
+          >
+            {themePreference === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            {!collapsed && (themePreference === 'dark' ? 'Light mode' : 'Dark mode')}
+          </button>
+          <button
+            type="button"
             onClick={logout}
             className={`mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-app-muted transition hover:bg-red-500/10 hover:text-red-500 ${
               collapsed ? 'justify-center' : ''
@@ -135,7 +150,7 @@ function DashboardLayout() {
         />
       )}
 
-      <div className="flex-1">
+      <div className="flex-1 min-w-0 overflow-x-hidden">
         <div className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-app-line bg-app-elevated/80 px-4 backdrop-blur-2xl lg:hidden">
           <button
             type="button"
@@ -147,6 +162,16 @@ function DashboardLayout() {
           <span className="text-sm font-bold text-app-fg">
             WebScrap <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">Pro</span>
           </span>
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="rounded-lg border border-app-line p-1.5 text-app-muted transition hover:bg-app-surface hover:text-app-soft"
+              aria-label="Toggle theme"
+            >
+              {themePreference === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
+          </div>
         </div>
         <div className="p-4 sm:p-6 lg:p-8">
           <AnimatePresence mode="wait">

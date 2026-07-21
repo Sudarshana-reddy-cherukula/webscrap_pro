@@ -68,7 +68,7 @@ function Footer() {
                 <a
                   key={s}
                   href="#"
-                  className="rounded-lg border border-app-line bg-white px-3 py-1.5 text-xs text-app-muted transition hover:border-indigo-400/30 hover:text-indigo-700 hover:bg-indigo-50"
+                   className="rounded-lg border border-app-line bg-app-elevated px-3 py-1.5 text-xs text-app-muted transition hover:border-indigo-400/30 hover:text-indigo-400 hover:bg-indigo-500/10"
                 >
                   {s}
                 </a>

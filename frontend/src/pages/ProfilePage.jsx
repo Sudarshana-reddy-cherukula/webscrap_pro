@@ -81,7 +81,7 @@ function ProfilePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled
-                  className="block w-full rounded-xl border border-app-line bg-white/[0.01] px-4 py-2.5 pr-10 text-sm text-app-muted transition"
+                  className="block w-full rounded-xl border border-app-line bg-app-elevated px-4 py-2.5 pr-10 text-sm text-app-muted transition"
                 />
                 <Mail size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-app-muted" />
               </div>
@@ -114,7 +114,7 @@ function ProfilePage() {
           <div           className="rounded-2xl border border-border bg-card p-6 backdrop-blur-xl">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-600/20 text-2xl font-bold text-cyan-300 ring-2 ring-white/10 shadow-lg shadow-cyan-500/10">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-600/20 text-2xl font-bold text-cyan-300 ring-2 ring-app-line shadow-lg shadow-cyan-500/10">
                   {user?.name?.charAt(0) || 'U'}
                 </div>
                 <button

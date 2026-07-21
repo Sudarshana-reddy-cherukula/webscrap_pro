@@ -586,6 +586,45 @@ const cropPages = asyncHandler(async (req, res) => {
   }
 });
 
+const downloadImage = asyncHandler(async (req, res) => {
+  const { jobId, filename } = req.params;
+  try {
+    const job = await pdfService.getJobStatus(jobId);
+    if (!job) return res.status(404).json({ success: false, message: 'Job not found' });
+    const image = job.results?.images?.find((img) => img.filename === filename);
+    if (!image) return res.status(404).json({ success: false, message: 'Image not found' });
+    const fileData = await require('fs').promises.readFile(image.path);
+    res.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Disposition': `inline; filename="${image.filename}"`,
+      'Content-Length': fileData.length,
+    });
+    res.end(fileData);
+  } catch (error) {
+    res.status(400).json({ success: false, message: 'Failed to download image', error: error.message });
+  }
+});
+
+const downloadAllImages = asyncHandler(async (req, res) => {
+  const { jobId } = req.params;
+  try {
+    const zipBuffer = await pdfService.createImagesZip(jobId);
+    if (!zipBuffer || zipBuffer.length === 0) {
+      return res.status(400).json({ success: false, message: 'ZIP file is empty' });
+    }
+    res.set({
+      'Content-Type': 'application/zip',
+      'Content-Disposition': `attachment; filename="extracted_images_${jobId}.zip"`,
+      'Content-Length': zipBuffer.length,
+      'Cache-Control': 'no-cache',
+    });
+    res.send(zipBuffer);
+  } catch (error) {
+    console.error('downloadAllImages error:', error.message);
+    res.status(400).json({ success: false, message: 'Failed to download images', error: error.message });
+  }
+});
+
 module.exports = {
   extractText,
   extractImages,
@@ -604,4 +643,6 @@ module.exports = {
   deleteJob,
   getUserJobs,
   downloadProcessedFile,
+  downloadImage,
+  downloadAllImages,
 };

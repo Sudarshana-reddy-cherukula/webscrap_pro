@@ -26,8 +26,8 @@ const SELECTOR_TYPES = [
   { value: 'attribute', label: 'HTML Attribute' },
 ]
 
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl"
-const inputClass = "mt-1.5 block w-full rounded-xl border border-white/10 bg-app-elevated px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+const cardClass = "rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl"
+const inputClass = "mt-1.5 block w-full rounded-xl border border-app-line bg-app-elevated px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
 const labelClass = "block text-sm font-medium text-app-soft"
 
 function ScraperPage() {
@@ -109,7 +109,7 @@ function ScraperPage() {
 
       <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className={`${cardClass} p-6 space-y-6`}>
-          <div className="flex items-center gap-3 pb-2 border-b border-white/5">
+          <div className="flex items-center gap-3 pb-2 border-b border-app-line/50">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20">
               <Globe size={18} className="text-white" />
             </div>
@@ -138,11 +138,11 @@ function ScraperPage() {
                     className={`group flex items-start gap-3 rounded-xl border p-3 text-left transition-all duration-200 ${
                       isActive
                         ? 'border-cyan-500/40 bg-cyan-500/10 shadow-lg shadow-cyan-500/5'
-                        : 'border-white/5 bg-white/[0.02] hover:border-cyan-500/20 hover:bg-cyan-500/[0.03]'
+                        : 'border-app-line/50 bg-app-surface hover:border-cyan-500/20 hover:bg-cyan-500/[0.03]'
                     }`}
                   >
                     <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all ${
-                      isActive ? 'bg-cyan-500/25 text-cyan-400 shadow-sm' : 'bg-white/[0.04] text-app-muted group-hover:bg-cyan-500/10 group-hover:text-cyan-400'
+                      isActive ? 'bg-cyan-500/25 text-cyan-400 shadow-sm' : 'bg-app-elevated/15 text-app-muted group-hover:bg-cyan-500/10 group-hover:text-cyan-400'
                     }`}>
                       <Icon size={14} />
                     </div>
@@ -179,7 +179,7 @@ function ScraperPage() {
             />
           </div>
 
-          <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
+          <div className="flex items-center justify-between rounded-xl border border-app-line bg-app-surface px-4 py-3">
             <div className="flex items-center gap-3">
               {usePlaywright ? (
                 <Film size={18} className="text-purple-400" />
@@ -237,11 +237,11 @@ function ScraperPage() {
                 <AlertCircle size={32} className="mx-auto text-red-500" />
                 <p className="mt-3 text-sm text-red-400">Failed to load jobs</p>
                 <p className="text-xs text-app-muted">{jobsError}</p>
-                <button onClick={loadJobs} className="mt-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-xs text-app-soft transition hover:bg-white/[0.06]">Try Again</button>
+                <button onClick={loadJobs} className="mt-3 rounded-xl border border-app-line bg-app-elevated/10 px-4 py-2 text-xs text-app-soft transition hover:bg-app-elevated/25">Try Again</button>
               </div>
             ) : jobs.length === 0 ? (
               <div className="py-12 text-center">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.03] border border-white/10">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-app-elevated/10 border border-app-line">
                    <Globe size={24} className="text-app-muted" />
                 </div>
                 <p className="mt-4 text-sm text-app-muted">No scraping jobs yet</p>
@@ -253,7 +253,7 @@ function ScraperPage() {
                 const StatusIcon = status.icon
                 return (
                   <div key={job.id || job._id}
-                    className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 transition-all duration-200 hover:bg-white/[0.04] hover:border-white/10 hover:shadow-sm"
+                    className="rounded-xl border border-app-line/50 bg-app-surface px-4 py-3 transition-all duration-200 hover:bg-app-elevated/15 hover:border-app-line hover:shadow-sm"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
@@ -270,20 +270,20 @@ function ScraperPage() {
                     <div className="mt-2 flex gap-1.5">
                       {job.status === 'running' && (
                         <>
-                          <button onClick={() => pauseJob(job.id || job._id)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-indigo-400" title="Pause"><Pause size={12} /></button>
-                          <button onClick={() => stopJob(job.id || job._id)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-red-400" title="Stop"><Square size={12} /></button>
+                          <button onClick={() => pauseJob(job.id || job._id)} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-indigo-400" title="Pause"><Pause size={12} /></button>
+                          <button onClick={() => stopJob(job.id || job._id)} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-red-400" title="Stop"><Square size={12} /></button>
                         </>
                       )}
                       {job.status === 'paused' && (
-                        <button onClick={() => resumeJob(job.id || job._id)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-cyan-400" title="Resume"><Play size={12} /></button>
+                        <button onClick={() => resumeJob(job.id || job._id)} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-cyan-400" title="Resume"><Play size={12} /></button>
                       )}
                       {job.status === 'completed' && (
                         <>
-                          <button onClick={() => downloadResults(job, 'csv')} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-cyan-400" title="Download CSV"><Download size={12} /></button>
-                          <button onClick={() => downloadResults(job, 'json')} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-purple-400" title="Download JSON"><FileType size={12} /></button>
+                          <button onClick={() => downloadResults(job, 'csv')} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-cyan-400" title="Download CSV"><Download size={12} /></button>
+                          <button onClick={() => downloadResults(job, 'json')} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-purple-400" title="Download JSON"><FileType size={12} /></button>
                         </>
                       )}
-                      <button onClick={() => deleteJob(job.id || job._id)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-red-400" title="Delete"><Trash2 size={12} /></button>
+                      <button onClick={() => deleteJob(job.id || job._id)} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-red-400" title="Delete"><Trash2 size={12} /></button>
                     </div>
                   </div>
                 )

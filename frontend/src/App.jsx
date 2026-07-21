@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import DashboardLayout from './layouts/DashboardLayout'
 import ProtectedRoute from './components/routes/ProtectedRoute'
+import AdminRoute from './components/routes/AdminRoute'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
 const LoginPage = lazy(() => import('./pages/LoginPage'))
@@ -74,14 +75,14 @@ function App() {
           <Route path="/dashboard/settings" element={<SettingsPage />} />
           <Route path="/dashboard/profile" element={<ProfilePage />} />
           <Route path="/dashboard/workflows" element={<WorkflowsPage />} />
-          <Route path="/dashboard/admin" element={<AdminPage />} />
+          <Route path="/dashboard/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
           <Route path="/scraper" element={<ScraperPage />} />
           <Route path="/pdf-tools" element={<PdfToolsPage />} />
           <Route path="/export" element={<ExportPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/ai" element={<AIDashboardPage />} />
           <Route path="/workflows" element={<WorkflowsPage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>

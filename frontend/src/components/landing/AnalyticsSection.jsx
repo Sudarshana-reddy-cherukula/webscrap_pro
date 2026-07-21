@@ -67,7 +67,7 @@ function AnalyticsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: i * 0.05 }}
-              className="rounded-2xl border border-app-line bg-white p-6 hover:border-indigo-400/30 transition-all duration-300 hover:-translate-y-1"
+              className="rounded-2xl border border-app-line bg-app-elevated p-6 hover:border-indigo-400/30 transition-all duration-300 hover:-translate-y-1"
             >
               <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${metric.gradient} p-2.5 shadow-lg`}>
                 <metric.icon size={20} className="text-white" />
@@ -83,7 +83,7 @@ function AnalyticsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-16 rounded-2xl border border-app-line bg-white p-8"
+          className="mt-16 rounded-2xl border border-app-line bg-app-elevated p-8"
         >
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -92,7 +92,7 @@ function AnalyticsSection() {
             </div>
             <div className="flex gap-2">
               {[BarChart3, LineChart, PieChart].map((Icon, i) => (
-                <div key={i} className="rounded-lg border border-app-line bg-white p-2 text-app-muted hover:bg-indigo-50 hover:text-app-nav transition cursor-pointer">
+                <div key={i} className="rounded-lg border border-app-line bg-app-elevated p-2 text-app-muted hover:bg-indigo-500/10 hover:text-app-nav transition cursor-pointer">
                   <Icon size={14} />
                 </div>
               ))}
@@ -107,7 +107,7 @@ function AnalyticsSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="rounded-xl border border-app-line bg-white p-4 text-center"
+                className="rounded-xl border border-app-line bg-app-elevated p-4 text-center"
               >
                 <p className="text-2xl font-bold text-app-fg">{item.value}</p>
                 <p className="text-xs text-app-muted mt-1">{item.label}</p>
@@ -118,7 +118,7 @@ function AnalyticsSection() {
             ))}
           </div>
 
-          <div className="mt-8 h-32 rounded-xl border border-app-line bg-white p-4 flex items-center justify-center">
+          <div className="mt-8 h-32 rounded-xl border border-app-line bg-app-elevated p-4 flex items-center justify-center">
             <div className="flex items-center gap-6">
               {[40, 65, 45, 80, 55, 90, 70].map((height, i) => (
                 <motion.div

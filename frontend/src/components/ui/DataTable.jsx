@@ -139,7 +139,7 @@ function DataTable({
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-app-line/50">
               {paginated.map((row, i) => (
                 <motion.tr
                   key={keyExtractor(row, i)}

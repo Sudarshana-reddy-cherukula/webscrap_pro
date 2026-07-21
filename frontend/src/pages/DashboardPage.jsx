@@ -97,21 +97,44 @@ function DashboardPage() {
             {user ? `${user.name || 'User'} — ` : ''}Live overview of your data operations
           </p>
         </div>
-        <div className="flex gap-1 rounded-xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-xl">
-          {TIMEFRAMES.map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => setTimeframe(t)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
-                timeframe === t
-                  ? 'bg-cyan-500/20 text-cyan-300 shadow-sm'
-                  : 'text-app-muted hover:text-app-soft'
-              }`}
-            >
-              {t}
-            </button>
-          ))}
+        <div className="flex gap-2 items-center">
+          <button
+            type="button"
+            onClick={() => {
+              if (!dashboard) return
+              const stats = [
+                `Total Scrapes: ${dashboard.totalScrapes || 0}`,
+                `Total PDFs: ${dashboard.totalPdfs || 0}`,
+                `Total Exports: ${dashboard.totalExports || 0}`,
+                `Success Rate: ${dashboard.successRate || 0}%`,
+                `Active Jobs: ${dashboard.activeJobs || 0}`,
+                `Queue Length: ${dashboard.queueLength || 0}`,
+              ].join('\n')
+              const blob = new Blob([`Dashboard Stats (${timeframe})\n\n${stats}`], { type: 'text/plain' })
+              const url = window.URL.createObjectURL(blob)
+              const a = document.createElement('a'); a.href = url; a.download = `dashboard-${timeframe.toLowerCase()}.txt`; a.click()
+              window.URL.revokeObjectURL(url)
+            }}
+            className="flex items-center gap-1.5 rounded-lg border border-app-line px-3 py-1.5 text-xs text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition"
+          >
+            <Download size={12} /> Export
+          </button>
+          <div className="flex gap-1 rounded-xl border border-app-line bg-app-elevated/10 p-1 backdrop-blur-xl">
+            {TIMEFRAMES.map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTimeframe(t)}
+                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
+                  timeframe === t
+                    ? 'bg-cyan-500/20 text-cyan-300 shadow-sm'
+                    : 'text-app-muted hover:text-app-soft'
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -129,7 +152,7 @@ function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
                 onClick={() => navigate(stat.link)}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-left backdrop-blur-xl transition hover:border-cyan-500/20 hover:bg-white/[0.05] hover:shadow-lg hover:shadow-cyan-500/5"
+                className="group relative overflow-hidden rounded-2xl border border-app-line bg-app-elevated/10 p-5 text-left backdrop-blur-xl transition hover:border-cyan-500/20 hover:bg-app-elevated/20 hover:shadow-lg hover:shadow-cyan-500/5"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute right-3 top-3 opacity-0 transition group-hover:opacity-100">
@@ -155,7 +178,7 @@ function DashboardPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="xl:col-span-2 rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl"
+              className="xl:col-span-2 rounded-2xl border border-app-line bg-app-elevated/10 p-6 backdrop-blur-xl"
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -199,7 +222,7 @@ function DashboardPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl"
+              className="rounded-2xl border border-app-line bg-app-elevated/10 p-6 backdrop-blur-xl"
             >
               <div className="flex items-center gap-2 mb-3">
                 <Terminal size={14} className="text-cyan-400" />
@@ -247,7 +270,7 @@ function DashboardPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl"
+            className="rounded-2xl border border-app-line bg-app-elevated/10 p-6 backdrop-blur-xl"
           >
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-medium text-app-fg">Recent Activity</h2>
@@ -266,7 +289,7 @@ function DashboardPage() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 transition hover:bg-white/[0.04] hover:border-white/10"
+                      className="flex items-center justify-between rounded-xl border border-app-line/50 bg-app-surface px-4 py-3 transition hover:bg-app-elevated/15 hover:border-app-line"
                     >
                       <div className="flex items-center gap-3">
                         <div

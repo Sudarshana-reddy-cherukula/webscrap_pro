@@ -1,14 +1,17 @@
 import useReducedMotion from './useReducedMotion'
-
-const rays = [
-  { width: 300, angle: 15, color: 'rgba(99,102,241,0.03)', duration: '20s', delay: '0s', left: '-10%' },
-  { width: 250, angle: -20, color: 'rgba(6,182,212,0.025)', duration: '25s', delay: '-7s', left: '30%' },
-  { width: 200, angle: 25, color: 'rgba(139,92,246,0.02)', duration: '22s', delay: '-12s', left: '60%' },
-  { width: 180, angle: -10, color: 'rgba(99,102,241,0.02)', duration: '28s', delay: '-4s', left: '80%' },
-]
+import useIsDark from '@/hooks/useIsDark'
 
 export default function LightRays() {
   const reducedMotion = useReducedMotion()
+  const isDark = useIsDark()
+
+  const a = isDark ? 1 : 1.8
+  const rays = [
+    { width: 300, angle: 15, color: `rgba(99,102,241,${0.03 * a})`, duration: '20s', delay: '0s', left: '-10%' },
+    { width: 250, angle: -20, color: `rgba(6,182,212,${0.025 * a})`, duration: '25s', delay: '-7s', left: '30%' },
+    { width: 200, angle: 25, color: `rgba(139,92,246,${0.02 * a})`, duration: '22s', delay: '-12s', left: '60%' },
+    { width: 180, angle: -10, color: `rgba(99,102,241,${0.02 * a})`, duration: '28s', delay: '-4s', left: '80%' },
+  ]
 
   if (reducedMotion) return null
 

@@ -1,7 +1,7 @@
 # WebScrap Pro — Context Dump
 
 > **Generated:** 2026-07-18
-> **Updated:** 2026-07-19 (Session 4: Deployment Live + Bug Fixes)
+> **Updated:** 2026-07-21 (Session 6: PDF Image Gallery + Download Fixes + Dark Theme)
 > **Purpose:** Session continuity across chats. Inject this at the start of new sessions.
 
 ---
@@ -151,6 +151,20 @@
 
 54. **Cursor-following dots** — Enhanced ParticleNetwork with: stronger attract force (0.04 vs 0.015), cursor-trail dots spawning every 2 frames (max 40, drift + fade), connection lines from particles to cursor within mouseRadius
 
+55. **PDF Image Gallery** (`PdfToolsPage.jsx`) — New `ImageGallery` component: responsive grid of extracted image thumbnails with blob URL loading, per-image download, "Download All as ZIP" button, loading spinners, metadata display (filename, dimensions, page, file size)
+
+56. **Image Download Endpoints** (`pdfController.js`, `pdfRoutes.js`) — `GET /download-image/:jobId/:filename` (single image), `GET /download-images/:jobId` (ZIP archive). JWT-protected, Content-Length headers, `res.send(buffer)` for binary responses.
+
+57. **ZIP During Extraction** (`pdfService.js`) — `extractImagesFromPDF()` now generates ZIP immediately after extraction using JSZip, stores as `results.outputFile` in MongoDB. Fallback rebuilds from individual files if stored ZIP is missing.
+
+58. **Dark Theme Inputs** (`index.css`) — Global `!important` CSS overrides force dark theme on ALL form elements: white text, slate-800 bg, slate-600 borders, blue focus ring. Applied to 49+ inline inputs across all pages.
+
+59. **UI Component Dark Styling** (`Input.jsx`, `Select.jsx`, `Textarea.jsx`, `SearchInput.jsx`, `FileUpload.jsx`) — All updated: `bg-slate-800 text-white border-slate-600 placeholder:text-slate-400 hover:border-slate-500 focus:border-blue-500`
+
+60. **Export Buttons Across Pages** — Added download/export functionality to AnalyticsPage (chat/search/classification), SettingsPage (backup), WorkflowsPage (runs csv), DashboardPage (stats txt), AdminPage (users csv)
+
+61. **PNG Extraction Fixes** (`pdfService.js`) — Fixed channel detection, null safety for rawPixels objects, Buffer.from for TypedArrays, PNG signature validation, ZIP only bundles valid PNGs
+
 ---
 
 ## Key Architecture Decisions
@@ -171,6 +185,9 @@
 - **Render for backend** — Free tier (750 hrs/month), spins down after 15min (30-60s cold start acceptable)
 - **Docker Redis** — Self-hosted on Windows PC (localhost:6379), unlimited commands, no external service needed
 - **Gmail OAuth over SMTP** — n8n uses Gmail OAuth2 (sign in with Google, no app password needed)
+- **ZIP during extraction** — Generate ZIP immediately when images are extracted, store in MongoDB results. Avoids temp file cleanup issues. Fallback rebuilds from individual files.
+- **Blob URLs for image previews** — Fetch extracted images via httpClient (JWT-protected), create blob URLs for display. No unauthenticated `<img src>` endpoints needed.
+- **Global CSS overrides for dark theme** — `!important` rules force dark theme on all form elements regardless of Tailwind classes. Covers inline inputs that don't use UI components.
 
 ---
 
@@ -257,6 +274,8 @@
 | GET | `/status/:jobId` | JWT | Get job status |
 | GET | `/results/:jobId` | JWT | Get job results |
 | GET | `/download/:jobId` | JWT | Download processed file |
+| GET | `/download-image/:jobId/:filename` | JWT | Download single extracted image |
+| GET | `/download-images/:jobId` | JWT | Download all extracted images as ZIP |
 | GET | `/jobs` | JWT | List user's jobs |
 
 ### Export (`/api/export`)
@@ -418,7 +437,7 @@
 
 ### Backend — Services
 - `backend/src/services/scrapingService.js` — 3-engine scraper (Cheerio, Puppeteer, Playwright)
-- `backend/src/services/pdfService.js` — PDF processing (pdf-lib, pdfjs-dist)
+- `backend/src/services/pdfService.js` — PDF processing (pdf-lib, pdfjs-dist, jszip for ZIP generation during image extraction)
 - `backend/src/services/exportService.js` — CSV/JSON/TXT/PDF export
 - `backend/src/services/aiService.js` — OpenAI: summarize, extractKeywords, classify, generateEmbedding, chatWithContent
 - `backend/src/services/duplicateService.js` — Hybrid duplicate detection (vector + string similarity)
@@ -470,7 +489,7 @@
 ### Frontend — Core
 - `frontend/src/main.jsx` — Entry point, ErrorBoundary + providers
 - `frontend/src/App.jsx` — Route definitions (lazy-loaded)
-- `frontend/src/index.css` — Tailwind + dark mode `.dark` CSS tokens (oklch) + 15 animation keyframes + prefers-reduced-motion fallback
+- `frontend/src/index.css` — Tailwind + dark mode `.dark` CSS tokens (oklch) + 15 animation keyframes + prefers-reduced-motion fallback + global `!important` dark theme overrides for all form elements (input/select/textarea)
 - `frontend/index.html` — Flash prevention script
 
 ### Frontend — Pages (21 total)
@@ -482,7 +501,7 @@
 - `frontend/src/pages/VerifyOtpPage.jsx` — OTP verification
 - `frontend/src/pages/DashboardPage.jsx` — Main dashboard with stats + charts
 - `frontend/src/pages/ScraperPage.jsx` — Web scraping configuration + job list
-- `frontend/src/pages/PdfToolsPage.jsx` — PDF processing tools
+- `frontend/src/pages/PdfToolsPage.jsx` — PDF processing tools with ImageGallery component (blob URL thumbnails, per-image download, Download All as ZIP)
 - `frontend/src/pages/UploadsPage.jsx` — Upload management
 - `frontend/src/pages/HistoryPage.jsx` — Job history table
 - `frontend/src/pages/ExportPage.jsx` — Export center
@@ -502,7 +521,7 @@
 - `frontend/src/components/ErrorBoundary.jsx` — React error boundary
 - `frontend/src/components/navigation/Navbar.jsx` — Top nav for public pages
 - `frontend/src/components/routes/ProtectedRoute.jsx` — Auth guard wrapper
-- `frontend/src/components/ui/` — 28 shadcn-style components (Button, Card, Badge, DataTable, Input, Skeleton, Tabs, Dialog, FileUpload, Pagination, SearchInput, Select, Textarea, Toast, etc.)
+- `frontend/src/components/ui/` — 28 shadcn-style components (Button, Card, Badge, DataTable, Input, Skeleton, Tabs, Dialog, FileUpload, Pagination, SearchInput, Select, Textarea, Toast, etc.) — all updated with dark theme styling (bg-slate-800, text-white, border-slate-600, blue focus ring)
 - `frontend/src/components/landing/` — Landing page sections (Hero, Features, Pricing, FAQ, CTA, etc.)
 - `frontend/src/components/background/` — 12 premium background animation components (see Background Animation section)
 
@@ -518,7 +537,7 @@
 - `frontend/src/services/httpClient.js` — Axios instance with auth interceptor
 - `frontend/src/services/authService.js` — Login, register, profile, password reset
 - `frontend/src/services/scraperService.js` — Scraping endpoints (includes `getJobsCursor()` for cursor pagination)
-- `frontend/src/services/pdfService.js` — PDF processing endpoints
+- `frontend/src/services/pdfService.js` — PDF processing endpoints (extractText, extractImages, downloadImage, downloadAllImages, etc.)
 - `frontend/src/services/exportService.js` — Export endpoints
 - `frontend/src/services/analyticsService.js` — Analytics endpoints
 - `frontend/src/services/dashboardService.js` — Dashboard stats, history, downloads
@@ -604,16 +623,17 @@
 
 ### Deployment Decision
 
-**Final Stack: Render + Docker (Local)**
+**Final Stack: Docker Full Stack + Upstash Redis + Cloudflare**
 
 | Service | Provider | Cost | Notes |
 |---------|----------|------|-------|
-| Frontend | Vercel | $0 | 100GB bandwidth |
-| Backend | Render | $0 | 750 hrs/month, spins down after 15min |
-| Redis | Docker (Local) | $0 | Unlimited commands |
-| n8n | Docker (Local) | $0 | Gmail OAuth, no SMTP password |
+| Frontend | Docker (nginx) | $0 | Port 80, proxied to backend |
+| Backend | Docker (node) | $0 | Port 5000, connects to Upstash |
+| Redis | Upstash | $0 | 10K commands/day free tier |
+| n8n | Docker | $0 | Gmail OAuth, port 5678 |
 | Database | MongoDB Atlas M0 | $0 | 512MB storage |
 | AI | OpenAI Credits | $0 | $5 initial (~1M tokens) |
+| CDN/DNS | Cloudflare | $0 | Free SSL + DDoS protection |
 
 **Total: $0/month**
 
@@ -636,35 +656,43 @@ Backend → n8n Webhook (localhost:5678) → Gmail OAuth → Email sent
 
 ### Docker Configuration
 
-**docker-compose.yml (Redis + n8n):**
+**docker-compose.yml (Full Stack):**
 ```yaml
-version: '3.8'
 services:
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    command: redis-server --appendonly yes
-
   n8n:
     image: n8nio/n8n
-    ports:
-      - "5678:5678"
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=n8n-admin-123
-      - GENERIC_TIMEZONE=UTC
-      - N8N_SECURE_COOKIE=false
-    volumes:
-      - n8n-data:/home/node/.n8n
+    ports: ["5678:5678"]
+    env_file: .env
+    volumes: [n8n-data:/home/node/.n8n]
+
+  backend:
+    build: ./backend
+    ports: ["5000:5000"]
+    env_file: .env
+    environment: [REDIS_URL=${REDIS_URL}]
+    volumes: [backend-uploads:/app/uploads, backend-exports:/app/exports]
+
+  frontend:
+    build: ./frontend
+    ports: ["80:80"]
+    depends_on: [backend]
+
+networks:
+  backend:
+    driver: bridge
 
 volumes:
-  redis-data:
   n8n-data:
+  backend-uploads:
+  backend-exports:
 ```
+
+**Key files:**
+- `.env` — All env vars (MONGO_URI, JWT_SECRET, REDIS_URL with Upstash, n8n creds)
+- `frontend/nginx.conf` — SPA + API proxy + Socket.io WebSocket + Cloudflare real IP + gzip
+- `backend/Dockerfile` — Multi-stage Node 20 Alpine (non-root, healthcheck)
+- `frontend/Dockerfile` — Multi-stage Node build → nginx serve
+- `backend/.dockerignore` + `frontend/.dockerignore` — Keep images small
 
 ### Backend Environment Variables
 
@@ -675,15 +703,15 @@ JWT_SECRET=your-32-char-minimum-secret-key
 
 # Infrastructure
 NODE_ENV=production
-PORT=10000
-REDIS_URL=redis://localhost:6379
+PORT=5000
+REDIS_URL=rediss://:password@your-upstash-host.upstash.io:6379
 
 # URLs
-FRONTEND_URL=https://your-app.vercel.app
-BACKEND_URL=https://webscrap-pro-backend.onrender.com
+FRONTEND_URL=http://localhost
+BACKEND_URL=http://localhost/api
 
 # Email (n8n with Gmail OAuth)
-N8N_WEBHOOK_URL=http://localhost:5678/webhook/email
+N8N_WEBHOOK_URL=http://n8n:5678/webhook/email
 EMAIL_FROM=WebScrap Pro <your-email@gmail.com>
 
 # AI (OpenAI)
@@ -712,6 +740,15 @@ EMBEDDING_DIMENSIONS=1536
 5. Set start command: `cd backend && node server.js`
 6. Add environment variables
 7. Deploy
+
+### Docker Deployment (Current)
+
+1. Install Docker Desktop
+2. Copy `.env.docker` → `.env`, fill in MONGO_URI, JWT_SECRET, REDIS_URL (Upstash)
+3. Run: `docker compose up -d --build`
+4. Verify: `docker compose ps` (all 4 containers should be healthy)
+5. Open: http://localhost (frontend), http://localhost:5000 (backend API)
+6. Cloudflare: Add A record → enable proxy → SSL Full Strict
 
 ### Feature Verification Checklist
 
@@ -744,12 +781,14 @@ EMBEDDING_DIMENSIONS=1536
 ## Remaining Work
 
 ### Pending
-- Set Render environment variables (MONGO_URI, JWT_SECRET, FRONTEND_URL, BACKEND_URL, etc.)
-- Connect Docker n8n/Redis to Render backend (ngrok or cloud free tier — **user chose to update context first**)
+- Fix Upstash Redis auth (WRONGPASS — password may need URL-encoding)
+- Set real JWT_SECRET in `.env` (replace placeholder)
 - Set Vercel frontend env vars (VITE_API_URL)
 - Test all features after deployment
 - Set up Sentry error tracking (optional)
 - Add Google OAuth (optional)
+- Add temp file cleanup scheduler for PDF job files (currently accumulate on disk)
+- Consider adding image preview zoom/lightbox to ImageGallery component
 
 ### Session 4: Deployment Live + Bug Fixes (2026-07-19)
 
@@ -843,6 +882,68 @@ Test Files  3 passed (3)
 
 **Status: Both apps LIVE, pending env vars + n8n/Redis connection**
 
+### Session 5: Docker Full Stack + Upstash Redis (2026-07-21)
+- Created full Docker Compose stack: frontend (nginx) + backend (node) + n8n + Redis
+- Created root `.env` with all service configs, `env_file` directive for containers
+- Created `frontend/nginx.conf` — SPA fallback, API proxy, Socket.io WebSocket upgrade, gzip, security headers, Cloudflare real IP forwarding
+- Created `.dockerignore` for both frontend and backend
+- Removed local Redis container from docker-compose (replaced with Upstash)
+- Fixed `build.args` format (mapping not list)
+- Fixed `env_file` loading (`.env` not `.env.docker`)
+- Updated `backend/src/config/redis.js` — Manual URL parsing for Upstash TLS connections
+- Fixed horizontal scrollbar (`overflow-x: hidden` on html/body/layouts)
+- Fixed PDF tools: 401 handler, iframe preview, text extraction display, merge state leak
+- Fixed ParticleNetwork crash (buildGrid empty grid guard)
+- Added `whitespace-pre-wrap break-words` to `<pre>` tags
+
+**Status: Full Docker stack running, Upstash Redis auth pending (WRONGPASS)**
+
+### Session 6: PDF Image Gallery + Download Fixes + Dark Theme (2026-07-21)
+
+**PDF Extract Images — Image Gallery:**
+- Added `ImageGallery` component to `PdfToolsPage.jsx` — displays extracted images as a responsive grid of thumbnails with metadata (filename, dimensions, page number, file size)
+- Each image has an individual **Download** button using blob URLs via httpClient (JWT-protected)
+- **Download All (.zip)** button in the header — downloads all extracted images as a ZIP archive
+- Images fetched via httpClient with blob responseType for proper auth handling
+- Loading spinners while images load, graceful empty state if no images found
+- Proper blob URL cleanup on component unmount
+
+**Backend — Image Download Endpoints:**
+- `GET /api/pdf/download-image/:jobId/:filename` — serves a single extracted image as PNG (JWT-protected)
+- `GET /api/pdf/download-images/:jobId` — bundles all extracted images into a ZIP and sends it (JWT-protected)
+- `createImagesZip()` in pdfService.js — generates ZIP during extraction and stores as `outputFile` in job results
+- Fallback: if stored ZIP is missing, rebuilds from individual image files on disk
+
+**ZIP Generation During Extraction:**
+- `extractImagesFromPDF()` now generates ZIP immediately after extracting all images and saves it to disk
+- Stored as `results.outputFile` in the MongoDB PDFJob document
+- Ensures ZIP is always available when user clicks "Download All"
+
+**Download Fixes Across All Pages:**
+- `AnalyticsPage` — Fixed blob.data unwrap for file downloads
+- `UploadsPage` — Auto-detect file type from extension for export
+- `HistoryPage` — Moved columns inside component for error notification access
+- `AIDashboardPage` — Added download buttons for chat transcript (txt), search results (csv), classification report (txt)
+- `SettingsPage` — Export settings backup button
+- `WorkflowsPage` — Export workflow runs (csv) button
+- `DashboardPage` — Export dashboard stats (txt) button
+- `AdminPage` — Export users list (csv) in UsersList component
+
+**Dark Theme Input Redesign:**
+- All UI components (Input, Select, Textarea, SearchInput, FileUpload) updated with premium dark UI: `h-12 rounded-xl bg-slate-800 text-white border-slate-600 placeholder:text-slate-400 hover:border-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30`
+- Added global CSS `!important` overrides for ALL form elements (input, select, textarea) to prevent base layer CSS from overriding dark theme
+- Covers all 49 inline inputs across pages that don't use UI components
+- Proper dark option styling for `<select>` elements
+
+**PNG Extraction Fixes:**
+- Fixed channel detection: `rawPixels.length >= totalPixels * 4 ? 4 : 3` (was fractional from buffer length)
+- Added null safety for `rawPixels` (can be object with `.rgbData` or `.data` property)
+- Fixed `Buffer.from()` to use `rawPixels.buffer` (TypedArray backing buffer)
+- Added PNG signature validation in `createPNGFromPixels()` — returns null if invalid
+- ZIP only bundles files with valid PNG headers
+
+**Status: PDF image gallery working, ZIP download functional, dark theme inputs consistent**
+
 ---
 
-*Last updated: 2026-07-19 Session 4*
+*Last updated: 2026-07-21 Session 6*

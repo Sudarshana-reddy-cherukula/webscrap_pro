@@ -33,7 +33,7 @@ function PasswordStrength({ password }) {
 
   return (
     <div className="mt-3 space-y-3">
-      <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+      <div className="h-1 rounded-full bg-app-line/50 overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: strength.width }}

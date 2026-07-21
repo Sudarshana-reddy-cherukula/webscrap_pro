@@ -14,7 +14,7 @@ const EXPORT_SOURCES = [
 
 const FORMATS = ['csv', 'json', 'txt', 'pdf']
 
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
+const cardClass = "rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-6"
 
 function ExportPage() {
   const [source, setSource] = useState('')
@@ -124,10 +124,10 @@ function ExportPage() {
                   return (
                     <button key={s.value} type="button" onClick={() => handleSourceChange(s.value)}
                       className={`flex items-center gap-3 rounded-xl border p-3 transition ${
-                        isSelected ? 'border-indigo-500/30 bg-indigo-500/10' : 'border-white/10 bg-white/[0.02] hover:border-white/20'
+                        isSelected ? 'border-indigo-500/30 bg-indigo-500/10' : 'border-app-line bg-app-surface hover:border-app-line-strong'
                       }`}
                     >
-                      <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${isSelected ? 'bg-indigo-500/20 text-indigo-400' : 'bg-white/[0.04] text-app-muted'}`}>
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${isSelected ? 'bg-indigo-500/20 text-indigo-400' : 'bg-app-elevated/15 text-app-muted'}`}>
                         <Icon size={14} />
                       </div>
                       <span className={`text-sm ${isSelected ? 'text-indigo-300' : 'text-app-soft'}`}>{s.label}</span>
@@ -141,7 +141,7 @@ function ExportPage() {
               <div>
                 <label className="block text-sm font-medium text-app-soft">Select Job</label>
                 {loadingJobs ? (
-                  <div className="mt-1.5 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5">
+                  <div className="mt-1.5 flex items-center gap-2 rounded-xl border border-app-line bg-app-surface px-4 py-2.5">
                     <Loader2 size={14} className="animate-spin text-app-muted" />
                     <span className="text-sm text-app-muted">Loading jobs...</span>
                   </div>
@@ -151,7 +151,7 @@ function ExportPage() {
                   </div>
                 ) : (
                   <select value={selectedJobId} onChange={(e) => setSelectedJobId(e.target.value)}
-                    className="mt-1.5 block w-full rounded-xl border border-white/10 bg-app-elevated px-4 py-2.5 text-sm text-app-fg transition focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                    className="mt-1.5 block w-full rounded-xl border border-app-line bg-app-elevated px-4 py-2.5 text-sm text-app-fg transition focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                   >
                     <option value="" className="bg-card">Select a job...</option>
                     {availableJobs.map((job) => (
@@ -170,7 +170,7 @@ function ExportPage() {
                 {FORMATS.map((f) => (
                   <button key={f} type="button" onClick={() => setFormat(f)}
                     className={`rounded-xl border px-4 py-2 text-sm font-medium transition ${
-                      format === f ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300' : 'border-white/10 text-app-muted hover:border-white/20 hover:text-app-nav'
+                      format === f ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300' : 'border-app-line text-app-muted hover:border-app-line-strong hover:text-app-nav'
                     }`}
                   >{f.toUpperCase()}</button>
                 ))}
@@ -209,7 +209,7 @@ function ExportPage() {
                 const st = statusConfig[exp.status] || statusConfig.pending
                 const StIcon = st.icon
                 return (
-                  <div key={expId} className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 transition hover:bg-white/[0.04]">
+                  <div key={expId} className="rounded-xl border border-app-line/50 bg-app-surface px-4 py-3 transition hover:bg-app-elevated/15">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className={`flex h-7 w-7 items-center justify-center rounded-lg ${st.bg}`}>
@@ -224,11 +224,11 @@ function ExportPage() {
                     </div>
                     <div className="mt-2 flex gap-1.5">
                       {exp.status === 'completed' && (
-                        <button onClick={() => handleDownload(exp)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-app-nav">
+                        <button onClick={() => handleDownload(exp)} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-app-nav">
                           <Download size={12} />
                         </button>
                       )}
-                      <button onClick={() => handleDelete(exp)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-red-400">
+                      <button onClick={() => handleDelete(exp)} className="rounded-lg border border-app-line px-2 py-1 text-[10px] text-app-muted transition hover:bg-app-elevated/15 hover:text-red-400">
                         <Trash2 size={12} />
                       </button>
                     </div>

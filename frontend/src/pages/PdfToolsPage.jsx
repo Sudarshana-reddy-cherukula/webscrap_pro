@@ -5,6 +5,7 @@ import {
   Loader2, Shield, SplitSquareVertical,
   Combine, RotateCcw, Crop, PaintBucket, Edit3,
   Upload, FileUp, FileSearch, Lock, Sliders, NotebookText,
+  Download, Copy, Images,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { pdfService } from '@/services/pdfService'
@@ -73,6 +74,22 @@ function ExtraOptions({ action, extraProps, setExtraProps }) {
             <div>
               <label className={labelClass}>Opacity</label>
               <input type="number" min="0" max="1" step="0.1" value={extraProps.opacity || 0.3} onChange={(e) => setExtraProps({ ...extraProps, opacity: parseFloat(e.target.value) })} className={inputClass} />
+            </div>
+            <div>
+              <label className={labelClass}>Font Size</label>
+              <input type="number" min="8" max="200" step="2" value={extraProps.fontSize || 48} onChange={(e) => setExtraProps({ ...extraProps, fontSize: parseInt(e.target.value) })} className={inputClass} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className={labelClass}>Rotation (deg)</label>
+              <select value={extraProps.rotation || -45} onChange={(e) => setExtraProps({ ...extraProps, rotation: parseInt(e.target.value) })} className={selectClass}>
+                <option value={-45}>-45</option>
+                <option value={-90}>-90</option>
+                <option value={0}>0</option>
+                <option value={45}>45</option>
+                <option value={90}>90</option>
+              </select>
             </div>
             <div>
               <label className={labelClass}>Position</label>
@@ -240,7 +257,7 @@ function CropOverlay({ extraProps, setExtraProps, pdfPreviewUrl }) {
 
   return (
     <div ref={containerRef} className="relative rounded-lg border border-border bg-card overflow-hidden select-none">
-      <embed src={pdfPreviewUrl} type="application/pdf" className="w-full h-[500px] pointer-events-none" />
+      <iframe src={pdfPreviewUrl} title="PDF Preview" className="w-full h-[500px] pointer-events-none border-0" />
       <div className="absolute inset-0 z-10">
         <div className="absolute inset-0 bg-black/40" style={{
           clipPath: `polygon(
@@ -268,6 +285,141 @@ function CropOverlay({ extraProps, setExtraProps, pdfPreviewUrl }) {
   )
 }
 
+function ImageGallery({ images, jobId }) {
+  const { showNotification } = useNotification()
+  const [downloading, setDownloading] = useState(null)
+  const [downloadingAll, setDownloadingAll] = useState(false)
+  const [imageUrls, setImageUrls] = useState({})
+  const actualImages = images.filter((img) => !img.filename.endsWith('.json'))
+
+  useEffect(() => {
+    if (!jobId || actualImages.length === 0) return
+    let cancelled = false
+    const load = async () => {
+      const urls = {}
+      for (const img of actualImages) {
+        try {
+          const blobRes = await pdfService.downloadImage(jobId, img.filename)
+          if (!cancelled) {
+            urls[img.filename] = window.URL.createObjectURL(blobRes.data)
+          }
+        } catch { }
+      }
+      if (!cancelled) setImageUrls(urls)
+    }
+    load()
+    return () => {
+      cancelled = true
+      setImageUrls((prev) => {
+        Object.values(prev).forEach((u) => window.URL.revokeObjectURL(u))
+        return {}
+      })
+    }
+  }, [jobId])
+
+  const handleDownloadSingle = async (img) => {
+    setDownloading(img.filename)
+    try {
+      const blobRes = await pdfService.downloadImage(jobId, img.filename)
+      const url = window.URL.createObjectURL(blobRes.data)
+      const a = document.createElement('a')
+      a.href = url; a.download = img.filename
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      setTimeout(() => window.URL.revokeObjectURL(url), 3000)
+      showNotification(`${img.filename} downloaded`)
+    } catch (err) {
+      showNotification(err.message || 'Download failed', 'error')
+    } finally {
+      setDownloading(null)
+    }
+  }
+
+  const handleDownloadAll = async () => {
+    setDownloadingAll(true)
+    try {
+      const blobRes = await pdfService.downloadAllImages(jobId)
+      const url = window.URL.createObjectURL(blobRes.data)
+      const a = document.createElement('a')
+      a.href = url; a.download = `extracted_images_${jobId}.zip`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      setTimeout(() => window.URL.revokeObjectURL(url), 3000)
+      showNotification('All images downloaded as ZIP')
+    } catch (err) {
+      showNotification(err.message || 'Download failed', 'error')
+    } finally {
+      setDownloadingAll(false)
+    }
+  }
+
+  if (actualImages.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-10 text-center">
+        <Image size={28} className="text-app-muted mb-2" />
+        <p className="text-xs text-app-muted">No embedded images found in this PDF.</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Images size={14} className="text-blue-500" />
+          <h4 className="text-sm font-semibold text-app-fg">{actualImages.length} Image{actualImages.length !== 1 ? 's' : ''} Extracted</h4>
+        </div>
+        <button
+          onClick={handleDownloadAll}
+          disabled={downloadingAll}
+          className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-700 transition-colors disabled:opacity-50"
+        >
+          {downloadingAll ? <Loader2 size={12} className="animate-spin" /> : <Download size={12} />}
+          Download All (.zip)
+        </button>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {actualImages.map((img, i) => (
+          <div key={i} className="group relative rounded-xl border border-border bg-card overflow-hidden hover:shadow-md transition-all">
+            <div className="aspect-square bg-muted/50 flex items-center justify-center overflow-hidden">
+              {imageUrls[img.filename] ? (
+                <img
+                  src={imageUrls[img.filename]}
+                  alt={img.filename}
+                  className="w-full h-full object-contain"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center text-app-muted">
+                  <Loader2 size={20} className="animate-spin mb-1" />
+                  <span className="text-[10px]">Loading...</span>
+                </div>
+              )}
+            </div>
+            <div className="px-3 py-2 border-t border-border">
+              <p className="text-[11px] font-medium text-app-fg truncate" title={img.filename}>{img.filename}</p>
+              <div className="flex items-center justify-between mt-1">
+                <span className="text-[10px] text-app-muted">{img.width}x{img.height} &middot; {img.page > 0 ? `Page ${img.page}` : ''}</span>
+                <span className="text-[10px] text-app-muted">{(img.size / 1024).toFixed(1)} KB</span>
+              </div>
+              <button
+                onClick={() => handleDownloadSingle(img)}
+                disabled={downloading === img.filename}
+                className="mt-2 w-full inline-flex items-center justify-center gap-1 rounded-lg border border-border bg-muted px-2 py-1 text-[10px] font-medium text-app-fg hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 transition-all disabled:opacity-50"
+              >
+                {downloading === img.filename ? <Loader2 size={10} className="animate-spin" /> : <Download size={10} />}
+                Download
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function PdfToolsPage() {
   const [selectedFile, setSelectedFile] = useState(null)
   const [mergeFiles, setMergeFiles] = useState([])
@@ -278,6 +430,8 @@ function PdfToolsPage() {
   const [category, setCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [dragActive, setDragActive] = useState(false)
+  const [lastJobId, setLastJobId] = useState(null)
+  const [lastFilename, setLastFilename] = useState(null)
   const { showNotification } = useNotification()
 
   const pdfPreviewUrl = useMemo(() => {
@@ -306,8 +460,9 @@ function PdfToolsPage() {
   const previewText = useMemo(() => {
     if (!result) return null
     if (typeof result === 'string') return result
+    if (action === 'extractImages' && result.images) return null
     return JSON.stringify(result, null, 2)
-  }, [result])
+  }, [result, action])
 
   function getResponseData(resp) { return resp.data?.data || resp.data }
   function triggerDownloadBlob(jobId, filename) {
@@ -325,6 +480,8 @@ function PdfToolsPage() {
     } else if (!selectedFile) { showNotification('Please upload a PDF first', 'warning'); return }
     setLoading(true)
     setResult(null)
+    setLastJobId(null)
+    setLastFilename(null)
     try {
       let response, d
       switch (action) {
@@ -341,13 +498,16 @@ function PdfToolsPage() {
         case 'extractImages':
           response = await pdfService.extractImages(selectedFile)
           d = getResponseData(response)
+          setLastJobId(d?.jobId)
           setResult(d?.results || d)
           break
         case 'convertToTxt': {
           response = await pdfService.convertToTxt(selectedFile)
           d = getResponseData(response)
           const j1 = d?.jobId; if (!j1) throw new Error('No job ID returned')
-          await triggerDownloadBlob(j1, `${selectedFile.name.replace(/\.pdf$/i, '')}.txt`)
+          const fn1 = `${selectedFile.name.replace(/\.pdf$/i, '')}.txt`
+          await triggerDownloadBlob(j1, fn1)
+          setLastJobId(j1); setLastFilename(fn1)
           setResult('Download ready.')
           break
         }
@@ -355,7 +515,9 @@ function PdfToolsPage() {
           response = await pdfService.convertToDocx(selectedFile)
           d = getResponseData(response)
           const j2 = d?.jobId; if (!j2) throw new Error('No job ID returned')
-          await triggerDownloadBlob(j2, `${selectedFile.name.replace(/\.pdf$/i, '')}.docx`)
+          const fn2 = `${selectedFile.name.replace(/\.pdf$/i, '')}.docx`
+          await triggerDownloadBlob(j2, fn2)
+          setLastJobId(j2); setLastFilename(fn2)
           setResult('Download ready.')
           break
         }
@@ -373,8 +535,9 @@ function PdfToolsPage() {
           d = getResponseData(response)
           const of = d?.results?.outputFile || d?.outputFile
           if (of?.path && d?.jobId) {
-            const ext = of.filename.includes('.') ? of.filename.split('.').pop() : 'pdf'
-            await triggerDownloadBlob(d.jobId, `output_${Date.now()}.${ext}`)
+            const outFn = of.filename || `output_${Date.now()}.pdf`
+            await triggerDownloadBlob(d.jobId, outFn)
+            setLastJobId(d.jobId); setLastFilename(outFn)
             setResult({ ...d?.results, downloaded: true })
           } else { setResult(d?.results || d) }
           break
@@ -419,10 +582,10 @@ function PdfToolsPage() {
           <p className="mt-1 text-sm text-app-muted">Process, extract, convert, secure, and manipulate PDF documents</p>
         </div>
         {selectedFile && (
-          <div className="hidden sm:flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 shadow-sm">
+          <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 shadow-sm">
             <FileUp size={14} className="text-blue-500" />
             <span className="text-sm text-app-fg max-w-[160px] truncate">{selectedFile.name}</span>
-            <button onClick={removeFile} className="ml-1 text-app-muted hover:text-app-muted transition-colors">&times;</button>
+            <button onClick={removeFile} className="ml-1 text-app-muted hover:text-red-500 transition-colors">&times;</button>
           </div>
         )}
       </div>
@@ -463,7 +626,17 @@ function PdfToolsPage() {
                 const ToolIcon = tool.icon
                 const isActive = action === tool.value
                 return (
-                  <motion.button key={tool.value} type="button" onClick={() => { setAction(tool.value); setExtraProps({}) }}
+                  <motion.button key={tool.value} type="button"
+                    onClick={() => {
+                      setAction(tool.value)
+                      setExtraProps({})
+                      setResult(null)
+                      if (tool.value === 'mergePdf') {
+                        setSelectedFile(null)
+                      } else {
+                        setMergeFiles([])
+                      }
+                    }}
                     initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}
                     className={`group relative overflow-hidden rounded-xl border p-4 text-left transition-all duration-200 ${
                       isActive
@@ -587,22 +760,62 @@ function PdfToolsPage() {
                 <div className="rounded-xl border border-border bg-muted/50 p-4">
                   <h3 className="flex items-center gap-2 text-sm font-semibold text-app-fg mb-3">
                     <Sliders size={14} className="text-app-muted" />
-                    {previewText ? 'Preview Output' : 'PDF Preview'}
+                    {result ? 'Preview Output' : 'PDF Preview'}
                   </h3>
-                  {previewText ? (
-                    <pre className="max-h-[400px] overflow-y-auto rounded-lg border border-border bg-card p-4 text-xs leading-5 text-app-fg font-mono scrollbar-hide">
-                      {previewText}
-                    </pre>
+                  {previewText && (action === 'extractText' || action === 'convertToTxt' || action === 'extractMetadata') ? (
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <button type="button" onClick={() => { navigator.clipboard.writeText(previewText); showNotification('Copied to clipboard') }}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 py-1 text-[11px] text-app-muted hover:text-app-soft hover:bg-app-elevated/15 transition">
+                          <Copy size={12} /> Copy
+                        </button>
+                        {lastJobId && (
+                          <button type="button" onClick={() => triggerDownloadBlob(lastJobId, lastFilename || 'output.txt')}
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 py-1 text-[11px] text-app-muted hover:text-app-soft hover:bg-app-elevated/15 transition">
+                            <Download size={12} /> Download
+                          </button>
+                        )}
+                      </div>
+                      <pre className="max-h-[400px] overflow-y-auto rounded-lg border border-border bg-card p-4 text-xs leading-5 text-app-fg font-mono scrollbar-hide whitespace-pre-wrap break-words">
+                        {previewText}
+                      </pre>
+                    </div>
+                  ) : result && action === 'extractImages' && result.images ? (
+                    <ImageGallery images={result.images} jobId={lastJobId} />
                   ) : pdfPreviewUrl && action === 'cropPages' ? (
                     <CropOverlay extraProps={extraProps} setExtraProps={setExtraProps} pdfPreviewUrl={pdfPreviewUrl} />
                   ) : pdfPreviewUrl ? (
                     <div className="rounded-lg border border-border bg-card overflow-hidden">
-                      <embed src={pdfPreviewUrl} type="application/pdf" className="w-full h-[500px]" />
+                      <iframe src={pdfPreviewUrl} title="PDF Preview" className="w-full h-[500px] border-0" />
                     </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center py-10 text-center">
                       <FileSearch size={28} className="text-app-muted mb-2" />
                       <p className="text-xs text-app-muted">Upload a PDF to see a preview here.</p>
+                    </div>
+                  )}
+                  {result && action !== 'extractText' && action !== 'convertToTxt' && action !== 'extractMetadata' && action !== 'extractImages' && (
+                    <div className="mt-3 rounded-lg border border-green-200 bg-green-50 p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        </div>
+                        <p className="text-sm font-medium text-green-800">Operation completed successfully</p>
+                      </div>
+                      {result.downloaded && (
+                        <div className="flex items-center gap-2 ml-7 mt-1">
+                          <p className="text-xs text-green-700">File has been downloaded.</p>
+                          {lastJobId && (
+                            <button type="button" onClick={() => triggerDownloadBlob(lastJobId, lastFilename || 'output.pdf')}
+                              className="inline-flex items-center gap-1 rounded border border-green-300 bg-white px-2 py-0.5 text-[10px] font-medium text-green-700 hover:bg-green-100 transition">
+                              <Download size={10} /> Re-download
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      {!result.downloaded && typeof result === 'object' && (
+                        <pre className="mt-2 max-h-[200px] overflow-y-auto rounded border border-green-200 bg-white p-2 text-xs leading-4 text-green-900 font-mono whitespace-pre-wrap break-words">{JSON.stringify(result, null, 2)}</pre>
+                      )}
                     </div>
                   )}
                 </div>

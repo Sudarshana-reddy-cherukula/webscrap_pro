@@ -113,7 +113,7 @@ function FaqPage() {
                         {item.q}
                         <ArrowRight size={14} className="shrink-0 text-app-muted transition group-open:rotate-90 group-open:text-cyan-400" />
                       </summary>
-                      <p className="border-t border-white/5 px-6 py-4 text-sm leading-6 text-app-muted">
+                      <p className="border-t border-app-line/50 px-6 py-4 text-sm leading-6 text-app-muted">
                         {item.a}
                       </p>
                     </details>

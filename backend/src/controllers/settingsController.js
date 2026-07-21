@@ -225,6 +225,137 @@ function parseDuration(str) {
   }
 }
 
+const getSettings = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  res.json({
+    success: true,
+    data: {
+      theme: user.settings?.theme || 'system',
+      notifications: user.settings?.notifications || { email: true, browser: true },
+      exportDefaults: user.settings?.exportDefaults || { format: 'csv', includeMetadata: true },
+    },
+  });
+});
+
+const updateSettings = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  user.settings = { ...user.settings, ...req.body };
+  await user.save();
+  res.json({ success: true, message: 'Settings updated', data: user.settings });
+});
+
+const getProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  res.json({
+    success: true,
+    data: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      avatar: user.avatar,
+      createdAt: user.createdAt,
+    },
+  });
+});
+
+const updateProfile = asyncHandler(async (req, res) => {
+  const { name, avatar } = req.body;
+  const user = await User.findById(req.user._id);
+  if (name) user.name = name;
+  if (avatar !== undefined) user.avatar = avatar;
+  await user.save();
+  res.json({
+    success: true,
+    message: 'Profile updated',
+    data: { id: user._id, name: user.name, email: user.email, avatar: user.avatar },
+  });
+});
+
+const deleteApiKey = asyncHandler(async (req, res) => {
+  const { keyId } = req.params;
+  const apiKey = await ApiKey.findOneAndDelete({ _id: keyId, userId: req.user._id });
+  if (!apiKey) {
+    return res.status(404).json({ success: false, message: 'API key not found' });
+  }
+  res.json({ success: true, message: 'API key deleted' });
+});
+
+const getThemeSettings = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  res.json({ success: true, data: { theme: user.settings?.theme || 'system' } });
+});
+
+const updateTheme = asyncHandler(async (req, res) => {
+  const { theme } = req.body;
+  const user = await User.findById(req.user._id);
+  user.settings = { ...user.settings, theme };
+  await user.save();
+  res.json({ success: true, message: 'Theme updated', data: { theme } });
+});
+
+const getNotificationPreferences = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  res.json({ success: true, data: user.settings?.notifications || { email: true, browser: true } });
+});
+
+const updateNotificationPreferences = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  user.settings = { ...user.settings, notifications: req.body };
+  await user.save();
+  res.json({ success: true, message: 'Notifications updated', data: user.settings.notifications });
+});
+
+const getExportDefaults = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  res.json({ success: true, data: user.settings?.exportDefaults || { format: 'csv', includeMetadata: true } });
+});
+
+const updateExportDefaults = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  user.settings = { ...user.settings, exportDefaults: req.body };
+  await user.save();
+  res.json({ success: true, message: 'Export defaults updated', data: user.settings.exportDefaults });
+});
+
+const resetToDefaults = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  user.settings = {};
+  await user.save();
+  res.json({ success: true, message: 'Settings reset to defaults' });
+});
+
+const exportSettings = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const settings = {
+    theme: user.settings?.theme || 'system',
+    notifications: user.settings?.notifications || { email: true, browser: true },
+    exportDefaults: user.settings?.exportDefaults || { format: 'csv', includeMetadata: true },
+    exportedAt: new Date().toISOString(),
+  };
+  res.setHeader('Content-Disposition', 'attachment; filename=settings-backup.json');
+  res.json(settings);
+});
+
+const importSettings = asyncHandler(async (req, res) => {
+  const settings = req.body;
+  if (!settings || typeof settings !== 'object') {
+    return res.status(400).json({ success: false, message: 'Invalid settings file' });
+  }
+  const user = await User.findById(req.user._id);
+  user.settings = {
+    theme: settings.theme || 'system',
+    notifications: settings.notifications || { email: true, browser: true },
+    exportDefaults: settings.exportDefaults || { format: 'csv', includeMetadata: true },
+  };
+  await user.save();
+  res.json({ success: true, message: 'Settings imported', data: user.settings });
+});
+
+const getAuditLog = asyncHandler(async (req, res) => {
+  res.json({ success: true, data: { logs: [], total: 0 } });
+});
+
 module.exports = {
   getSecuritySettings,
   enable2FA,
@@ -236,4 +367,19 @@ module.exports = {
   getActiveSessions,
   revokeSession,
   deleteAccount,
+  getSettings,
+  updateSettings,
+  getProfile,
+  updateProfile,
+  deleteApiKey,
+  getThemeSettings,
+  updateTheme,
+  getNotificationPreferences,
+  updateNotificationPreferences,
+  getExportDefaults,
+  updateExportDefaults,
+  resetToDefaults,
+  exportSettings,
+  importSettings,
+  getAuditLog,
 };

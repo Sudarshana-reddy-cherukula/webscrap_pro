@@ -10,6 +10,7 @@ import {
   Sun,
   Monitor,
   Save,
+  Download,
 } from 'lucide-react'
 
 const alertOptions = [
@@ -143,9 +144,28 @@ function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-app-fg">Settings</h1>
-        <p className="mt-1 text-sm text-app-muted">Manage your workspace preferences</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-app-fg">Settings</h1>
+          <p className="mt-1 text-sm text-app-muted">Manage your workspace preferences</p>
+        </div>
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              const { settingsService } = await import('@/services/settingsService')
+              const res = await settingsService.exportSettings()
+              const blob = res.data || res
+              const url = window.URL.createObjectURL(blob)
+              const a = document.createElement('a'); a.href = url; a.download = 'settings-backup.json'; a.click()
+              window.URL.revokeObjectURL(url)
+              showNotification('Settings exported')
+            } catch { showNotification('Export failed', 'error') }
+          }}
+          className="flex items-center gap-1.5 rounded-lg border border-app-line px-3 py-2 text-xs text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition"
+        >
+          <Download size={12} /> Export
+        </button>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">

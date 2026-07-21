@@ -100,8 +100,8 @@ function PricingSection() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className={`relative rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1 ${
                 plan.popular
-                  ? 'border-indigo-400/40 bg-gradient-to-b from-indigo-50 to-white shadow-2xl shadow-indigo-500/10'
-                  : 'border-app-line bg-white hover:border-app-line'
+                  ? 'border-indigo-400/40 bg-gradient-to-b from-indigo-500/10 to-app-elevated shadow-2xl shadow-indigo-500/10'
+                  : 'border-app-line bg-app-elevated hover:border-app-line'
               }`}
             >
               {plan.popular && (
@@ -134,7 +134,7 @@ function PricingSection() {
                 className={`mt-8 w-full rounded-xl py-2.5 text-sm font-semibold transition-all duration-300 ${
                   plan.popular
                     ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 hover:scale-[1.02]'
-                    : 'border border-app-line text-app-soft hover:bg-white hover:scale-[1.02]'
+                    : 'border border-app-line text-app-soft hover:bg-app-elevated hover:scale-[1.02]'
                 }`}
               >
                 {plan.cta}
@@ -152,7 +152,7 @@ function PricingSection() {
           <h3 className="text-center text-lg font-semibold text-app-fg mb-6">Frequently asked about pricing</h3>
           <div className="space-y-3">
             {faq.map((item) => (
-              <details key={item.q} className="group rounded-xl border border-app-line bg-white transition hover:border-app-line">
+              <details key={item.q} className="group rounded-xl border border-app-line bg-app-elevated transition hover:border-app-line">
                 <summary className="flex cursor-pointer items-center justify-between px-5 py-4 text-sm font-medium text-app-soft">
                   {item.q}
                   <ArrowRight size={14} className="shrink-0 transition-transform duration-300 group-open:rotate-90 text-app-muted" />

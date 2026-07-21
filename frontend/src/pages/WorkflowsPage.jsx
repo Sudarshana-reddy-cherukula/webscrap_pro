@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/Badge'
 import { useNotification } from '@/hooks/useNotification'
 import { workflowService } from '@/services/workflowService'
 
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
+const cardClass = "rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-6"
 
 const STEP_TYPES = [
   { type: 'scrape', label: 'Scrape URL', icon: Globe, color: 'cyan' },
@@ -76,7 +76,7 @@ function StepEditor({ step, index, onChange, onRemove }) {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="mt-4 space-y-3 border-t border-white/10 pt-4">
+            <div className="mt-4 space-y-3 border-t border-app-line pt-4">
               {(step.type === 'scrape') && (
                 <>
                   <div>
@@ -100,7 +100,7 @@ function StepEditor({ step, index, onChange, onRemove }) {
                   <div>
                     <label className="block text-xs text-app-muted mb-1">Operation</label>
                     <select value={step.config.operation || 'extractText'} onChange={(e) => updateConfig('operation', e.target.value)}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-app-fg outline-none">
+                      className="w-full rounded-lg border border-app-line bg-app-surface px-3 py-2 text-sm text-app-fg outline-none">
                       <option value="extractText">Extract Text</option>
                       <option value="summarize">Summarize (AI)</option>
                       <option value="extractKeywords">Extract Keywords (AI)</option>
@@ -110,7 +110,7 @@ function StepEditor({ step, index, onChange, onRemove }) {
                     <div>
                       <label className="block text-xs text-app-muted mb-1">Style</label>
                       <select value={step.config.style || 'concise'} onChange={(e) => updateConfig('style', e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-app-fg outline-none">
+                        className="w-full rounded-lg border border-app-line bg-app-surface px-3 py-2 text-sm text-app-fg outline-none">
                         <option value="concise">Concise</option>
                         <option value="detailed">Detailed</option>
                         <option value="bullet">Bullet Points</option>
@@ -124,7 +124,7 @@ function StepEditor({ step, index, onChange, onRemove }) {
                 <div className="grid grid-cols-3 gap-2">
                   <Input value={step.config.field || ''} onChange={(e) => updateConfig('field', e.target.value)} placeholder="Field path" />
                   <select value={step.config.operator || 'contains'} onChange={(e) => updateConfig('operator', e.target.value)}
-                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-app-fg outline-none">
+                    className="rounded-lg border border-app-line bg-app-surface px-3 py-2 text-sm text-app-fg outline-none">
                     <option value="contains">Contains</option>
                     <option value="notContains">Not Contains</option>
                     <option value="equals">Equals</option>
@@ -146,7 +146,7 @@ function StepEditor({ step, index, onChange, onRemove }) {
                 <div>
                   <label className="block text-xs text-app-muted mb-1">On Error</label>
                   <select value={step.onError || 'stop'} onChange={(e) => onChange(index, { ...step, onError: e.target.value })}
-                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-app-fg outline-none">
+                    className="rounded-lg border border-app-line bg-app-surface px-3 py-2 text-sm text-app-fg outline-none">
                     <option value="stop">Stop</option>
                     <option value="continue">Continue</option>
                     <option value="retry">Retry</option>
@@ -307,7 +307,7 @@ function RunHistory({ workflowId, onClose }) {
                     {run.duration ? ` - ${(run.duration / 1000).toFixed(1)}s` : ''}
                   </p>
                 </div>
-                <Badge className={run.status === 'success' ? 'bg-green-500/15 text-green-300' : run.status === 'failed' ? 'bg-red-500/15 text-red-300' : 'bg-white/10 text-app-muted'}>
+                <Badge className={run.status === 'success' ? 'bg-green-500/15 text-green-300' : run.status === 'failed' ? 'bg-red-500/15 text-red-300' : 'bg-app-surface text-app-muted'}>
                   {run.status}
                 </Badge>
               </div>
@@ -418,9 +418,28 @@ export default function WorkflowsPage() {
           <h1 className="text-2xl font-bold tracking-tight text-app-fg">Workflows</h1>
           <p className="mt-1 text-sm text-app-muted">Automate multi-step scraping pipelines</p>
         </div>
-        <Button onClick={() => { setEditingWorkflow(null); setShowBuilder(true) }}>
-          <Plus size={14} className="mr-1.5" /> New Workflow
-        </Button>
+        <div className="flex gap-2">
+          {runs.length > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                const csv = 'Workflow,Status,Started,Completed,Steps\n' + runs.map(r =>
+                  `"${(r.workflowName || '').replace(/"/g, '""')}","${r.status || ''}","${r.startedAt || ''}","${r.completedAt || ''}","${r.steps?.length || 0}"`
+                ).join('\n')
+                const blob = new Blob([csv], { type: 'text/csv' })
+                const url = window.URL.createObjectURL(blob)
+                const a = document.createElement('a'); a.href = url; a.download = 'workflow-runs.csv'; a.click()
+                window.URL.revokeObjectURL(url)
+              }}
+              className="flex items-center gap-1.5 rounded-lg border border-app-line px-3 py-2 text-xs text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition"
+            >
+              <Download size={12} /> Export Runs
+            </button>
+          )}
+          <Button onClick={() => { setEditingWorkflow(null); setShowBuilder(true) }}>
+            <Plus size={14} className="mr-1.5" /> New Workflow
+          </Button>
+        </div>
       </div>
 
       {stats && (
@@ -480,7 +499,7 @@ export default function WorkflowsPage() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <Badge className={wf.enabled ? 'bg-green-500/15 text-green-300' : 'bg-white/10 text-app-muted'}>
+                  <Badge className={wf.enabled ? 'bg-green-500/15 text-green-300' : 'bg-app-surface text-app-muted'}>
                     {wf.enabled ? 'Active' : 'Paused'}
                   </Badge>
                   <div className="min-w-0 flex-1">

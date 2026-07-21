@@ -99,7 +99,7 @@ function FeaturesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: i * 0.05, duration: 0.5 }}
-              className="group relative overflow-hidden rounded-2xl border border-app-line bg-white p-6 transition-all duration-500 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/5 hover:-translate-y-1"
+              className="group relative overflow-hidden rounded-2xl border border-app-line bg-app-elevated p-6 transition-all duration-500 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/5 hover:-translate-y-1"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.02] via-transparent to-violet-600/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${feature.gradient} p-2.5 shadow-lg ${feature.glow} group-hover:scale-110 transition-all duration-300`}>

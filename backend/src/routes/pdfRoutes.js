@@ -37,5 +37,7 @@ router.get('/results/:jobId', protect, validateParams(jobStatusSchema), pdfContr
 router.delete('/delete/:jobId', protect, validateParams(jobStatusSchema), pdfController.deleteJob);
 router.get('/jobs', protect, pdfController.getUserJobs);
 router.get('/download/:jobId', protect, validateParams(jobStatusSchema), pdfController.downloadProcessedFile);
+router.get('/download-image/:jobId/:filename', protect, pdfController.downloadImage);
+router.get('/download-images/:jobId', protect, validateParams(jobStatusSchema), pdfController.downloadAllImages);
 
 module.exports = router;

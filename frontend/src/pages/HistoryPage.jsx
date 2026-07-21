@@ -1,45 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Download, Trash2, RefreshCw } from 'lucide-react'
 import { DataTable } from '@/components/ui/DataTable'
 import { Badge } from '@/components/ui/Badge'
 import { SearchInput } from '@/components/ui/SearchInput'
+import { useNotification } from '@/hooks/useNotification'
 
 const typeFilters = ['All', 'Scrape', 'PDF', 'Export', 'OCR']
-
-const columns = [
-  { accessor: 'type', header: 'Type', render: (val) => {
-    const colors = { Scrape: 'text-cyan-400', PDF: 'text-purple-400', Export: 'text-indigo-400', OCR: 'text-emerald-400' }
-    return <span className={`text-xs font-medium ${colors[val] || 'text-app-muted'}`}>{val || '—'}</span>
-  }},
-  { accessor: 'name', header: 'Name', render: (val, row) => (
-    <div>
-      <p className="text-sm text-app-soft">{val}</p>
-      {row.details && <p className="text-xs text-app-muted">{row.details}</p>}
-    </div>
-  )},
-  { accessor: 'status', header: 'Status', render: (val) => {
-    const variants = { Completed: 'success', Running: 'info', Failed: 'error', Pending: 'warning' }
-    return <Badge variant={variants[val] || 'default'}>{val}</Badge>
-  }},
-  { accessor: 'pages', header: 'Pages/URLs', render: (val) => <span className="text-sm text-app-muted">{val ?? '—'}</span> },
-  { accessor: 'duration', header: 'Duration', render: (val) => <span className="text-sm text-app-muted">{val || '—'}</span> },
-  { accessor: 'date', header: 'Date', render: (val) => {
-    if (!val) return '—'
-    const d = new Date(val)
-    return <span className="text-sm text-app-muted">{d.toLocaleDateString()} {d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-  }},
-  { accessor: 'actions', header: '', render: () => (
-    <div className="flex items-center gap-1">
-      <button type="button" className="rounded-lg border border-white/10 p-1.5 text-app-muted hover:bg-white/[0.04] hover:text-app-soft transition" title="Download">
-        <Download size={12} />
-      </button>
-      <button type="button" className="rounded-lg border border-white/10 p-1.5 text-app-muted hover:bg-white/[0.04] hover:text-red-400 transition" title="Delete">
-        <Trash2 size={12} />
-      </button>
-    </div>
-  )},
-]
 
 function HistoryPage() {
   const [data, setData] = useState([])
@@ -47,6 +14,64 @@ function HistoryPage() {
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('All')
+  const { showNotification } = useNotification()
+
+  const columns = [
+    { accessor: 'type', header: 'Type', render: (val) => {
+      const colors = { Scrape: 'text-cyan-400', PDF: 'text-purple-400', Export: 'text-indigo-400', OCR: 'text-emerald-400' }
+      return <span className={`text-xs font-medium ${colors[val] || 'text-app-muted'}`}>{val || '—'}</span>
+    }},
+    { accessor: 'name', header: 'Name', render: (val, row) => (
+      <div>
+        <p className="text-sm text-app-soft">{val}</p>
+        {row.details && <p className="text-xs text-app-muted">{row.details}</p>}
+      </div>
+    )},
+    { accessor: 'status', header: 'Status', render: (val) => {
+      const variants = { Completed: 'success', Running: 'info', Failed: 'error', Pending: 'warning' }
+      return <Badge variant={variants[val] || 'default'}>{val}</Badge>
+    }},
+    { accessor: 'pages', header: 'Pages/URLs', render: (val) => <span className="text-sm text-app-muted">{val ?? '—'}</span> },
+    { accessor: 'duration', header: 'Duration', render: (val) => <span className="text-sm text-app-muted">{val || '—'}</span> },
+    { accessor: 'date', header: 'Date', render: (val) => {
+      if (!val) return '—'
+      const d = new Date(val)
+      return <span className="text-sm text-app-muted">{d.toLocaleDateString()} {d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+    }},
+    { accessor: 'actions', header: '', render: (val, row) => (
+      <div className="flex items-center gap-1">
+        {row.status === 'Completed' && (
+          <button type="button" onClick={async () => {
+            try {
+              const jobId = row.id
+              if (row.type === 'PDF') {
+                const { pdfService } = await import('@/services/pdfService')
+                const blobRes = await pdfService.downloadProcessedFile(jobId)
+                const url = window.URL.createObjectURL(blobRes.data)
+                const a = document.createElement('a'); a.href = url; a.download = `${row.name || 'output'}.pdf`; a.click()
+                window.URL.revokeObjectURL(url)
+              } else {
+                const { exportService } = await import('@/services/exportService')
+                const exportRes = await exportService.start({ sourceType: 'scraping', sourceId: jobId, exportType: 'csv' })
+                const exportId = exportRes.data?.data?.exportId
+                if (!exportId) throw new Error('No export ID')
+                const blobRes = await exportService.download(exportId)
+                const url = window.URL.createObjectURL(blobRes.data)
+                const a = document.createElement('a'); a.href = url; a.download = `${row.name || 'results'}.csv`; a.click()
+                window.URL.revokeObjectURL(url)
+              }
+            } catch { showNotification('Download failed', 'error') }
+          }}
+            className="rounded-lg border border-app-line p-1.5 text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition" title="Download">
+            <Download size={12} />
+          </button>
+        )}
+        <button type="button" className="rounded-lg border border-app-line p-1.5 text-app-muted hover:bg-app-elevated/15 hover:text-red-400 transition" title="Delete">
+          <Trash2 size={12} />
+        </button>
+      </div>
+    )},
+  ]
 
   const loadHistory = async () => {
     setLoading(true)
@@ -89,7 +114,7 @@ function HistoryPage() {
           <p className="mt-1 text-sm text-app-muted">View all your scraping and processing jobs</p>
         </div>
         <button type="button" onClick={loadHistory} disabled={loading}
-          className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-app-muted transition hover:bg-white/[0.06] hover:text-app-soft disabled:opacity-50 backdrop-blur-xl"
+          className="inline-flex items-center gap-2 rounded-xl border border-app-line bg-app-elevated/10 px-4 py-2.5 text-sm text-app-muted transition hover:bg-app-elevated/25 hover:text-app-soft disabled:opacity-50 backdrop-blur-xl"
         >
           <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
           Refresh
@@ -101,7 +126,7 @@ function HistoryPage() {
           {typeFilters.map((f) => (
             <button key={f} type="button" onClick={() => setTypeFilter(f)}
               className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
-                typeFilter === f ? 'bg-cyan-500/15 text-cyan-300' : 'text-app-muted hover:text-app-soft hover:bg-white/[0.04]'
+                typeFilter === f ? 'bg-cyan-500/15 text-cyan-300' : 'text-app-muted hover:text-app-soft hover:bg-app-elevated/15'
               }`}
             >{f}</button>
           ))}
@@ -110,7 +135,7 @@ function HistoryPage() {
       </div>
 
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-1"
+        className="rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-1"
       >
         <DataTable
           columns={columns}

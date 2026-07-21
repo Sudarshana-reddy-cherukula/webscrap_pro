@@ -34,15 +34,15 @@ def scrape():
         url = data.get('url')
         scrape_type = data.get('type', 'static')
         options = data.get('options', {})
-        
+
         if not url:
             return jsonify({
                 'success': False,
                 'message': 'URL is required'
             }), 400
-        
+
         logger.info(f"Starting {scrape_type} scraping for URL: {url}")
-        
+
         if scrape_type == 'static':
             result = scrape_static(url, options)
         elif scrape_type == 'dynamic':
@@ -52,14 +52,14 @@ def scrape():
                 'success': False,
                 'message': f'Unsupported scrape type: {scrape_type}'
             }), 400
-        
+
         logger.info(f"Scraping completed successfully for URL: {url}")
-        
+
         return jsonify({
             'success': True,
             'data': result
         })
-        
+
     except Exception as e:
         logger.error(f"Scraping error: {str(e)}")
         return jsonify({
@@ -71,31 +71,31 @@ def scrape_static(url, options):
     headers = {
         'User-Agent': options.get('userAgent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'),
     }
-    
+
     if options.get('headers'):
         headers.update(options['headers'])
-    
+
     response = requests.get(url, headers=headers, timeout=options.get('timeout', 30))
     response.raise_for_status()
-    
+
     soup = BeautifulSoup(response.content, 'html.parser')
     result = {}
-    
+
     if options.get('extractText', True):
         result['text'] = soup.get_text(strip=True)
-    
+
     if options.get('extractTables', False):
         result['tables'] = extract_tables(soup)
-    
+
     if options.get('extractImages', False):
         result['images'] = extract_images(soup, url)
-    
+
     if options.get('extractLinks', False):
         result['links'] = extract_links(soup, url)
-    
+
     if options.get('extractMetadata', True):
         result['metadata'] = extract_metadata(soup)
-    
+
     return result
 
 def scrape_dynamic(url, options):
@@ -105,45 +105,45 @@ def scrape_dynamic(url, options):
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.binary_location = '/usr/bin/chromium'
-    
+
     if options.get('userAgent'):
         chrome_options.add_argument(f'--user-agent={options["userAgent"]}')
-    
+
     service = Service('/usr/bin/chromedriver')
     driver = webdriver.Chrome(service=service, options=chrome_options)
-    
+
     try:
         driver.get(url)
-        
+
         if options.get('waitForSelector'):
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, options['waitForSelector']))
             )
         else:
             time.sleep(3)
-        
+
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
-        
+
         result = {}
-        
+
         if options.get('extractText', True):
             result['text'] = soup.get_text(strip=True)
-        
+
         if options.get('extractTables', False):
             result['tables'] = extract_tables(soup)
-        
+
         if options.get('extractImages', False):
             result['images'] = extract_images(soup, url)
-        
+
         if options.get('extractLinks', False):
             result['links'] = extract_links(soup, url)
-        
+
         if options.get('extractMetadata', True):
             result['metadata'] = extract_metadata(soup)
-        
+
         return result
-        
+
     finally:
         driver.quit()
 
@@ -154,20 +154,20 @@ def extract_tables(soup):
             'headers': [],
             'rows': []
         }
-        
+
         header_row = table.find('tr')
         if header_row:
             headers = [th.get_text(strip=True) for th in header_row.find_all(['th', 'td'])]
             table_data['headers'] = headers
-        
+
         for row in table.find_all('tr')[1:]:
             cells = [td.get_text(strip=True) for td in row.find_all(['td', 'th'])]
             if cells:
                 table_data['rows'].append(cells)
-        
+
         if table_data['headers'] or table_data['rows']:
             tables.append(table_data)
-    
+
     return tables
 
 def extract_images(soup, base_url):
@@ -196,23 +196,23 @@ def extract_links(soup, base_url):
 
 def extract_metadata(soup):
     metadata = {}
-    
+
     title_tag = soup.find('title')
     if title_tag:
         metadata['title'] = title_tag.get_text(strip=True)
-    
+
     desc_tag = soup.find('meta', attrs={'name': 'description'})
     if desc_tag:
         metadata['description'] = desc_tag.get('content', '')
-    
+
     keywords_tag = soup.find('meta', attrs={'name': 'keywords'})
     if keywords_tag:
         metadata['keywords'] = keywords_tag.get('content', '')
-    
+
     author_tag = soup.find('meta', attrs={'name': 'author'})
     if author_tag:
         metadata['author'] = author_tag.get('content', '')
-    
+
     return metadata
 
 if __name__ == '__main__':

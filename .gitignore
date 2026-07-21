@@ -2,6 +2,7 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.docker
 dist/
 build/
 *.log
@@ -12,11 +13,25 @@ __pycache__/
 # Runtime directories
 uploads/
 exports/
+reports/
 logs/
 temp/
 jobs/
-CONTEXT_DUMP.md/
-DEPLOY_STEP_BY_STEP.md/
-DEPLOY.md/
-PRODUCTION_ARCHITECTURE.md/
-ZERO_COST_DEPLOY.md/
+
+# Docker
+*.pid
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+
+# Build artifacts
+*.tgz
+*.tar.gz
+
+# Context/deploy docs
+*.md
+!README.md

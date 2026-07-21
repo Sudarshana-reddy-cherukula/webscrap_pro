@@ -1,41 +1,65 @@
 services:
-  redis:
-    image: redis:7-alpine
-    container_name: webscrap-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    command: redis-server --appendonly yes
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   n8n:
     image: n8nio/n8n
     container_name: webscrap-n8n
+    env_file: .env
     ports:
       - "5678:5678"
     environment:
       - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=n8n-admin-123
       - GENERIC_TIMEZONE=UTC
       - N8N_SECURE_COOKIE=false
-      - N8N_HOST=localhost
+      - N8N_HOST=0.0.0.0
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
-      - WEBHOOK_URL=http://localhost:5678
+      - WEBHOOK_URL=http://n8n:5678
+      - DB_TYPE=bundled
     volumes:
       - n8n-data:/home/node/.n8n
     restart: unless-stopped
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: webscrap-backend
+    env_file: .env
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - REDIS_URL=${REDIS_URL}
+      - N8N_WEBHOOK_URL=http://n8n:5678/webhook/email
+    volumes:
+      - backend-uploads:/app/uploads
+      - backend-exports:/app/exports
+    restart: unless-stopped
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api
+    container_name: webscrap-frontend
+    ports:
+      - "80:80"
+    restart: unless-stopped
     depends_on:
-      redis:
-        condition: service_healthy
+      - backend
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
 
 volumes:
-  redis-data:
   n8n-data:
+  backend-uploads:
+  backend-exports:

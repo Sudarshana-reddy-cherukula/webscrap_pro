@@ -1,2 +1,37 @@
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+node_modules/
+dist/
+build/
+*.local
 .env
-node_modules
+.env.*
+!.env.example
+!.env.docker
+
+# Uploads & exports
+uploads/
+exports/
+reports/
+temp/
+jobs/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+*.tgz
+
+# Coverage
+coverage/
+
+# Puppeteer/Playwright
+browser-data/

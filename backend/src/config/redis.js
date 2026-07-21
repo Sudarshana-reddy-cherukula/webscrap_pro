@@ -11,18 +11,33 @@ function createRedisConnection() {
     return null;
   }
 
-  const client = new Redis(url, {
-    maxRetriesPerRequest: null,
-    enableReadyCheck: false,
-    retryStrategy(times) {
-      if (times > 5) {
-        logger.error('Redis: max reconnection attempts reached');
-        return null;
-      }
-      return Math.min(times * 200, 5000);
-    },
-    lazyConnect: true,
-  });
+  const useTLS = url.startsWith('rediss://');
+  let options;
+
+  try {
+    const parsed = new URL(url);
+    options = {
+      host: parsed.hostname,
+      port: parseInt(parsed.port || '6379', 10),
+      password: parsed.password || parsed.username || '',
+      tls: useTLS ? {} : undefined,
+      maxRetriesPerRequest: null,
+      enableReadyCheck: false,
+      retryStrategy(times) {
+        if (times > 5) {
+          logger.error('Redis: max reconnection attempts reached');
+          return null;
+        }
+        return Math.min(times * 200, 5000);
+      },
+      lazyConnect: true,
+    };
+    logger.info({ host: options.host, port: options.port, tls: !!options.tls }, 'Redis config parsed');
+  } catch {
+    options = { url, maxRetriesPerRequest: null, enableReadyCheck: false, lazyConnect: true };
+  }
+
+  const client = useTLS ? new Redis(options) : new Redis(options);
 
   client.on('connect', () => {
     isAvailable = true;

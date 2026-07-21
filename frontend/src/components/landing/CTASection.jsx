@@ -43,7 +43,7 @@ function CTASection({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate && onNavigate('/faq')}
-                className="border border-app-line px-8 py-3 text-base font-medium text-app-soft rounded-xl hover:bg-white transition-all duration-300 hover:scale-105"
+                className="border border-app-line px-8 py-3 text-base font-medium text-app-soft rounded-xl hover:bg-app-elevated transition-all duration-300 hover:scale-105"
               >
                 Learn more
               </button>

@@ -110,7 +110,7 @@ function ScrapingWorkflow() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="rounded-2xl border border-app-line bg-white p-6 overflow-hidden"
+            className="rounded-2xl border border-app-line bg-app-elevated p-6 overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">

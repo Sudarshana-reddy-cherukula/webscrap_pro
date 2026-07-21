@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/Badge'
 import { useNotification } from '@/hooks/useNotification'
 import { adminService } from '@/services/adminService'
 
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
+const cardClass = "rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-6"
 
 function StatsOverview({ stats }) {
   const overview = stats?.overview || {}
@@ -54,7 +54,7 @@ function StatsOverview({ stats }) {
               return (
                 <div key={plan} className="flex items-center gap-3">
                   <span className="text-xs text-app-muted w-16 capitalize">{plan}</span>
-                  <div className="flex-1 h-2 rounded-full bg-white/5 overflow-hidden">
+                  <div className="flex-1 h-2 rounded-full bg-app-line overflow-hidden">
                     <div className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500" style={{ width: `${pct}%` }} />
                   </div>
                   <span className="text-xs text-app-soft w-12 text-right">{count} ({pct}%)</span>
@@ -136,9 +136,27 @@ function UsersList({ onSelectUser }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         <Input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSearch()} placeholder="Search users..." className="flex-1" />
         <Button onClick={handleSearch}><Search size={14} /></Button>
+        {users.length > 0 && (
+          <button
+            type="button"
+            onClick={() => {
+              const csv = 'Name,Email,Role,Status,Jobs,Created\n' + users.map(u =>
+                `"${(u.name || '').replace(/"/g, '""')}","${u.email || ''}","${u.role || ''}","${u.isActive ? 'Active' : 'Inactive'}","${u.jobCount || 0}","${u.createdAt || ''}"`
+              ).join('\n')
+              const blob = new Blob([csv], { type: 'text/csv' })
+              const url = window.URL.createObjectURL(blob)
+              const a = document.createElement('a'); a.href = url; a.download = 'users.csv'; a.click()
+              window.URL.revokeObjectURL(url)
+            }}
+            className="rounded-lg border border-app-line p-2 text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition"
+            title="Export users"
+          >
+            <Download size={14} />
+          </button>
+        )}
       </div>
 
       {loading ? (
@@ -157,8 +175,8 @@ function UsersList({ onSelectUser }) {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-app-fg truncate">{user.name}</p>
-                      <Badge className={user.role === 'admin' ? 'bg-indigo-500/15 text-indigo-300 text-[10px]' : 'bg-white/10 text-app-muted text-[10px]'}>{user.role}</Badge>
-                      <Badge className={`text-[10px] ${user.subscription?.plan !== 'free' ? 'bg-purple-500/15 text-purple-300' : 'bg-white/10 text-app-muted'}`}>{user.subscription?.plan || 'free'}</Badge>
+                      <Badge className={user.role === 'admin' ? 'bg-indigo-500/15 text-indigo-300 text-[10px]' : 'bg-app-surface text-app-muted text-[10px]'}>{user.role}</Badge>
+                      <Badge className={`text-[10px] ${user.subscription?.plan !== 'free' ? 'bg-purple-500/15 text-purple-300' : 'bg-app-surface text-app-muted'}`}>{user.subscription?.plan || 'free'}</Badge>
                     </div>
                     <p className="text-xs text-app-muted truncate">{user.email}</p>
                   </div>
@@ -275,7 +293,7 @@ export default function AdminPage() {
         <p className="mt-1 text-sm text-app-muted">System management and user administration</p>
       </div>
 
-      <div className="flex gap-1 rounded-xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-xl overflow-x-auto">
+      <div className="flex gap-1 rounded-xl border border-app-line bg-app-elevated/10 p-1 backdrop-blur-xl overflow-x-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon
           return (

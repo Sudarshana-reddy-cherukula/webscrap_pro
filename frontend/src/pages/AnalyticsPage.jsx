@@ -13,7 +13,7 @@ const TABS = [
   { id: 'keywords', label: 'Keywords', icon: Hash },
 ]
 
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
+const cardClass = "rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-6"
 const iconBox = "inline-flex rounded-xl bg-gradient-to-br p-2"
 
 const CHART_COLORS = ['#06b6d4', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#3b82f6', '#14b8a6', '#f97316', '#6366f1']
@@ -183,7 +183,8 @@ function AnalyticsPage() {
 
   const handleExport = async () => {
     try {
-      const blob = await analyticsService.exportAnalytics('csv', activeTab)
+      const res = await analyticsService.exportAnalytics('csv', activeTab)
+      const blob = res.data || res
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a'); a.href = url; a.download = `analytics-${activeTab}.csv`; a.click()
       window.URL.revokeObjectURL(url)
@@ -211,16 +212,16 @@ function AnalyticsPage() {
           <p className="mt-1 text-sm text-app-muted">Track and analyze your data operations</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={handleExport} className="border-white/10 text-xs text-app-muted">
+          <Button variant="outline" onClick={handleExport} className="border-app-line text-xs text-app-muted">
             <Download size={14} className="mr-1.5" /> Export
           </Button>
-          <Button variant="outline" onClick={handleClear} className="border-white/10 text-xs text-app-muted">
+          <Button variant="outline" onClick={handleClear} className="border-app-line text-xs text-app-muted">
             <Trash2 size={14} className="mr-1.5" /> Clear
           </Button>
         </div>
       </div>
 
-      <div className="flex gap-1 rounded-xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-xl">
+      <div className="flex gap-1 rounded-xl border border-app-line bg-app-elevated/10 p-1 backdrop-blur-xl">
         {TABS.map((tab) => {
           const Icon = tab.icon
           return (

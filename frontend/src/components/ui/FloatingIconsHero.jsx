@@ -31,7 +31,7 @@ function FloatingIcon({ IconComponent, className, index }) {
       className={cn('absolute', className)}
     >
       <motion.div
-        className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl bg-white/80 backdrop-blur-md border border-app-line"
+        className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl bg-app-elevated/80 backdrop-blur-md border border-app-line"
         animate={{
           y: [0, -8, 0, 8, 0],
           x: [0, 6, 0, -6, 0],
@@ -151,7 +151,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-app-line bg-white max-w-3xl mx-auto"
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-app-line bg-app-elevated max-w-3xl mx-auto"
         >
           {[
             { value: '10M+', label: 'Pages scraped' },
@@ -159,7 +159,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
             { value: '50K+', label: 'Active users' },
             { value: '150+', label: 'Countries' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white px-4 py-5 text-center">
+            <div key={stat.label} className="bg-app-elevated px-4 py-5 text-center">
               <p className="text-2xl md:text-3xl font-bold text-app-fg">{stat.value}</p>
               <p className="mt-1 text-xs text-app-muted">{stat.label}</p>
             </div>

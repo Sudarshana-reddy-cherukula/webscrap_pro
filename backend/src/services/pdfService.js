@@ -4,6 +4,7 @@ const path = require('path');
 const { PDFDocument, rgb, StandardFonts, degrees } = require('pdf-lib');
 const { encryptPDF } = require('@pdfsmaller/pdf-encrypt-lite');
 const logger = require('../utils/logger');
+const zlib = require('zlib');
 
 const TEMP_DIR = path.join(__dirname, '../temp');
 
@@ -187,20 +188,105 @@ class PDFService {
 
       await this.updateProgress(pdfJob._id, 30);
       const dataBuffer = await fs.readFile(file.path);
-      const data = await parsePdfData(dataBuffer);
-      await this.updateProgress(pdfJob._id, 70);
+      const originalDoc = await PDFDocument.load(dataBuffer);
+      await this.updateProgress(pdfJob._id, 50);
 
-      let modifiedText = data.text;
+      const pdfjsLib = await getPdfjsLib();
+      const data = new Uint8Array(dataBuffer.buffer || dataBuffer);
+      const doc = await pdfjsLib.getDocument({ data }).promise;
+      const metadata = await doc.getMetadata();
+      const info = metadata.info || {};
+
+      let allText = '';
+      const pageTexts = [];
+      for (let i = 1; i <= doc.numPages; i++) {
+        const page = await doc.getPage(i);
+        const content = await page.getTextContent();
+        const pageText = content.items.map(item => item.str).join(' ');
+        pageTexts.push(pageText);
+        allText += pageText + '\n';
+      }
+
+      let modifiedText = allText;
       if (options.operation === 'replace' && options.searchText) {
         modifiedText = modifiedText.split(options.searchText).join(options.replaceText || '');
       } else if (options.operation === 'append') {
         modifiedText = modifiedText + '\n' + (options.replaceText || '');
       } else if (options.operation === 'prepend') {
         modifiedText = (options.replaceText || '') + '\n' + modifiedText;
+      } else if (options.operation === 'remove' && options.searchText) {
+        modifiedText = modifiedText.split(options.searchText).join('');
       }
 
-      const results = { operation: options.operation, pageCount: data.numpages, modified: true, outputFile: await this.saveTextFile(modifiedText, `modified_${file.originalname}`) };
+      await this.updateProgress(pdfJob._id, 70);
+
+      const newDoc = await PDFDocument.create();
+      const helveticaFont = await newDoc.embedFont(StandardFonts.Helvetica);
+      const lines = modifiedText.split('\n');
+      const PAGE_WIDTH = 612;
+      const PAGE_HEIGHT = 792;
+      const MARGIN = 50;
+      const FONT_SIZE = 11;
+      const LINE_HEIGHT = FONT_SIZE * 1.4;
+      const MAX_LINES_PER_PAGE = Math.floor((PAGE_HEIGHT - 2 * MARGIN) / LINE_HEIGHT);
+
+      let pageNum = 0;
+      for (let i = 0; i < lines.length; i += MAX_LINES_PER_PAGE) {
+        const pageLines = lines.slice(i, i + MAX_LINES_PER_PAGE);
+        const page = newDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+
+        for (let li = 0; li < pageLines.length; li++) {
+          const line = pageLines[li];
+          const y = PAGE_HEIGHT - MARGIN - (li + 1) * LINE_HEIGHT;
+
+          let truncatedLine = line;
+          while (helveticaFont.widthOfTextAtSize(truncatedLine, FONT_SIZE) > (PAGE_WIDTH - 2 * MARGIN) && truncatedLine.length > 0) {
+            truncatedLine = truncatedLine.slice(0, -1);
+          }
+
+          page.drawText(truncatedLine, {
+            x: MARGIN,
+            y,
+            size: FONT_SIZE,
+            font: helveticaFont,
+            color: rgb(0, 0, 0),
+          });
+        }
+        pageNum++;
+      }
+
+      if (newDoc.getPageCount() === 0) {
+        const page = newDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+        page.drawText(modifiedText || '(empty)', {
+          x: MARGIN,
+          y: PAGE_HEIGHT - MARGIN - FONT_SIZE,
+          size: FONT_SIZE,
+          font: helveticaFont,
+          color: rgb(0, 0, 0),
+        });
+      }
+
+      if (info.Title) newDoc.setTitle(info.Title);
+      if (info.Author) newDoc.setAuthor(info.Author);
+      if (info.Subject) newDoc.setSubject(info.Subject);
+      if (info.Creator) newDoc.setCreator(info.Creator);
+
+      const pdfBytes = await newDoc.save();
+      const outputFilename = `modified_${file.filename}`;
+      const outputPath = path.join(TEMP_DIR, outputFilename);
+      await fs.writeFile(outputPath, pdfBytes);
+      const stats = await fs.stat(outputPath);
+
       await this.updateProgress(pdfJob._id, 90);
+
+      const results = {
+        operation: options.operation,
+        pageCount: newDoc.getPageCount(),
+        modified: true,
+        originalText: allText.substring(0, 500),
+        modifiedText: modifiedText.substring(0, 500),
+        outputFile: { filename: `modified_${file.originalname}`, path: outputPath, size: stats.size },
+      };
       await pdfJob.completeJob(results);
       return { job: pdfJob, results };
     } catch (error) {
@@ -325,22 +411,34 @@ class PDFService {
         indices = Array.from({ length: pageCount }, (_, i) => i);
       }
 
+      const JSZip = require('jszip');
+      const zip = new JSZip();
+
       for (const idx of indices) {
         const newDoc = await PDFDocument.create();
         const [copiedPage] = await newDoc.copyPages(pdfDoc, [idx]);
         newDoc.addPage(copiedPage);
         const pageBytes = await newDoc.save();
-        const pageFile = `page_${idx + 1}_${file.filename}`;
-        const pagePath = path.join(TEMP_DIR, pageFile);
-        await fs.writeFile(pagePath, pageBytes);
-        const s = Buffer.byteLength(pageBytes);
-        totalSize += s;
-        pages.push({ page: idx + 1, filename: pageFile, path: pagePath, size: s });
+        const pageFilename = `page_${idx + 1}.pdf`;
+        zip.file(pageFilename, pageBytes);
+        totalSize += pageBytes.length;
+        pages.push({ page: idx + 1, filename: pageFilename, size: pageBytes.length });
       }
+
+      const zipBytes = await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+      const zipFilename = `split_${path.parse(file.originalname).name}.zip`;
+      const zipPath = path.join(TEMP_DIR, zipFilename);
+      await fs.writeFile(zipPath, zipBytes);
+      const zipStats = await fs.stat(zipPath);
 
       await this.updateProgress(pdfJob._id, 90);
 
-      const results = { pageCount, pages, splitMode: options.mode, outputFile: { filename: `split_${path.parse(file.originalname).name}.zip`, path: pages[0]?.path || '', size: totalSize } };
+      const results = {
+        pageCount,
+        pages,
+        splitMode: options.mode,
+        outputFile: { filename: zipFilename, path: zipPath, size: zipStats.size },
+      };
       await pdfJob.completeJob(results);
       return { job: pdfJob, results };
     } catch (error) {
@@ -519,16 +617,34 @@ class PDFService {
               try {
                 const obj = await page.objs.get(name);
                 if (obj && obj.data) {
-                  const ext = obj.data.kind === 'RGB' ? 'png' : 'jpg';
-                  const imgFilename = `page_${i}_img_${imgs.length + 1}.${ext}`;
+                  const width = obj.width || obj.data.width;
+                  const height = obj.height || obj.data.height;
+                  if (!width || !height) continue;
+
+                  let rawPixels = obj.data.rgbData || obj.data.data;
+                  if (!rawPixels) continue;
+
+                  if (rawPixels.constructor && rawPixels.constructor.name === 'Object') {
+                    rawPixels = rawPixels.rgbData || rawPixels.data;
+                    if (!rawPixels) continue;
+                  }
+
+                  const expectedLen = width * height * (rawPixels.length === width * height * 4 ? 4 : 3);
+                  if (rawPixels.length < expectedLen) continue;
+
+                  const imgFilename = `page_${i}_img_${imgs.length + 1}.png`;
                   const imgPath = path.join(TEMP_DIR, imgFilename);
-                  const imgData = obj.data.kind === 'RGB'
-                    ? Buffer.from(obj.data.rgbData || obj.data.data)
-                    : Buffer.from(obj.data.data);
-                  await fs.writeFile(imgPath, imgData);
-                  imgs.push({ filename: imgFilename, path: imgPath, size: imgData.length, page: i });
+
+                  const pngBuffer = this.createPNGFromPixels(
+                    Buffer.from(rawPixels.buffer ? rawPixels.buffer : rawPixels),
+                    width,
+                    height
+                  );
+                  if (!pngBuffer) continue;
+                  await fs.writeFile(imgPath, pngBuffer);
+                  imgs.push({ filename: imgFilename, path: imgPath, size: pngBuffer.length, page: i, width, height });
                 }
-              } catch { }
+              } catch (err) { logger.error(`Error extracting image ${name} from page ${i}:`, err.message); }
             }
           }
         }
@@ -546,11 +662,105 @@ class PDFService {
       if (jobId) await this.updateProgress(jobId, 70);
 
       const format = options.format || 'png';
-      return { images: extractedImages, count: extractedImages.length, format, quality: toNum(options.imageQuality, 300) };
+
+      const JSZip = require('jszip');
+      const zip = new JSZip();
+      const actualImages = extractedImages.filter((img) => !img.filename.endsWith('.json'));
+      let zipEntryCount = 0;
+      for (const img of actualImages) {
+        try {
+          const fileData = await fs.readFile(img.path);
+          if (fileData && fileData.length > 8) {
+            const isPng = fileData[0] === 137 && fileData[1] === 80 && fileData[2] === 78 && fileData[3] === 71;
+            if (isPng) {
+              zip.file(img.filename, fileData);
+              zipEntryCount++;
+            }
+          }
+        } catch (err) { logger.error(`Error reading ${img.filename} for ZIP:`, err.message); }
+      }
+      logger.info(`ZIP: added ${zipEntryCount} valid PNG files out of ${actualImages.length} extracted images`);
+      const zipBytes = await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+      const zipFilename = `images_${jobId || Date.now()}.zip`;
+      const zipPath = path.join(TEMP_DIR, zipFilename);
+      await fs.writeFile(zipPath, zipBytes);
+      const zipStats = await fs.stat(zipPath);
+
+      if (jobId) await this.updateProgress(jobId, 90);
+
+      return { images: extractedImages, count: extractedImages.length, format, quality: toNum(options.imageQuality, 300), outputFile: { filename: zipFilename, path: zipPath, size: zipStats.size } };
     } catch (error) {
       logger.error('Error extracting images from PDF:', error);
       throw new Error('Failed to extract images from PDF.');
     }
+  }
+
+  createPNGFromPixels(rawPixels, width, height) {
+    const totalPixels = width * height;
+    const channels = rawPixels.length >= totalPixels * 4 ? 4 : 3;
+    const hasAlpha = channels === 4;
+    const colorType = hasAlpha ? 6 : 2;
+
+    const filtered = Buffer.alloc(height * (1 + width * channels));
+    let offset = 0;
+    for (let y = 0; y < height; y++) {
+      filtered[offset++] = 0;
+      for (let x = 0; x < width; x++) {
+        const srcIdx = (y * width + x) * channels;
+        for (let c = 0; c < channels; c++) {
+          filtered[offset++] = rawPixels[srcIdx + c] || 0;
+        }
+      }
+    }
+
+    const compressed = zlib.deflateSync(filtered);
+
+    const signature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+
+    const ihdrData = Buffer.alloc(13);
+    ihdrData.writeUInt32BE(width, 0);
+    ihdrData.writeUInt32BE(height, 4);
+    ihdrData[8] = 8;
+    ihdrData[9] = colorType;
+    ihdrData[10] = 0;
+    ihdrData[11] = 0;
+    ihdrData[12] = 0;
+    const ihdrChunk = this.makePNGChunk('IHDR', ihdrData);
+
+    const idatChunk = this.makePNGChunk('IDAT', compressed);
+
+    const iendChunk = this.makePNGChunk('IEND', Buffer.alloc(0));
+
+    const png = Buffer.concat([signature, ihdrChunk, idatChunk, iendChunk]);
+    const validSignature = png[0] === 137 && png[1] === 80 && png[2] === 78 && png[3] === 71;
+    return validSignature ? png : null;
+  }
+
+  makePNGChunk(type, data) {
+    const length = Buffer.alloc(4);
+    length.writeUInt32BE(data.length, 0);
+    const typeBuffer = Buffer.from(type, 'ascii');
+    const crcData = Buffer.concat([typeBuffer, data]);
+    const crc = this.crc32(crcData);
+    const crcBuffer = Buffer.alloc(4);
+    crcBuffer.writeUInt32BE(crc >>> 0, 0);
+    return Buffer.concat([length, typeBuffer, data, crcBuffer]);
+  }
+
+  crc32(buf) {
+    let table = PDFService._crcTable;
+    if (!table) {
+      table = new Uint32Array(256);
+      for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let j = 0; j < 8; j++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        table[i] = c;
+      }
+      PDFService._crcTable = table;
+    }
+    let crc = 0xFFFFFFFF;
+    for (let i = 0; i < buf.length; i++) crc = table[(crc ^ buf[i]) & 0xFF] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
   }
 
   async convertPDFToDocx(file, options, jobId) {
@@ -665,6 +875,42 @@ class PDFService {
     job.downloadCount += 1;
     await job.save();
     return { filePath, fileName, originalName: job.originalName };
+  }
+
+  async createImagesZip(jobId) {
+    const job = await PDFJob.findById(jobId);
+    if (!job) throw new Error('PDF job not found');
+    if (job.status !== 'completed') throw new Error('PDF job not completed');
+
+    if (job.results?.outputFile?.path) {
+      try {
+        const data = await fs.readFile(job.results.outputFile.path);
+        if (data && data.length > 0) return data;
+      } catch (err) {
+        logger.warn(`Stored ZIP not found at ${job.results.outputFile.path}, rebuilding...`);
+      }
+    }
+
+    const images = job.results?.images;
+    if (!images || images.length === 0) throw new Error('No images found for this job');
+
+    const JSZip = require('jszip');
+    const zip = new JSZip();
+    let added = 0;
+    for (const img of images) {
+      if (img.filename.endsWith('.json')) continue;
+      try {
+        const fileData = await fs.readFile(img.path);
+        if (fileData && fileData.length > 0) {
+          zip.file(img.filename, fileData);
+          added++;
+        }
+      } catch (err) {
+        logger.warn(`Cannot read ${img.path}: ${err.message}`);
+      }
+    }
+    if (added === 0) throw new Error('No image files could be read from disk');
+    return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
   }
 }
 

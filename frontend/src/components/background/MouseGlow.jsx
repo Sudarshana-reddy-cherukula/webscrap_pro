@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react'
 import useReducedMotion from './useReducedMotion'
+import useIsDark from '@/hooks/useIsDark'
 
 export default function MouseGlow() {
   const [pos, setPos] = useState({ x: -200, y: -200 })
   const [active, setActive] = useState(false)
   const reducedMotion = useReducedMotion()
+  const isDark = useIsDark()
+
+  const glowAlpha = isDark ? 0.08 : 0.14
+  const glowAlpha2 = isDark ? 0.04 : 0.07
 
   useEffect(() => {
     if (reducedMotion) return
@@ -35,7 +40,7 @@ export default function MouseGlow() {
         width: 300,
         height: 300,
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.04) 40%, transparent 70%)',
+        background: `radial-gradient(circle, rgba(99,102,241,${glowAlpha}) 0%, rgba(139,92,246,${glowAlpha2}) 40%, transparent 70%)`,
         opacity: active ? 1 : 0,
         transition: 'opacity 0.5s ease-out',
         willChange: 'transform',

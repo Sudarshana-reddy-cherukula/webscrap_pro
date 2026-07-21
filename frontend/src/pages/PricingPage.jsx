@@ -31,7 +31,7 @@ const faq = [
   { q: 'Do you offer student discounts?', a: 'Yes, we offer 50% off for verified students and academic researchers.' },
 ]
 
-const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6"
+const cardClass = "rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-6"
 
 function PricingPage() {
   const navigate = useNavigate()
@@ -78,7 +78,7 @@ function PricingPage() {
                 className={`mt-8 w-full rounded-xl py-2.5 text-sm font-semibold transition ${
                   plan.popular
                     ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30'
-                    : 'border border-white/10 text-app-soft hover:bg-white/[0.04]'
+                    : 'border border-app-line text-app-soft hover:bg-app-elevated/15'
                 }`}
               >{plan.cta}</button>
             </motion.div>
@@ -89,12 +89,12 @@ function PricingPage() {
           <h2 className="text-center text-2xl font-bold text-app-fg">Frequently asked questions</h2>
           <div className="mx-auto mt-10 grid max-w-3xl gap-4">
             {faq.map((item) => (
-              <details key={item.q} className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl transition hover:border-white/20">
+              <details key={item.q} className="group rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl transition hover:border-app-line-strong">
                 <summary className="flex cursor-pointer items-center justify-between px-6 py-4 text-sm font-medium text-app-nav">
                   {item.q}
                   <ArrowRight size={14} className="shrink-0 text-app-muted transition group-open:rotate-90" />
                 </summary>
-                <p className="border-t border-white/5 px-6 py-4 text-sm leading-6 text-app-muted">{item.a}</p>
+                <p className="border-t border-app-line/50 px-6 py-4 text-sm leading-6 text-app-muted">{item.a}</p>
               </details>
             ))}
           </div>

@@ -7,6 +7,7 @@ import { UploadProgress } from '@/components/ui/UploadProgress'
 import { DataTable } from '@/components/ui/DataTable'
 import { Badge } from '@/components/ui/Badge'
 import { dashboardService } from '@/services/dashboardService'
+import { useNotification } from '@/hooks/useNotification'
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024
 const ACCEPTED_TYPES = {
@@ -17,50 +18,67 @@ const ACCEPTED_TYPES = {
   'text/plain': ['.txt'],
 }
 
-const columns = [
-  { accessor: 'name', header: 'Name', render: (val, row) => (
-    <div className="flex items-center gap-3">
-      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.04]">
-        <FileText size={14} className="text-cyan-400" />
-      </div>
-      <div>
-        <p className="text-sm text-app-soft">{val}</p>
-        <p className="text-xs text-app-muted">{row.type?.toUpperCase() || 'PDF'}</p>
-      </div>
-    </div>
-  )},
-  { accessor: 'size', header: 'Size', render: (val) => {
-    const units = ['B', 'KB', 'MB']; let i = 0; let s = val || 0
-    while (s >= 1024 && i < units.length - 1) { s /= 1024; i++ }
-    return <span className="text-sm text-app-muted">{s.toFixed(1)} {units[i]}</span>
-  }},
-  { accessor: 'status', header: 'Status', render: (val) => {
-    const variants = { completed: 'success', processing: 'warning', failed: 'error', pending: 'default' }
-    return <Badge variant={variants[val] || 'default'}>{val}</Badge>
-  }},
-  { accessor: 'createdAt', header: 'Uploaded', render: (val) => {
-    if (!val) return '—'
-    const d = new Date(val)
-    return <span className="text-sm text-app-muted">{d.toLocaleDateString()} {d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-  }},
-  { accessor: 'actions', header: '', render: () => (
-    <div className="flex items-center gap-1">
-      <button type="button" className="rounded-lg border border-white/10 p-1.5 text-app-muted hover:bg-white/[0.04] hover:text-app-soft transition" title="Download">
-        <Download size={12} />
-      </button>
-      <button type="button" className="rounded-lg border border-white/10 p-1.5 text-app-muted hover:bg-white/[0.04] hover:text-red-400 transition" title="Delete">
-        <Trash2 size={12} />
-      </button>
-    </div>
-  )},
-]
-
 function UploadsPage() {
   const [uploads, setUploads] = useState([])
   const [queue, setQueue] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
+  const { showNotification } = useNotification()
+
+  const columns = [
+    { accessor: 'name', header: 'Name', render: (val, row) => (
+      <div className="flex items-center gap-3">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-app-elevated/15">
+          <FileText size={14} className="text-cyan-400" />
+        </div>
+        <div>
+          <p className="text-sm text-app-soft">{val}</p>
+          <p className="text-xs text-app-muted">{row.type?.toUpperCase() || 'PDF'}</p>
+        </div>
+      </div>
+    )},
+    { accessor: 'size', header: 'Size', render: (val) => {
+      const units = ['B', 'KB', 'MB']; let i = 0; let s = val || 0
+      while (s >= 1024 && i < units.length - 1) { s /= 1024; i++ }
+      return <span className="text-sm text-app-muted">{s.toFixed(1)} {units[i]}</span>
+    }},
+    { accessor: 'status', header: 'Status', render: (val) => {
+      const variants = { completed: 'success', processing: 'warning', failed: 'error', pending: 'default' }
+      return <Badge variant={variants[val] || 'default'}>{val}</Badge>
+    }},
+    { accessor: 'createdAt', header: 'Uploaded', render: (val) => {
+      if (!val) return '—'
+      const d = new Date(val)
+      return <span className="text-sm text-app-muted">{d.toLocaleDateString()} {d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+    }},
+    { accessor: 'actions', header: '', render: (val, row) => (
+      <div className="flex items-center gap-1">
+        {row.status === 'completed' && (
+          <button type="button" onClick={async () => {
+            try {
+              const { exportService } = await import('@/services/exportService')
+              const ext = (row.filename || row.name || '').split('.').pop()?.toLowerCase()
+              const fmt = ext === 'csv' ? 'csv' : ext === 'json' ? 'json' : ext === 'txt' ? 'txt' : 'pdf'
+              const exportRes = await exportService.start({ sourceType: 'upload', sourceId: row._id || row.id, exportType: fmt })
+              const exportId = exportRes.data?.data?.exportId
+              if (!exportId) throw new Error('No export ID')
+              const blobRes = await exportService.download(exportId)
+              const url = window.URL.createObjectURL(blobRes.data)
+              const a = document.createElement('a'); a.href = url; a.download = row.filename || row.name || 'download'; a.click()
+              window.URL.revokeObjectURL(url)
+            } catch { showNotification('Download failed', 'error') }
+          }}
+            className="rounded-lg border border-app-line p-1.5 text-app-muted hover:bg-app-elevated/15 hover:text-app-soft transition" title="Download">
+            <Download size={12} />
+          </button>
+        )}
+        <button type="button" className="rounded-lg border border-app-line p-1.5 text-app-muted hover:bg-app-elevated/15 hover:text-red-400 transition" title="Delete">
+          <Trash2 size={12} />
+        </button>
+      </div>
+    )},
+  ]
 
   const loadUploads = async () => {
     try {
@@ -149,13 +167,13 @@ function UploadsPage() {
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
         {...getRootProps()}
         className={`relative rounded-2xl border-2 border-dashed p-8 text-center cursor-pointer transition-all duration-300 backdrop-blur-xl ${
-          isDragActive ? 'border-cyan-500/50 bg-cyan-500/5' : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
+          isDragActive ? 'border-cyan-500/50 bg-cyan-500/5' : 'border-app-line bg-app-surface hover:border-app-line-strong hover:bg-app-elevated/15'
         }`}
       >
         <input {...getInputProps()} />
         <div className="flex flex-col items-center gap-3">
           <div className={`flex h-12 w-12 items-center justify-center rounded-xl transition-colors ${
-            isDragActive ? 'bg-cyan-500/20 text-cyan-400' : 'bg-white/[0.04] text-app-muted'
+            isDragActive ? 'bg-cyan-500/20 text-cyan-400' : 'bg-app-elevated/15 text-app-muted'
           }`}>
             {isDragActive ? <Upload size={24} className="animate-bounce" /> : <Upload size={24} />}
           </div>
@@ -196,7 +214,7 @@ function UploadsPage() {
       </div>
 
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-1"
+        className="rounded-2xl border border-app-line bg-app-elevated/10 backdrop-blur-xl p-1"
       >
         <DataTable columns={columns} data={filteredUploads} loading={loading} error={error}
           emptyTitle="No files uploaded" emptyText="Upload your first file using the drop zone above." searchable={false}

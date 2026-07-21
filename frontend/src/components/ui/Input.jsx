@@ -10,7 +10,13 @@ function Input({
       type={type}
       data-slot="input"
       className={cn(
-        "h-8 w-full min-w-0 rounded-lg border border-input bg-app-elevated px-2.5 py-1 text-base text-app-fg placeholder:text-app-muted transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm",
+        "h-12 w-full min-w-0 rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-sm text-white placeholder:text-slate-400 transition-all duration-200 outline-none",
+        "hover:border-slate-500",
+        "focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30",
+        "disabled:bg-slate-800 disabled:text-white disabled:opacity-100 disabled:cursor-not-allowed",
+        "file:inline-flex file:h-8 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-white",
+        "aria-invalid:border-red-500 aria-invalid:ring-2 aria-invalid:ring-red-500/30",
+        "md:text-sm",
         className
       )}
       {...props} />

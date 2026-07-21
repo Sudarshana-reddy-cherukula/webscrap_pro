@@ -72,7 +72,7 @@ function PdfToolsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: i * 0.05, duration: 0.5 }}
-              className="group relative overflow-hidden rounded-2xl border border-app-line bg-white p-6 transition-all duration-500 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/5 hover:-translate-y-1"
+              className="group relative overflow-hidden rounded-2xl border border-app-line bg-app-elevated p-6 transition-all duration-500 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/5 hover:-translate-y-1"
             >
               <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${tool.gradient} p-2.5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 <tool.icon size={20} className="text-white" />
@@ -92,7 +92,7 @@ function PdfToolsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-16 rounded-2xl border border-app-line bg-white p-8"
+          className="mt-16 rounded-2xl border border-app-line bg-app-elevated p-8"
         >
           <div className="grid gap-8 md:grid-cols-2 items-center">
             <div>
@@ -114,7 +114,7 @@ function PdfToolsSection() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-xl border border-app-line bg-white p-6">
+            <div className="rounded-xl border border-app-line bg-app-elevated p-6">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs text-app-muted">Processing Queue</span>
                 <span className="text-xs text-emerald-600">● 12 active</span>

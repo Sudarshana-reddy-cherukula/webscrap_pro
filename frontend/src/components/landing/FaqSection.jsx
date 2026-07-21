@@ -100,7 +100,7 @@ function FaqSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.03 }}
-              className="rounded-xl border border-app-line bg-white overflow-hidden transition hover:border-app-line"
+              className="rounded-xl border border-app-line bg-app-elevated overflow-hidden transition hover:border-app-line"
             >
               <button
                 type="button"
