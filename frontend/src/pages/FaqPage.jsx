@@ -40,7 +40,7 @@ const categories = [
   {
     title: 'Data & Export',
     icon: HelpCircle,
-    color: 'from-amber-500 to-orange-600',
+    color: 'from-indigo-500 to-violet-600',
     questions: [
       { q: 'What export formats are available?', a: 'We support CSV, JSON, XLSX, and XML export formats. Enterprise plans include custom format support and direct database integrations.' },
       { q: 'How long is my data stored?', a: 'Data retention varies by plan: Starter 24 hours, Professional 30 days, Enterprise unlimited retention with configurable data lifecycle policies.' },

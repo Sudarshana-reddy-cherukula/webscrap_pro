@@ -46,18 +46,18 @@ function Footer() {
 
   return (
     <footer className="relative border-t border-app-line bg-app-bg">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(200,90,72,0.03),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(212,147,60,0.02),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(99,102,241,0.03),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.02),transparent_50%)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
             <Link to="/" className="group inline-flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-[7px] font-bold text-white shadow-lg shadow-amber-500/20 tracking-tight leading-none">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-[7px] font-bold text-white shadow-lg shadow-indigo-500/20 tracking-tight leading-none">
                 WP
               </div>
               <span className="text-lg font-bold tracking-tight text-app-fg">
-                WebScrap <span className="text-amber-600">Pro</span>
+                WebScrap <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">Pro</span>
               </span>
             </Link>
             <p className="mt-4 text-sm leading-6 text-app-muted max-w-xs">
@@ -68,16 +68,16 @@ function Footer() {
                 <a
                   key={s}
                   href="#"
-                  className="rounded-lg border border-app-line bg-white px-3 py-1.5 text-xs text-app-muted transition hover:border-amber-400/30 hover:text-amber-700 hover:bg-amber-50"
+                  className="rounded-lg border border-app-line bg-white px-3 py-1.5 text-xs text-app-muted transition hover:border-indigo-400/30 hover:text-indigo-700 hover:bg-indigo-50"
                 >
                   {s}
                 </a>
               ))}
             </div>
 
-            <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
-              <Zap size={10} className="text-amber-600" />
-              <span className="text-[10px] text-amber-700">All systems operational</span>
+            <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-indigo-400/20 bg-indigo-50 px-3 py-1">
+              <Zap size={10} className="text-indigo-600" />
+              <span className="text-[10px] text-indigo-700">All systems operational</span>
             </div>
           </div>
 
@@ -91,7 +91,7 @@ function Footer() {
                   <motion.li key={link.label} whileHover={{ x: 3 }}>
                     <Link
                       to={link.to}
-                      className="text-sm text-app-muted transition hover:text-amber-700"
+                      className="text-sm text-app-muted transition hover:text-indigo-700"
                     >
                       {link.label}
                     </Link>
@@ -114,12 +114,12 @@ function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Subscribe to updates"
-                className="w-48 rounded-xl border border-app-line bg-white pl-9 pr-3 py-2 text-xs text-app-fg placeholder:text-app-muted transition focus:border-amber-400/50 focus:outline-none focus:ring-1 focus:ring-amber-500/20"
+                className="w-48 rounded-xl border border-app-line bg-app-elevated pl-9 pr-3 py-2 text-xs text-app-fg placeholder:text-app-muted transition focus:border-indigo-400/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/20"
               />
             </div>
             <button
               type="submit"
-              className="rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 p-2 text-white transition hover:shadow-lg hover:shadow-amber-500/20"
+              className="rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 p-2 text-white transition hover:shadow-lg hover:shadow-indigo-500/20"
             >
               <ArrowRight size={14} />
             </button>

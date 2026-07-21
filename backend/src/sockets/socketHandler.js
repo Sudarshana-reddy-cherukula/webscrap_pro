@@ -11,9 +11,23 @@ class SocketHandler {
   }
 
   initialize(server) {
+    const socketAllowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://webscrap-pro-ecru.vercel.app',
+    ];
+    if (process.env.FRONTEND_URL) {
+      process.env.FRONTEND_URL.split(',').map(s => s.trim()).forEach(url => {
+        if (url && !socketAllowedOrigins.includes(url)) socketAllowedOrigins.push(url);
+      });
+    }
+
     this.io = new Server(server, {
       cors: {
-        origin: process.env.FRONTEND_URL || "http://localhost:3000",
+        origin: (origin, cb) => {
+          if (!origin || process.env.NODE_ENV === 'development' || socketAllowedOrigins.includes(origin)) cb(null, true);
+          else cb(new Error(`Origin ${origin} not allowed by Socket.IO`));
+        },
         methods: ["GET", "POST"],
         credentials: true,
       },

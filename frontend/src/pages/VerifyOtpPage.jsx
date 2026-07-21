@@ -59,16 +59,16 @@ function VerifyOtpPage() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"
       >
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
-        <div className="relative rounded-2xl border border-app-line bg-white/80 p-8 backdrop-blur-2xl shadow-2xl">
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-indigo-500/20 via-violet-500/10 to-cyan-600/20 blur-3xl" />
+        <div className="relative rounded-2xl border border-app-line bg-app-bg/80 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
             <Link to="/" className="mb-6 inline-flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white shadow-lg">S</div>
-              <span className="text-lg font-bold text-app-fg">Scrape<span className="text-amber-600">Flow</span></span>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-bold text-white shadow-lg">S</div>
+              <span className="text-lg font-bold text-app-fg">WebScrap <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">Pro</span></span>
             </Link>
-            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
-              <Sparkles size={10} className="text-amber-600" />
-              <span className="text-[10px] text-amber-700">Verify your email</span>
+            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-indigo-400/20 bg-indigo-50 px-3 py-1">
+              <Sparkles size={10} className="text-indigo-600" />
+              <span className="text-[10px] text-indigo-700">Verify your email</span>
             </div>
             <h1 className="text-2xl font-bold text-app-fg">Check your email</h1>
             <p className="mt-2 text-sm text-app-muted">Enter the 6-digit code sent to {email || 'your email'}</p>
@@ -94,7 +94,7 @@ function VerifyOtpPage() {
                     value={digit}
                     onChange={(e) => handleChange(i, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(i, e)}
-                    className="h-14 w-12 rounded-xl border border-app-line bg-white text-center text-xl font-bold text-app-fg transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                    className="h-14 w-12 rounded-xl border border-app-line bg-app-elevated text-center text-xl font-bold text-app-fg transition focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                   />
                 ))}
               </div>
@@ -102,7 +102,7 @@ function VerifyOtpPage() {
               {error && <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3"><p className="text-xs text-red-600 text-center">{error}</p></div>}
 
               <button type="submit" disabled={loading}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30 disabled:opacity-50">
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:shadow-indigo-500/30 disabled:opacity-50">
                 {loading ? <Loader2 size={16} className="animate-spin" /> : null}
                 {loading ? 'Verifying...' : 'Verify email'}
               </button>
@@ -110,7 +110,7 @@ function VerifyOtpPage() {
               <div className="mt-4 text-center">
                 <p className="text-xs text-app-muted">
                   Didn't receive the code?{' '}
-                  <button type="button" className="text-amber-600 hover:text-amber-700 transition">Resend</button>
+                  <button type="button" className="text-indigo-600 hover:text-indigo-700 transition">Resend</button>
                 </p>
               </div>
 

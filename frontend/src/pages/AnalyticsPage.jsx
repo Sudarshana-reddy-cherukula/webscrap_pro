@@ -200,7 +200,7 @@ function AnalyticsPage() {
     { label: 'Total Scrapes', value: data?.totalScrapes || '—', icon: Globe, color: 'from-cyan-500 to-blue-600' },
     { label: 'PDFs Processed', value: data?.totalPdfs || '—', icon: FileText, color: 'from-purple-500 to-pink-600' },
     { label: 'Data Points', value: data?.totalDataPoints || '—', icon: BarChart3, color: 'from-green-500 to-emerald-600' },
-    { label: 'This Month', value: data?.thisMonth || '—', icon: Calendar, color: 'from-amber-500 to-orange-600' },
+    { label: 'This Month', value: data?.thisMonth || '—', icon: Calendar, color: 'from-indigo-500 to-violet-600' },
   ]
 
   return (

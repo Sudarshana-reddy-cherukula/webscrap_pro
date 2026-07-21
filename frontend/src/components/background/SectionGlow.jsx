@@ -1,9 +1,9 @@
 const colorMap = {
   indigo: 'rgba(99,102,241,0.08)',
-  cyan: 'rgba(6,182,212,0.07)',
   violet: 'rgba(139,92,246,0.07)',
-  amber: 'rgba(209,138,42,0.06)',
-  rose: 'rgba(236,72,153,0.06)',
+  cyan: 'rgba(6,182,212,0.07)',
+  purple: 'rgba(79,70,229,0.06)',
+  blue: 'rgba(59,130,246,0.06)',
 }
 
 const positionMap = {

@@ -43,21 +43,20 @@ function ForgotPasswordPage() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"
       >
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-indigo-500/20 via-violet-500/10 to-cyan-600/20 blur-3xl" />
 
-        <div className="relative rounded-2xl border border-app-line bg-white/80 p-8 backdrop-blur-2xl shadow-2xl">
+        <div className="relative rounded-2xl border border-app-line bg-app-bg/80 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
             <Link to="/" className="mb-6 inline-flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white shadow-lg shadow-amber-500/20">
-                S
-              </div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-bold text-white shadow-lg shadow-indigo-500/20">
+                WP</div>
               <span className="text-lg font-bold text-app-fg">
-                Scrape<span className="text-amber-600">Flow</span>
+                WebScrap <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">Pro</span>
               </span>
             </Link>
-            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
-              <Sparkles size={10} className="text-amber-600" />
-              <span className="text-[10px] text-amber-700">Password reset</span>
+            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-indigo-400/20 bg-indigo-50 px-3 py-1">
+              <Sparkles size={10} className="text-indigo-600" />
+              <span className="text-[10px] text-indigo-700">Password reset</span>
             </div>
             <h1 className="text-2xl font-bold text-app-fg">Forgot password?</h1>
             <p className="mt-2 text-sm text-app-muted">
@@ -80,7 +79,7 @@ function ForgotPasswordPage() {
               <button
                 type="button"
                 onClick={() => navigate('/login')}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:shadow-indigo-500/30"
               >
                 Back to login <ArrowRight size={14} />
               </button>
@@ -94,7 +93,7 @@ function ForgotPasswordPage() {
                   type="email"
                   {...register('email')}
                   placeholder="you@example.com"
-                  className="mt-1.5 block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                  className="mt-1.5 block w-full rounded-xl border border-app-line bg-app-elevated px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                 />
                 {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
               </div>
@@ -108,7 +107,7 @@ function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:shadow-indigo-500/30 disabled:opacity-50"
               >
                 {loading ? (
                   <Loader2 size={16} className="animate-spin" />

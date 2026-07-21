@@ -9,7 +9,7 @@ const typeFilters = ['All', 'Scrape', 'PDF', 'Export', 'OCR']
 
 const columns = [
   { accessor: 'type', header: 'Type', render: (val) => {
-    const colors = { Scrape: 'text-cyan-400', PDF: 'text-purple-400', Export: 'text-amber-400', OCR: 'text-emerald-400' }
+    const colors = { Scrape: 'text-cyan-400', PDF: 'text-purple-400', Export: 'text-indigo-400', OCR: 'text-emerald-400' }
     return <span className={`text-xs font-medium ${colors[val] || 'text-app-muted'}`}>{val || '—'}</span>
   }},
   { accessor: 'name', header: 'Name', render: (val, row) => (

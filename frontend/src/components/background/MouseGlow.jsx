@@ -35,7 +35,7 @@ export default function MouseGlow() {
         width: 300,
         height: 300,
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, rgba(6,182,212,0.04) 40%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.04) 40%, transparent 70%)',
         opacity: active ? 1 : 0,
         transition: 'opacity 0.5s ease-out',
         willChange: 'transform',

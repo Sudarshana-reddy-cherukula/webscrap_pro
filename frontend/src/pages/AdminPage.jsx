@@ -22,7 +22,7 @@ function StatsOverview({ stats }) {
     { label: 'Total Users', value: overview.totalUsers || 0, icon: Users, color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
     { label: 'Active (7d)', value: overview.activeUsers || 0, icon: UserCheck, color: 'text-green-400', bg: 'bg-green-500/10' },
     { label: 'New (30d)', value: overview.newUsers30d || 0, icon: Users, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-    { label: 'Scrape Jobs', value: overview.totalScrapeJobs || 0, icon: Globe, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+    { label: 'Scrape Jobs', value: overview.totalScrapeJobs || 0, icon: Globe, color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
     { label: 'PDF Jobs', value: overview.totalPdfJobs || 0, icon: FileText, color: 'text-rose-400', bg: 'bg-rose-500/10' },
     { label: 'Exports', value: overview.totalExports || 0, icon: Download, color: 'text-blue-400', bg: 'bg-blue-500/10' },
     { label: 'Workflows', value: overview.totalWorkflows || 0, icon: Workflow, color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
@@ -157,7 +157,7 @@ function UsersList({ onSelectUser }) {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-app-fg truncate">{user.name}</p>
-                      <Badge className={user.role === 'admin' ? 'bg-amber-500/15 text-amber-300 text-[10px]' : 'bg-white/10 text-app-muted text-[10px]'}>{user.role}</Badge>
+                      <Badge className={user.role === 'admin' ? 'bg-indigo-500/15 text-indigo-300 text-[10px]' : 'bg-white/10 text-app-muted text-[10px]'}>{user.role}</Badge>
                       <Badge className={`text-[10px] ${user.subscription?.plan !== 'free' ? 'bg-purple-500/15 text-purple-300' : 'bg-white/10 text-app-muted'}`}>{user.subscription?.plan || 'free'}</Badge>
                     </div>
                     <p className="text-xs text-app-muted truncate">{user.email}</p>
@@ -216,7 +216,7 @@ function SystemHealth() {
         { label: 'Database', value: health.database?.status, icon: Server, color: health.database?.status === 'connected' ? 'text-green-400' : 'text-red-400' },
         { label: 'Heap Used', value: `${health.memory?.heapUsed}MB`, icon: HardDrive, color: 'text-cyan-400' },
         { label: 'RSS Memory', value: `${health.memory?.rss}MB`, icon: HardDrive, color: 'text-purple-400' },
-        { label: 'Uptime', value: `${Math.round(health.uptime / 60)}min`, icon: Clock, color: 'text-amber-400' },
+        { label: 'Uptime', value: `${Math.round(health.uptime / 60)}min`, icon: Clock, color: 'text-indigo-400' },
         { label: 'Node.js', value: health.nodeVersion, icon: Cpu, color: 'text-blue-400' },
         { label: 'Platform', value: health.platform, icon: Activity, color: 'text-rose-400' },
       ].map((item, i) => (

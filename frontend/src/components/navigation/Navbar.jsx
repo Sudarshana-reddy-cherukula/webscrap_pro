@@ -30,20 +30,20 @@ function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-app-line bg-white/80 backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b border-app-line bg-app-elevated/80 backdrop-blur-2xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <Link to="/" className="group flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white shadow-lg shadow-amber-500/20">
-            S
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-bold text-white shadow-lg shadow-indigo-500/20">
+            W
           </div>
           <span className="text-lg font-bold tracking-tight text-app-fg">
-            Scrape<span className="text-amber-600">Flow</span>
+            WebScrap <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">Pro</span>
           </span>
         </Link>
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-xl border border-app-line bg-white p-2 text-app-muted transition hover:bg-app-surface hover:text-app-fg lg:hidden"
+          className="inline-flex items-center justify-center rounded-xl border border-app-line bg-app-elevated p-2 text-app-muted transition hover:bg-app-surface hover:text-app-fg lg:hidden"
           aria-label="Toggle navigation menu"
           onClick={() => setMobileOpen((prev) => !prev)}
         >
@@ -70,7 +70,7 @@ function Navbar() {
                   {isActive && (
                     <motion.span
                       layoutId="nav-glow"
-                      className="absolute inset-0 rounded-xl bg-gradient-to-b from-amber-500/10 to-orange-600/5 shadow-lg shadow-amber-500/5"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-b from-indigo-500/10 to-violet-600/5 shadow-lg shadow-indigo-500/5"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -84,7 +84,7 @@ function Navbar() {
           {isAuthenticated ? (
             <button
               type="button"
-              className="rounded-xl border border-app-line bg-white p-2 text-app-muted transition hover:bg-app-surface hover:text-red-500"
+              className="rounded-xl border border-app-line bg-app-elevated p-2 text-app-muted transition hover:bg-app-surface hover:text-red-500"
               onClick={handleLogout}
               aria-label="Logout"
             >
@@ -94,13 +94,13 @@ function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="rounded-xl border border-app-line px-4 py-2 text-sm font-medium text-app-soft transition hover:bg-white hover:text-app-fg"
+                className="rounded-xl border border-app-line px-4 py-2 text-sm font-medium text-app-soft transition hover:bg-app-elevated hover:text-app-fg"
               >
                 Log in
               </Link>
               <Link
                 to="/register"
-                className="rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30"
+                className="rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:shadow-indigo-500/30"
               >
                 Sign up
               </Link>
@@ -127,7 +127,7 @@ function Navbar() {
                   className={({ isActive }) =>
                     `rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
                       isActive
-                        ? 'bg-amber-500/10 text-amber-700'
+                        ? 'bg-indigo-500/10 text-indigo-700'
                         : 'text-app-muted hover:bg-app-surface hover:text-app-nav'
                     }`
                   }
@@ -139,7 +139,7 @@ function Navbar() {
                 {isAuthenticated ? (
                   <button
                     type="button"
-                    className="flex-1 rounded-xl border border-app-line bg-white px-4 py-2 text-sm text-red-500 transition hover:bg-app-surface"
+                      className="flex-1 rounded-xl border border-app-line bg-app-elevated px-4 py-2 text-sm text-red-500 transition hover:bg-app-surface"
                     onClick={handleLogout}
                   >
                     Log out
@@ -148,7 +148,7 @@ function Navbar() {
                   <Link
                     to="/register"
                     onClick={() => setMobileOpen(false)}
-                    className="flex-1 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-2 text-center text-sm font-semibold text-white"
+                    className="flex-1 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-4 py-2 text-center text-sm font-semibold text-white"
                   >
                     Sign up
                   </Link>

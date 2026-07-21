@@ -20,7 +20,7 @@ const plans = [
     name: 'Enterprise', price: '$249',
     description: 'For large organizations',
     features: ['Unlimited pages/month', 'Custom scraping integrations', 'Unlimited PDF processing', 'Real-time data export', 'Unlimited data retention', 'Dedicated account manager', 'Advanced API with SSO/SAML', 'Unlimited team members', '99.99% SLA guarantee', 'Custom onboarding', 'On-premise deployment option'],
-    cta: 'Contact sales', popular: false, color: 'from-amber-500 to-orange-600',
+    cta: 'Contact sales', popular: false, color: 'from-indigo-500 to-violet-600',
   },
 ]
 
@@ -58,7 +58,7 @@ function PricingPage() {
               className={`relative ${cardClass} ${plan.popular ? 'border-purple-500/30 shadow-xl shadow-purple-500/5' : ''}`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg">
                   Most popular
                 </div>
               )}
@@ -77,7 +77,7 @@ function PricingPage() {
               <button type="button" onClick={() => navigate('/register')}
                 className={`mt-8 w-full rounded-xl py-2.5 text-sm font-semibold transition ${
                   plan.popular
-                    ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30'
+                    ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30'
                     : 'border border-white/10 text-app-soft hover:bg-white/[0.04]'
                 }`}
               >{plan.cta}</button>
@@ -107,7 +107,7 @@ function PricingPage() {
             <h2 className="text-2xl font-bold text-app-fg">Still have questions?</h2>
             <p className="mt-2 text-sm text-app-muted">Our team is here to help you find the perfect plan.</p>
             <button type="button" onClick={() => navigate('/faq')}
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30"
             >Visit FAQ <ArrowRight size={16} /></button>
           </div>
         </motion.div>

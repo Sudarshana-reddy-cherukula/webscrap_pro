@@ -17,7 +17,7 @@ const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-b
 const STEP_TYPES = [
   { type: 'scrape', label: 'Scrape URL', icon: Globe, color: 'cyan' },
   { type: 'transform', label: 'Transform', icon: FileText, color: 'purple' },
-  { type: 'condition', label: 'Condition', icon: Filter, color: 'amber' },
+  { type: 'condition', label: 'Condition', icon: Filter, color: 'indigo' },
   { type: 'export', label: 'Export', icon: Download, color: 'green' },
   { type: 'webhook', label: 'Webhook', icon: Send, color: 'rose' },
   { type: 'delay', label: 'Delay', icon: Timer, color: 'blue' },
@@ -26,7 +26,7 @@ const STEP_TYPES = [
 const STEP_COLORS = {
   cyan: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
   purple: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
-  amber: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+  indigo: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
   green: 'bg-green-500/15 text-green-300 border-green-500/30',
   rose: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
   blue: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
@@ -271,7 +271,7 @@ function RunHistory({ workflowId, onClose }) {
       case 'success': return <CheckCircle2 size={14} className="text-green-400" />
       case 'failed': return <XCircle size={14} className="text-red-400" />
       case 'running': return <Loader2 size={14} className="text-cyan-400 animate-spin" />
-      case 'cancelled': return <AlertTriangle size={14} className="text-amber-400" />
+      case 'cancelled': return <AlertTriangle size={14} className="text-indigo-400" />
       default: return <Clock size={14} className="text-app-muted" />
     }
   }
@@ -429,7 +429,7 @@ export default function WorkflowsPage() {
             { label: 'Total Workflows', value: stats.totalWorkflows, icon: Workflow, color: 'text-cyan-400' },
             { label: 'Active', value: stats.activeWorkflows, icon: Zap, color: 'text-green-400' },
             { label: 'Total Runs', value: stats.totalRuns, icon: Play, color: 'text-purple-400' },
-            { label: 'Success Rate', value: `${stats.successRate}%`, icon: BarChart3, color: 'text-amber-400' },
+            { label: 'Success Rate', value: `${stats.successRate}%`, icon: BarChart3, color: 'text-indigo-400' },
           ].map((stat, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
               className={`${cardClass} !p-4`}>

@@ -18,7 +18,7 @@ const recentJobs = [
 function DashboardPreview() {
   return (
     <section id="dashboard" className="relative border-t border-app-line py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(212,147,60,0.04),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(139,92,246,0.04),transparent_50%)]" />
       <div className="absolute inset-0 bg-grid opacity-30" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -28,7 +28,7 @@ function DashboardPreview() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">
+          <p className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
             Dashboard
           </p>
           <h2 className="mt-4 text-balance text-3xl sm:text-4xl font-bold text-app-fg">
@@ -46,11 +46,11 @@ function DashboardPreview() {
           transition={{ delay: 0.1 }}
           className="mt-16 relative"
         >
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-transparent blur-3xl" />
-          <div className="relative rounded-2xl border border-app-line bg-white/90 backdrop-blur-2xl overflow-hidden shadow-2xl shadow-amber-500/5">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-indigo-500/10 via-violet-500/5 to-transparent blur-3xl" />
+          <div className="relative rounded-2xl border border-app-line bg-white/90 backdrop-blur-2xl overflow-hidden shadow-2xl shadow-indigo-500/5">
             <div className="border-b border-app-line px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-xs font-bold text-white">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-bold text-white">
                   D
                 </div>
                 <div>
@@ -60,7 +60,7 @@ function DashboardPreview() {
               </div>
               <div className="flex gap-2">
                 <div className="h-2 w-2 rounded-full bg-emerald-500" />
-                <div className="h-2 w-2 rounded-full bg-amber-400" />
+                <div className="h-2 w-2 rounded-full bg-indigo-400" />
                 <div className="h-2 w-2 rounded-full bg-red-400" />
               </div>
             </div>
@@ -101,12 +101,12 @@ function DashboardPreview() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      className="flex items-center justify-between px-4 py-3 text-sm hover:bg-amber-50/50 transition-colors"
+                      className="flex items-center justify-between px-4 py-3 text-sm hover:bg-indigo-50/50 transition-colors"
                     >
                       <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div className={`h-1.5 w-1.5 rounded-full shrink-0 ${
                           job.status === 'Completed' ? 'bg-emerald-500' :
-                          job.status === 'Processing' ? 'bg-amber-400' :
+                          job.status === 'Processing' ? 'bg-indigo-400' :
                           'bg-red-400'
                         }`} />
                         <span className="text-app-soft truncate">{job.url}</span>
@@ -117,7 +117,7 @@ function DashboardPreview() {
                         <span className={`${
                           job.data === 'Completed' ? 'text-emerald-600' :
                           job.data === 'Error' ? 'text-red-500' :
-                          'text-amber-600'
+                          'text-indigo-600'
                         }`}>{job.data}</span>
                       </div>
                     </motion.div>

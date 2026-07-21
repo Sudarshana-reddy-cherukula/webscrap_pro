@@ -44,7 +44,7 @@ function FloatingIcon({ IconComponent, className, index }) {
           ease: 'easeInOut',
         }}
       >
-        <IconComponent className="w-6 h-6 md:w-7 md:h-7 text-amber-600" />
+        <IconComponent className="w-6 h-6 md:w-7 md:h-7 text-indigo-600" />
       </motion.div>
     </motion.div>
   )
@@ -88,14 +88,14 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
         ))}
       </div>
 
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,90,72,0.05),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.05),transparent_60%)]" />
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-50 px-4 py-1.5 text-xs font-medium text-amber-700"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-50 px-4 py-1.5 text-xs font-medium text-indigo-700"
         >
           <Zap size={12} />
           Now in public beta — try it free
@@ -111,7 +111,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
             Scrape smarter.
           </span>
           <br />
-          <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-rose-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-indigo-600 via-violet-500 to-cyan-500 bg-clip-text text-transparent">
             Extract everything.
           </span>
         </motion.h1>
@@ -134,7 +134,7 @@ function FloatingIconsHero({ ctaHref, onCtaClick }) {
         >
           <Button
             onClick={onCtaClick || (() => {})}
-            className="bg-gradient-to-r from-amber-500 to-orange-600 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 hover:scale-105 transition-all duration-300"
           >
             Start scraping free
           </Button>

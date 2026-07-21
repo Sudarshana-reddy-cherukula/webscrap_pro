@@ -20,7 +20,7 @@ export default function AnimatedGradientLayer() {
       <div
         className="absolute inset-0 animate-gradient-rotate"
         style={{
-          background: 'conic-gradient(from 0deg at 50% 50%, rgba(99,102,241,0.08) 0deg, rgba(6,182,212,0.06) 90deg, rgba(139,92,246,0.07) 180deg, rgba(236,72,153,0.04) 270deg, rgba(99,102,241,0.08) 360deg)',
+          background: 'conic-gradient(from 0deg at 50% 50%, rgba(99,102,241,0.08) 0deg, rgba(139,92,246,0.06) 90deg, rgba(6,182,212,0.07) 180deg, rgba(79,70,229,0.04) 270deg, rgba(99,102,241,0.08) 360deg)',
           width: '200vmax',
           height: '200vmax',
           left: '50%',

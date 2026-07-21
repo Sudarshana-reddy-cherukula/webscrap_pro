@@ -15,3 +15,8 @@ exports/
 logs/
 temp/
 jobs/
+CONTEXT_DUMP.md/
+DEPLOY_STEP_BY_STEP.md/
+DEPLOY.md/
+PRODUCTION_ARCHITECTURE.md/
+ZERO_COST_DEPLOY.md/

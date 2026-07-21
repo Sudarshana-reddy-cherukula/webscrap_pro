@@ -27,7 +27,7 @@ const SELECTOR_TYPES = [
 ]
 
 const cardClass = "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl"
-const inputClass = "mt-1.5 block w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+const inputClass = "mt-1.5 block w-full rounded-xl border border-white/10 bg-app-elevated px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
 const labelClass = "block text-sm font-medium text-app-soft"
 
 function ScraperPage() {
@@ -94,7 +94,7 @@ function ScraperPage() {
     running: { icon: Loader2, color: 'text-blue-400', bg: 'bg-blue-500/10' },
     completed: { icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
     failed: { icon: AlertCircle, color: 'text-red-400', bg: 'bg-red-500/10' },
-    paused: { icon: Pause, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+    paused: { icon: Pause, color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
     pending: { icon: Clock, color: 'text-app-muted', bg: 'bg-zinc-500/10' },
   }
 
@@ -270,7 +270,7 @@ function ScraperPage() {
                     <div className="mt-2 flex gap-1.5">
                       {job.status === 'running' && (
                         <>
-                          <button onClick={() => pauseJob(job.id || job._id)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-amber-400" title="Pause"><Pause size={12} /></button>
+                          <button onClick={() => pauseJob(job.id || job._id)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-indigo-400" title="Pause"><Pause size={12} /></button>
                           <button onClick={() => stopJob(job.id || job._id)} className="rounded-lg border border-white/10 px-2 py-1 text-[10px] text-app-muted transition hover:bg-white/[0.04] hover:text-red-400" title="Stop"><Square size={12} /></button>
                         </>
                       )}

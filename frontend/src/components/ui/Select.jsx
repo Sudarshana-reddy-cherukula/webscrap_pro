@@ -8,7 +8,7 @@ function Select({ id, label, options = [], className = '', ...props }) {
       )}
       <select
         id={id}
-        className={`w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm text-app-fg outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20 ${className}`.trim()}
+        className={`w-full rounded-2xl border border-border bg-app-elevated px-4 py-3 text-sm text-app-fg outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20 ${className}`.trim()}
         {...props}
       >
         {options.map((option) => (

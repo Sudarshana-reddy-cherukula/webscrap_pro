@@ -9,17 +9,17 @@ function CTASection({ onNavigate }) {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-3xl border border-amber-400/30 bg-gradient-to-br from-amber-50 via-orange-50/50 to-rose-50/30 px-8 py-16 text-center sm:px-16"
+          className="relative overflow-hidden rounded-3xl border border-indigo-400/30 bg-gradient-to-br from-indigo-50 via-violet-50/50 to-cyan-50/30 px-8 py-16 text-center sm:px-16"
         >
           <div className="absolute inset-0 bg-grid opacity-20" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-r from-indigo-500/20 to-violet-500/20 rounded-full blur-3xl" />
 
           <div className="relative">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-50 px-4 py-1.5 text-xs font-medium text-amber-700"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-50 px-4 py-1.5 text-xs font-medium text-indigo-700"
             >
               <Sparkles size={12} />
               Start your free trial today
@@ -35,7 +35,7 @@ function CTASection({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate && onNavigate('/register')}
-                className="group bg-gradient-to-r from-amber-500 to-orange-600 px-8 py-3 text-base font-semibold text-white rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-300 hover:scale-105"
+                className="group bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-3 text-base font-semibold text-white rounded-xl shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-300 hover:scale-105"
               >
                 Get started free
                 <ArrowRight size={16} className="ml-2 inline transition-transform duration-300 group-hover:translate-x-1" />

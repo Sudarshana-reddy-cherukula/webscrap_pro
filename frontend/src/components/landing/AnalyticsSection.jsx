@@ -6,25 +6,25 @@ const metrics = [
     icon: BarChart3,
     title: 'Volume Metrics',
     description: 'Track pages scraped, PDFs processed, and data exported over time with granular breakdowns.',
-    gradient: 'from-emerald-500 to-teal-600',
+    gradient: 'from-indigo-500 to-violet-600',
   },
   {
     icon: LineChart,
     title: 'Performance Trends',
     description: 'Monitor processing speed, success rates, and queue times with interactive time-series charts.',
-    gradient: 'from-teal-500 to-cyan-600',
+    gradient: 'from-cyan-500 to-blue-600',
   },
   {
     icon: PieChart,
     title: 'Resource Allocation',
     description: 'Visualize usage by project, team member, or data source. Optimize your resource distribution.',
-    gradient: 'from-green-500 to-emerald-600',
+    gradient: 'from-emerald-500 to-teal-600',
   },
   {
     icon: TrendingUp,
     title: 'Cost Analytics',
     description: 'Track spending across projects, set budget alerts, and optimize cost per page scraped.',
-    gradient: 'from-emerald-500 to-green-600',
+    gradient: 'from-violet-500 to-purple-600',
   },
 ]
 
@@ -38,7 +38,7 @@ const insights = [
 function AnalyticsSection() {
   return (
     <section id="analytics" className="relative border-t border-app-line py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(16,185,129,0.04),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(6,182,212,0.04),transparent_50%)]" />
       <div className="absolute inset-0 bg-grid opacity-30" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -48,7 +48,7 @@ function AnalyticsSection() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+          <p className="text-xs font-semibold uppercase tracking-widest text-cyan-600">
             Analytics
           </p>
           <h2 className="mt-4 text-balance text-3xl sm:text-4xl font-bold text-app-fg">
@@ -67,7 +67,7 @@ function AnalyticsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: i * 0.05 }}
-              className="rounded-2xl border border-app-line bg-white p-6 hover:border-emerald-400/30 transition-all duration-300 hover:-translate-y-1"
+              className="rounded-2xl border border-app-line bg-white p-6 hover:border-indigo-400/30 transition-all duration-300 hover:-translate-y-1"
             >
               <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${metric.gradient} p-2.5 shadow-lg`}>
                 <metric.icon size={20} className="text-white" />
@@ -92,7 +92,7 @@ function AnalyticsSection() {
             </div>
             <div className="flex gap-2">
               {[BarChart3, LineChart, PieChart].map((Icon, i) => (
-                <div key={i} className="rounded-lg border border-app-line bg-white p-2 text-app-muted hover:bg-amber-50 hover:text-app-nav transition cursor-pointer">
+                <div key={i} className="rounded-lg border border-app-line bg-white p-2 text-app-muted hover:bg-indigo-50 hover:text-app-nav transition cursor-pointer">
                   <Icon size={14} />
                 </div>
               ))}
@@ -111,7 +111,7 @@ function AnalyticsSection() {
               >
                 <p className="text-2xl font-bold text-app-fg">{item.value}</p>
                 <p className="text-xs text-app-muted mt-1">{item.label}</p>
-                <p className={`text-xs mt-2 ${item.change.startsWith('+') ? 'text-emerald-600' : 'text-amber-600'}`}>
+                <p className={`text-xs mt-2 ${item.change.startsWith('+') ? 'text-emerald-600' : 'text-indigo-600'}`}>
                   {item.change} <span className="text-app-muted">{item.per}</span>
                 </p>
               </motion.div>
@@ -127,7 +127,7 @@ function AnalyticsSection() {
                   whileInView={{ height }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="w-8 bg-gradient-to-t from-emerald-500/50 to-teal-500/30 rounded-lg"
+                  className="w-8 bg-gradient-to-t from-indigo-500/50 to-violet-500/30 rounded-lg"
                   style={{ height }}
                 />
               ))}

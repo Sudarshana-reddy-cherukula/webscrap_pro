@@ -14,7 +14,7 @@ function NotFoundPage() {
         <p className="mt-2 text-app-muted">The page you&apos;re looking for doesn&apos;t exist.</p>
         <Link
           to="/"
-          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:shadow-amber-500/30"
+          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:shadow-indigo-500/30"
         >
           Go home
         </Link>

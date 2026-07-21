@@ -21,7 +21,7 @@ const statCards = [
   { label: 'Scraping Jobs', key: 'scraping', icon: Globe, color: 'from-cyan-500 to-blue-600', link: '/scraper' },
   { label: 'PDFs Processed', key: 'pdf', icon: FileText, color: 'from-purple-500 to-pink-600', link: '/pdf-tools' },
   { label: 'Total Exports', key: 'exports', icon: Download, color: 'from-green-500 to-emerald-600', link: '/export' },
-  { label: 'Active Jobs', key: 'active', icon: TrendingUp, color: 'from-amber-500 to-orange-600', link: '/analytics' },
+  { label: 'Active Jobs', key: 'active', icon: TrendingUp, color: 'from-indigo-500 to-violet-600', link: '/analytics' },
 ]
 
 const statusIcon = {

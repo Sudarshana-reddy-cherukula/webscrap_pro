@@ -74,8 +74,8 @@ function LoginPage() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-md"
       >
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-rose-600/20 blur-3xl" />
-        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-amber-400/30 via-orange-500/30 to-rose-500/30" />
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-indigo-500/20 via-violet-500/10 to-cyan-600/20 blur-3xl" />
+        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-indigo-400/30 via-violet-500/30 to-cyan-500/30" />
 
         <div className="relative rounded-2xl border border-app-line bg-app-bg/70 p-8 backdrop-blur-2xl shadow-2xl">
           <div className="mb-8 text-center">
@@ -85,16 +85,16 @@ function LoginPage() {
               transition={{ delay: 0.1, duration: 0.5 }}
             >
               <Link to="/" className="mb-6 inline-flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-[7px] font-bold text-white shadow-lg shadow-amber-500/20 tracking-tight leading-none">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-[7px] font-bold text-white shadow-lg shadow-indigo-500/20 tracking-tight leading-none">
                   WP
                 </div>
                 <span className="text-lg font-bold text-app-fg">
-                  WebScrap <span className="text-amber-600">Pro</span>
+                  WebScrap <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">Pro</span>
                 </span>
               </Link>
-              <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-50 px-3 py-1">
-                <Sparkles size={10} className="text-amber-600" />
-                <span className="text-[10px] text-amber-700">Welcome back</span>
+              <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-indigo-400/20 bg-indigo-50 px-3 py-1">
+                <Sparkles size={10} className="text-indigo-600" />
+                <span className="text-[10px] text-indigo-700">Welcome back</span>
               </div>
             </motion.div>
             <h1 className="text-2xl font-bold text-app-fg">Sign in to your account</h1>
@@ -107,18 +107,18 @@ function LoginPage() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <label htmlFor="email" className="block text-sm font-medium text-app-soft">Email address</label>
               <input id="email" type="email" {...register('email')} placeholder="you@example.com"
-                className="mt-1.5 block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
+                className="mt-1.5 block w-full rounded-xl border border-app-line bg-app-elevated px-4 py-2.5 text-sm text-app-fg placeholder:text-app-muted transition focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
               {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>}
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
               <div className="flex items-center justify-between">
                 <label htmlFor="password" className="block text-sm font-medium text-app-soft">Password</label>
-                <Link to="/forgot-password" className="text-xs text-app-muted hover:text-amber-600 transition">Forgot password?</Link>
+                <Link to="/forgot-password" className="text-xs text-app-muted hover:text-indigo-600 transition">Forgot password?</Link>
               </div>
               <div className="relative mt-1.5">
                 <input id="password" type={showPassword ? 'text' : 'password'} {...register('password')} placeholder="Enter your password"
-                  className="block w-full rounded-xl border border-app-line bg-white px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20" />
+                  className="block w-full rounded-xl border border-app-line bg-app-elevated px-4 py-2.5 pr-10 text-sm text-app-fg placeholder:text-app-muted transition focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-app-muted hover:text-app-soft transition">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -128,7 +128,7 @@ function LoginPage() {
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
               <Button type="submit" disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-300 hover:scale-[1.02]">
+                className="w-full bg-gradient-to-r from-indigo-500 to-violet-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-300 hover:scale-[1.02]">
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> Signing in...</span>
                 ) : (
@@ -149,7 +149,7 @@ function LoginPage() {
 
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
             <a href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/google`}
-              className="flex w-full items-center justify-center gap-3 rounded-xl border border-app-line bg-white px-4 py-2.5 text-sm font-medium text-app-fg transition hover:bg-app-surface">
+              className="flex w-full items-center justify-center gap-3 rounded-xl border border-app-line bg-app-elevated px-4 py-2.5 text-sm font-medium text-app-fg transition hover:bg-app-surface">
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -168,7 +168,7 @@ function LoginPage() {
           >
             <p className="text-sm text-app-muted">
               Don&apos;t have an account?{' '}
-               <Link to="/register" className="font-medium text-amber-600 transition hover:text-amber-700">
+               <Link to="/register" className="font-medium text-indigo-600 transition hover:text-indigo-700">
                 Create one <ArrowRight size={12} className="inline" />
               </Link>
             </p>
