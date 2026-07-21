@@ -11,7 +11,6 @@ validateEnv();
 const http = require('http');
 const socketHandler = require('./src/sockets/socketHandler');
 const { connectDB, disconnectDB } = require('./src/config/database');
-const { connectRedis, disconnectRedis } = require('./src/config/redis');
 const { startWorkers, stopWorkers } = require('./src/workers');
 const logger = require('./src/utils/logger');
 const app = require('./src/app');
@@ -26,7 +25,6 @@ let isShuttingDown = false;
 const startServer = async () => {
   try {
     await connectDB();
-    await connectRedis();
     startWorkers();
 
     server.listen(PORT, () => {
@@ -64,9 +62,6 @@ const gracefulShutdown = async (signal) => {
 
     await stopWorkers();
     logger.info('Workers stopped');
-
-    await disconnectRedis();
-    logger.info('Redis disconnected');
 
     await disconnectDB();
     logger.info('MongoDB disconnected');

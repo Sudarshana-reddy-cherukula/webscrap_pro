@@ -1,16 +1,11 @@
-const { startScrapeWorker, stopScrapeWorker } = require('./scrapeWorker');
-const { startPdfWorker, stopPdfWorker } = require('./pdfWorker');
+const logger = require('../utils/logger');
 
 function startWorkers() {
-  startScrapeWorker();
-  startPdfWorker();
+  logger.info('Workers disabled — running in sync mode (no Redis)');
 }
 
 async function stopWorkers() {
-  await Promise.allSettled([
-    stopScrapeWorker(),
-    stopPdfWorker(),
-  ]);
+  // no-op: workers not started
 }
 
 module.exports = { startWorkers, stopWorkers };

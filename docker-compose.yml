@@ -29,7 +29,6 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=5000
-      - REDIS_URL=${REDIS_URL:-}
       - N8N_WEBHOOK_URL=http://n8n:5678/webhook/email
     volumes:
       - backend-uploads:/app/uploads
